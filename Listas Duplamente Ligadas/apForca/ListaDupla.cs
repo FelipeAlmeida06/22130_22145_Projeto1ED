@@ -8,31 +8,70 @@ public class ListaDupla<Dado>
              where Dado : IComparable<Dado>, IRegistro
 {
   NoDuplo<Dado> primeiro, ultimo, 
-                atual;   // é usado para percorrer a lista e mostrar
+                atual, anterior;   // é usado para percorrer a lista e mostrar
                          // o nó que está sendo visitado a cada momento
   int quantosNos;
   bool primeiroAcessoDoPercurso;
   int numeroDoNoAtual;
 
-  public void PosicionarNoInicio()
+
+    public void PosicionarNoInicio()
   {
-    //  codificar
-  }
+        //  codificar
+
+        atual = primeiro;
+        numeroDoNoAtual = 0;
+        primeiroAcessoDoPercurso = true;
+    }
 
   public void PosicionarNoFinal()
   {
-    //  codificar
-  }
+        //  codificar
+
+        atual = ultimo;
+        numeroDoNoAtual = quantosNos - 1;
+        primeiroAcessoDoPercurso = true;
+    }
 
   public void Avancar()
   {
-    //  codificar
-  }
+        //  codificar
+
+        if (EstaVazia)
+            return;
+
+        if (primeiroAcessoDoPercurso)
+        {
+            primeiroAcessoDoPercurso = false;
+            return;
+        }
+
+        if (atual != null && atual.Prox != null)
+        {
+            atual = atual.Prox;
+            numeroDoNoAtual++;
+        }
+    }
 
   public void Retroceder()
   {
-    //  codificar
-  }
+        //  codificar
+
+        if (EstaVazia)
+            return;
+
+        if (primeiroAcessoDoPercurso)
+        {
+            primeiroAcessoDoPercurso = false;
+            return;
+        }
+
+        if (atual != null && atual.Ant != null)
+        {
+            atual = atual.Ant;
+            numeroDoNoAtual--;
+        }
+    }
 
   public void PosicionarEm(int indice)
   {
