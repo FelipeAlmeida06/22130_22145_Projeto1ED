@@ -16,8 +16,8 @@ public class PalavraDica : IComparable<PalavraDica>, IRegistro
     private string palavra;
     private string dica;
 
-    public string Palavra { get; private set; }
-    public string Dica { get; private set; }
+    public string Palavra { get; private set; }         // public string Palavra { get; private set; }
+    public string Dica { get; set; }            // public string Dica { get; private set; }
 
 
     /*
