@@ -176,7 +176,7 @@ namespace apListaLigada
 
         }
 
-
+        
     private bool modoEdicao = false; // Variável para controlar o estado
         
     private void btnIncluir_Click(object sender, EventArgs e)
@@ -185,6 +185,8 @@ namespace apListaLigada
             // criar objeto da classe Palavra e Dica para busca
             // tentar incluir em ordem esse objeto na lista1
             // se não incluiu (já existe) avisar o usuário
+
+
 
             // Habilita o modo de edição
             modoEdicao = true;
@@ -258,7 +260,7 @@ namespace apListaLigada
                               MessageBoxButtons.OK,
                               MessageBoxIcon.Error);
             }
-
+            
         }
 
 
@@ -321,13 +323,16 @@ namespace apListaLigada
             }
         }
 
-    private void btnExcluir_Click(object sender, EventArgs e)
-    {
+
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
             // para o nó atualmente visitado e exibido na tela:
             // perguntar ao usuário se realmente deseja excluir essa palavra e dica
             // se sim, remover o nó atual da lista duplamente ligada e exibir o próximo nó
             // se não, manter como está
 
+
+            
             // Verifica se há um nó atual válido
             if (listaPalavras.Atual == null || listaPalavras.QuantosNos == 0)
             {
@@ -409,13 +414,84 @@ namespace apListaLigada
                                   MessageBoxIcon.Error);
                 }
             }
+            
+ 
         }
 
     private void FrmAlunos_FormClosing(object sender, FormClosingEventArgs e)
     {
-      // solicitar ao usuário que escolha o arquivo de saída
-      // percorrer a lista ligada e gravar seus dados no arquivo de saída
-    }
+            // solicitar ao usuário que escolha o arquivo de saída
+            // percorrer a lista ligada e gravar seus dados no arquivo de saída
+
+            // Só prossegue se houver palavras na lista
+            if (listaPalavras == null || listaPalavras.QuantosNos == 0)
+                return;
+
+            // Pergunta ao usuário se deseja salvar os dados
+            DialogResult resposta = MessageBox.Show(
+                "Deseja salvar as palavras e dicas antes de sair?",
+                "Salvar dados",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            if (resposta == DialogResult.Cancel)
+            {
+                e.Cancel = true; // Cancela o fechamento do formulário
+                return;
+            }
+
+            if (resposta == DialogResult.Yes)
+            {
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "Arquivos de texto (*.txt)|*.txt";
+                    saveFileDialog.Title = "Salvar palavras e dicas";
+                    saveFileDialog.DefaultExt = "txt";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
+                            {
+                                // Dentro do using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
+                                // Escreve o cabeçalho
+                                writer.WriteLine("Palavra com 30 caractere      Dica até o final da linha");
+
+                                // Usar um NoDuplo<Dado> auxiliar em vez de depender do atual da lista
+                                NoDuplo<PalavraDica> noAtual = listaPalavras.Primeiro;
+                                while (noAtual != null)
+                                {
+                                    string palavra = noAtual.Info.Palavra.PadRight(30).Substring(0, 30);
+                                    string dica = noAtual.Info.Dica;
+
+                                    writer.WriteLine($"{palavra}{dica}");
+
+                                    noAtual = noAtual.Prox; // Avança diretamente sem usar o método Avancar()
+                                }
+                            }
+
+                            MessageBox.Show("Dados salvos com sucesso!",
+                                          "Sucesso",
+                                          MessageBoxButtons.OK,
+                                          MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Erro ao salvar arquivo: {ex.Message}",
+                                          "Erro",
+                                          MessageBoxButtons.OK,
+                                          MessageBoxIcon.Error);
+                            e.Cancel = true; // Cancela o fechamento para permitir nova tentativa
+                        }
+                    }
+                    else
+                    {
+                        e.Cancel = true; // Usuário cancelou o save
+                    }
+                }
+            }
+        }
 
     private void ExibirDados(ListaDupla<PalavraDica> aLista, ListBox lsb, Direcao qualDirecao)         //   ListaDupla<Aluno> aLista, ListBox lsb, Direcao qualDirecao
     {
@@ -446,10 +522,14 @@ namespace apListaLigada
 
     private void FrmAlunos_Load(object sender, EventArgs e)
     {
-      // fazer a leitura do arquivo escolhido pelo usuário e armazená-lo na lista1
-      // posicionar o ponteiro atual no início da lista duplamente ligada
-      // Exibir o Registro Atual;
-    }
+            // fazer a leitura do arquivo escolhido pelo usuário e armazená-lo na lista1
+            // posicionar o ponteiro atual no início da lista duplamente ligada
+            // Exibir o Registro Atual;
+
+
+            //FazerLeitura(ref listaPalavras);
+
+        }
 
     private void btnInicio_Click(object sender, EventArgs e)
     {
@@ -500,10 +580,6 @@ namespace apListaLigada
 
             if (listaPalavras.Atual != null)
             {
-                //txtPalavra.Text = listaPalavras.Atual.Info.Palavra;
-                //txtDica.Text = listaPalavras.Atual.Info.Dica;
-                //lblPosicao.Text = $"Registro: {posicaoAtual + 1}/{totalPalavras}";
-
                 txtRA.Text = listaPalavras.Atual.Info.Palavra;
                 txtNome.Text = listaPalavras.Atual.Info.Dica;
                 slRegistro.Text = $"Registro: {posicaoAtual + 1}/{totalPalavras}";
@@ -514,7 +590,6 @@ namespace apListaLigada
     private void btnEditar_Click(object sender, EventArgs e)
     {
             // alterar a dica e guardar seu novo valor no nó exibido
-
 
             // Verifica se há um nó atual válido
             if (listaPalavras.Atual == null)
@@ -545,12 +620,12 @@ namespace apListaLigada
                 btnEditar.Click += SalvarEdicao;
 
                 // Desabilita outros botões durante a edição
-                //btnIncluir.Enabled = false;
-                //btnExcluir.Enabled = false;
-                //btnAnterior.Enabled = false;
-                //btnProximo.Enabled = false;
-                //btnInicio.Enabled = false;
-                //btnFim.Enabled = false;
+                btnNovo.Enabled = false;             // btnIncluir
+                btnExcluir.Enabled = false;
+                btnAnterior.Enabled = false;
+                btnProximo.Enabled = false;
+                btnInicio.Enabled = false;
+                btnFim.Enabled = false;
             }
     }
 
@@ -575,13 +650,13 @@ namespace apListaLigada
             }
             finally
             {
-                /*
+                
                 // Restaura o estado original
                 txtNome.ReadOnly = true;
                 btnEditar.Text = "Editar";
                 btnEditar.Click -= SalvarEdicao;
                 btnEditar.Click += btnEditar_Click;
-                */
+                
 
                 // Limpa os campos após edição
                 txtRA.Text = "";
@@ -594,8 +669,8 @@ namespace apListaLigada
                 btnEditar.Click += btnEditar_Click;
 
                 // Reabilita os botões
-                //btnIncluir.Enabled = true;
-                //btnExcluir.Enabled = true;
+                btnNovo.Enabled = true;              // btnIncluir
+                btnExcluir.Enabled = true;
 
                 // Só reabilita navegação se houver mais de um registro
                 bool podeNavegar = listaPalavras.QuantosNos > 1;
@@ -650,9 +725,6 @@ namespace apListaLigada
             // Coloca o foco no campo RA
             txtRA.Focus();
         }
-
-        
     }
-
 
 }

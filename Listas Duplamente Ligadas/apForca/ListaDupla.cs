@@ -46,14 +46,27 @@ public class ListaDupla<Dado>
             return;
         }
 
-        if (atual != null && atual.Prox != null)
+        if (atual != null)
         {
-            atual = atual.Prox;
-            numeroDoNoAtual++;
+            if (atual.Prox != null)
+            {
+                atual = atual.Prox;
+                numeroDoNoAtual++;
+            }
+            else
+            {
+                atual = null; // CHEGOU NO FINAL, precisa anular
+            }
         }
+
+        //if (atual != null && atual.Prox != null)
+        //{
+        //atual = atual.Prox;
+        //numeroDoNoAtual++;
+        //}
     }
 
-  public void Retroceder()
+    public void Retroceder()
   {
         //  codificar
 
@@ -75,14 +88,32 @@ public class ListaDupla<Dado>
 
   public void PosicionarEm(int indice)
   {
-    // fica para vocês fazerem
+        // fica para vocês fazerem
 
-    // verificar se indice é válido ( >= 0 && < quantosNos)
-    // se for valido:
-    //    atual aponta o primeiro nó;
-    //    percorre "indice" nós com o ponteiro atual sequencial
-    //      atualiza a variável numeroDoNoAtual
-  }
+        // verificar se indice é válido ( >= 0 && < quantosNos)
+        // se for valido:
+        //    atual aponta o primeiro nó;
+        //    percorre "indice" nós com o ponteiro atual sequencial
+        //      atualiza a variável numeroDoNoAtual
+
+        // verificar se indice é válido ( >= 0 && < quantosNos)
+        if (indice < 0 || indice >= quantosNos)
+            throw new IndexOutOfRangeException("Índice fora dos limites da lista");
+
+        // se for valido:
+        //    atual aponta o primeiro nó;
+        atual = primeiro;
+        numeroDoNoAtual = 0;
+
+        // percorre "indice" nós com o ponteiro atual sequencial
+        while (numeroDoNoAtual < indice)
+        {
+            atual = atual.Prox;
+            numeroDoNoAtual++;
+        }
+
+        primeiroAcessoDoPercurso = true;
+    }
 
   public Dado this[int indice]
   {

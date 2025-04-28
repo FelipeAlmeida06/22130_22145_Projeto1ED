@@ -54,7 +54,8 @@ public class PalavraDica : IComparable<PalavraDica>, IRegistro
 
     public int CompareTo(PalavraDica outra)
     {
-        return string.Compare(this.Palavra, outra?.Palavra, StringComparison.Ordinal);
+        //return string.Compare(this.Palavra, outra?.Palavra, StringComparison.Ordinal);
+        return string.Compare(this.Palavra, outra?.Palavra, StringComparison.OrdinalIgnoreCase);
     }
 
     public override string ToString()
