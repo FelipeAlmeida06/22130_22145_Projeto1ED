@@ -329,36 +329,114 @@ public class ListaDupla<Dado>
 
   public bool Remover(Dado dadoARemover)
   {
-    if (EstaVazia)
-      return false;
+        /*
+        if (EstaVazia)
+          return false;
 
-    if (!Existe(dadoARemover))
-      return false;
+        if (!Existe(dadoARemover))
+          return false;
 
-    // aqui sabemos que o nó foi encontrado e o método
-    // Existe() configurou os ponteiros atual e anterior
-    // para delimitar onde está o nó a ser removido
+        // aqui sabemos que o nó foi encontrado e o método
+        // Existe() configurou os ponteiros atual e anterior
+        // para delimitar onde está o nó a ser removido
 
-    if (atual == primeiro)
-    {
-      primeiro = primeiro.Prox;
-      if (primeiro == null)  // removemos o único nó da lista
-        ultimo = null;
+        if (atual == primeiro)
+        {
+          primeiro = primeiro.Prox;
+          if (primeiro == null)  // removemos o único nó da lista
+            ultimo = null;
+        }
+        else
+          if (atual == ultimo)
+          {
+            anterior.Prox = null;   // desliga o último nó
+            ultimo = anterior;
+          }
+          else     // nó interno a ser excluido
+          {
+                anterior.Prox = atual.Prox;
+          }
+
+        quantosNos--;
+        return true;
+        */
+
+
+
+
+        if (EstaVazia)
+            return false;
+
+        if (!Existe(dadoARemover))
+            return false;
+
+        // Verificação adicional de segurança
+        if (atual == null)
+            return false;
+
+        // Caso 1: Remoção do primeiro nó
+        if (atual == primeiro)
+        {
+            primeiro = primeiro.Prox;
+            if (primeiro == null)
+            {
+                ultimo = null; // Lista ficou vazia
+            }
+            else
+            {
+                primeiro.Ant = null; // Atualiza o anterior do novo primeiro
+            }
+        }
+        // Caso 2: Remoção do último nó
+        else if (atual == ultimo)
+        {
+            // Como Existe() não configura 'anterior', precisamos encontrá-lo
+            if (primeiro == atual) // Caso especial: só há um nó (já tratado no caso 1)
+            {
+                primeiro = null;
+                ultimo = null;
+            }
+            else
+            {
+                // Encontra o nó anterior ao último
+                NoDuplo<Dado> noAnterior = primeiro;
+                while (noAnterior != null && noAnterior.Prox != ultimo)
+                {
+                    noAnterior = noAnterior.Prox;
+                }
+
+                if (noAnterior != null)
+                {
+                    ultimo = noAnterior;
+                    ultimo.Prox = null;
+                }
+            }
+        }
+        // Caso 3: Remoção de nó do meio
+        else
+        {
+            // Como Existe() não configura 'anterior', precisamos encontrá-lo
+            NoDuplo<Dado> noAnterior = primeiro;
+            while (noAnterior != null && noAnterior.Prox != atual)
+            {
+                noAnterior = noAnterior.Prox;
+            }
+
+            if (noAnterior != null && atual.Prox != null)
+            {
+                noAnterior.Prox = atual.Prox;
+                atual.Prox.Ant = noAnterior;
+            }
+            else
+            {
+                return false; // Não encontrou o nó anterior ou próximo
+            }
+        }
+
+        quantosNos--;
+        return true;
+
     }
-    else
-      if (atual == ultimo)
-      {
-        anterior.Prox = null;   // desliga o último nó
-        ultimo = anterior;
-      }
-      else     // nó interno a ser excluido
-      {
-        anterior.Prox = atual.Prox;
-      }
-
-    quantosNos--;
-    return true;
-  }
 
   public void GravarDados(string nomeArq)
   {

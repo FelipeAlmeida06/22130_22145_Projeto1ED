@@ -48,6 +48,7 @@
             this.btnExcluir = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnSair = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpCadastro = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
@@ -60,9 +61,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.slRegistro = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnLerArquivo = new System.Windows.Forms.ToolStripButton();
-            this.btnFecharArquivo = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpCadastro.SuspendLayout();
@@ -122,9 +120,7 @@
             this.btnExcluir,
             this.toolStripSeparator2,
             this.btnSair,
-            this.toolStripSeparator4,
-            this.btnLerArquivo,
-            this.btnFecharArquivo});
+            this.toolStripSeparator4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(674, 47);
@@ -246,6 +242,11 @@
             this.btnSair.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 47);
+            // 
             // tabControl1
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -270,7 +271,7 @@
             this.tpCadastro.Location = new System.Drawing.Point(4, 30);
             this.tpCadastro.Name = "tpCadastro";
             this.tpCadastro.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCadastro.Size = new System.Drawing.Size(609, 292);
+            this.tpCadastro.Size = new System.Drawing.Size(649, 292);
             this.tpCadastro.TabIndex = 0;
             this.tpCadastro.Text = "Cadastro";
             this.tpCadastro.UseVisualStyleBackColor = true;
@@ -288,10 +289,10 @@
             // 
             this.tpListagem.Controls.Add(this.groupBox1);
             this.tpListagem.Controls.Add(this.lsbDados);
-            this.tpListagem.Location = new System.Drawing.Point(4, 30);
+            this.tpListagem.Location = new System.Drawing.Point(4, 25);
             this.tpListagem.Name = "tpListagem";
             this.tpListagem.Padding = new System.Windows.Forms.Padding(3);
-            this.tpListagem.Size = new System.Drawing.Size(649, 292);
+            this.tpListagem.Size = new System.Drawing.Size(649, 297);
             this.tpListagem.TabIndex = 1;
             this.tpListagem.Text = "Listagem";
             this.tpListagem.UseVisualStyleBackColor = true;
@@ -345,7 +346,7 @@
             this.tpForca.Location = new System.Drawing.Point(4, 25);
             this.tpForca.Name = "tpForca";
             this.tpForca.Padding = new System.Windows.Forms.Padding(3);
-            this.tpForca.Size = new System.Drawing.Size(609, 297);
+            this.tpForca.Size = new System.Drawing.Size(649, 297);
             this.tpForca.TabIndex = 2;
             this.tpForca.Text = "Forca";
             this.tpForca.UseVisualStyleBackColor = true;
@@ -373,33 +374,6 @@
             this.slRegistro.Name = "slRegistro";
             this.slRegistro.Size = new System.Drawing.Size(89, 20);
             this.slRegistro.Text = "Registro:0/0";
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 47);
-            // 
-            // btnLerArquivo
-            // 
-            this.btnLerArquivo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnLerArquivo.Image = ((System.Drawing.Image)(resources.GetObject("btnLerArquivo.Image")));
-            this.btnLerArquivo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnLerArquivo.Name = "btnLerArquivo";
-            this.btnLerArquivo.Size = new System.Drawing.Size(29, 44);
-            this.btnLerArquivo.Text = "Abrir";
-            this.btnLerArquivo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnLerArquivo.Click += new System.EventHandler(this.btnLerArquivo_Click);
-            // 
-            // btnFecharArquivo
-            // 
-            this.btnFecharArquivo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnFecharArquivo.Image = ((System.Drawing.Image)(resources.GetObject("btnFecharArquivo.Image")));
-            this.btnFecharArquivo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnFecharArquivo.Name = "btnFecharArquivo";
-            this.btnFecharArquivo.Size = new System.Drawing.Size(29, 44);
-            this.btnFecharArquivo.Text = "Fechar";
-            this.btnFecharArquivo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnFecharArquivo.Click += new System.EventHandler(this.btnFecharArquivo_Click);
             // 
             // FrmAlunos
             // 
@@ -461,8 +435,6 @@
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.TabPage tpForca;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripButton btnLerArquivo;
-        private System.Windows.Forms.ToolStripButton btnFecharArquivo;
     }
 }
 

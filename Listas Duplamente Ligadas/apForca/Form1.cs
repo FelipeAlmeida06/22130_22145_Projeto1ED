@@ -7,8 +7,8 @@ using System.Windows.Forms;
 
 namespace apListaLigada
 {
-  public partial class FrmAlunos : Form
-  {
+    public partial class FrmAlunos : Form
+    {
         //ListaDupla<Aluno> lista1;
 
         private ListaDupla<PalavraDica> listaPalavras;
@@ -31,72 +31,11 @@ namespace apListaLigada
         //        //FazerLeitura(ref listaPalavras);       // FazerLeitura(ref lista1);
         //}
 
-    private void btnFecharArquivo_Click(object sender, EventArgs e)
-    {
-            try
-            {
-                // Confirmação antes de fechar (se houver dados)
-                if (listaPalavras != null && listaPalavras.QuantosNos > 0)
-                {
-                    DialogResult resposta = MessageBox.Show(
-                        "Tem certeza que deseja fechar o arquivo atual?",
-                        "Aviso",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Question,
-                        MessageBoxDefaultButton.Button2);
 
-                    if (resposta != DialogResult.Yes)
-                        return;
-                }
-
-                // Limpa a lista de palavras
-                listaPalavras = new ListaDupla<PalavraDica>();
-
-                // Reseta os contadores
-                posicaoAtual = 0;
-                totalPalavras = 0;
-
-                // Limpa os campos de exibição
-                txtRA.Text = "";
-                txtNome.Text = "";
-
-                // Limpa o ListBox de dados
-                lsbDados.Items.Clear();
-
-                // Atualiza o status
-                slRegistro.Text = "Registro: 0/0";
-
-                // Desabilita os botões de navegação
-                btnAnterior.Enabled = false;
-                btnProximo.Enabled = false;
-                btnInicio.Enabled = false;
-                btnFim.Enabled = false;
-
-                // Habilita o botão de abrir arquivo
-                btnLerArquivo.Enabled = true;
-
-                // Mostra mensagem de sucesso
-                MessageBox.Show("Arquivo fechado com sucesso",
-                              "Aviso",
-                              MessageBoxButtons.OK,
-                              MessageBoxIcon.Information);     // .\nTodos os dados foram limpos."
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro ao fechar arquivo: {ex.Message}",
-                              "Erro",
-                              MessageBoxButtons.OK,
-                              MessageBoxIcon.Error);
-            }
-            finally
-            {
-            }
-        }
-
-    private void btnLerArquivo_Click(object sender, EventArgs e)
-    {
-         FazerLeitura(ref listaPalavras);
-    }
+        //private void btnLerArquivo_Click(object sender, EventArgs e)
+        //{
+        //FazerLeitura(ref listaPalavras);
+        //}
 
         private void FazerLeitura(ref ListaDupla<PalavraDica> qualLista)             // ref ListaDupla<Aluno> qualLista
         {
@@ -173,42 +112,43 @@ namespace apListaLigada
                 }
             }
             //MessageBox.Show($"Total de linhas lidas: {qualLista.QuantosNos}");        // $"Total de palavras lidas: {qualLista.QuantosNos}"
-
+             
         }
 
-        
-    private bool modoEdicao = false; // Variável para controlar o estado
-        
-    private void btnIncluir_Click(object sender, EventArgs e)
-    {
+
+        private bool modoEdicao = false; // Variável para controlar o estado
+
+        private void btnIncluir_Click(object sender, EventArgs e)
+        {
             // se o usuário digitou palavra e dica:
             // criar objeto da classe Palavra e Dica para busca
             // tentar incluir em ordem esse objeto na lista1
             // se não incluiu (já existe) avisar o usuário
 
 
+            if (!modoEdicao)
+            {
+                // Enable edit mode
+                modoEdicao = true;
+                btnAnterior.Enabled = false;
+                btnProximo.Enabled = false;
+                btnInicio.Enabled = false;
+                btnFim.Enabled = false;
 
-            // Habilita o modo de edição
-            modoEdicao = true;
+                txtRA.Clear();
+                txtNome.Clear();
+                txtRA.Focus();
+                return;
+            }
 
-            // Desabilita a navegação enquanto estiver editando
-            btnAnterior.Enabled = false;
-            btnProximo.Enabled = false;
-            btnInicio.Enabled = false;
-            btnFim.Enabled = false;
-
-            if (!modoEdicao) return; // Só permite incluir se estiver no modo edição
-
-            // Verifica se os campos estão preenchidos
+            // Validate fields
             if (string.IsNullOrWhiteSpace(txtRA.Text) || string.IsNullOrWhiteSpace(txtNome.Text))
             {
-                
                 MessageBox.Show("Por favor, preencha os campos de palavra e dica.",
                               "Campos vazios",
                               MessageBoxButtons.OK,
-                              MessageBoxIcon.Warning);     // "Por favor, preencha tanto a palavra quanto a dica.",
-                                                           //"Campos vazios",
-                return; 
+                              MessageBoxIcon.Warning);
+                return;
             }
 
             try
@@ -218,10 +158,33 @@ namespace apListaLigada
                     txtNome.Text.Trim()
                 );
 
+                // Use the fixed version of InserirEmOrdem
                 bool inserido = listaPalavras.InserirEmOrdem(novaPalavra);
 
                 if (inserido)
                 {
+                    // Atualizar arquivo
+                    string caminhoArquivo = Path.Combine(Application.StartupPath, "palavras.txt");
+                    List<string> linhas;
+
+                    // Check if file exists first
+                    if (File.Exists(caminhoArquivo))
+                        linhas = File.ReadAllLines(caminhoArquivo).ToList();
+                    else
+                        linhas = new List<string> { "Palavra com 30 caractere      Dica até o final da linha" };
+
+                    // Format new line properly
+                    string novaLinha = $"{novaPalavra.Palavra.PadRight(30).Substring(0, 30)}{novaPalavra.Dica}";
+
+                    // Add the new line after the header if it exists
+                    if (linhas.Count > 0 && linhas[0].StartsWith("Palavra com 30 caractere"))
+                        linhas.Add(novaLinha); // Add at the end, as order doesn't matter in file
+                    else
+                        linhas.Add(novaLinha);
+
+                    // Write all lines to file
+                    File.WriteAllLines(caminhoArquivo, linhas);
+
                     MessageBox.Show("Palavra adicionada com sucesso!",
                                   "Sucesso",
                                   MessageBoxButtons.OK,
@@ -231,15 +194,12 @@ namespace apListaLigada
                     listaPalavras.PosicionarNoFinal();
                     ExibirRegistroAtual();
 
-                    // Limpa os campos para nova entrada
+                    // Reset UI state
                     txtRA.Clear();
                     txtNome.Clear();
                     txtRA.Focus();
 
-                    // Volta ao modo normal
                     modoEdicao = false;
-
-                    // Reabilita a navegação
                     btnAnterior.Enabled = true;
                     btnProximo.Enabled = true;
                     btnInicio.Enabled = true;
@@ -260,12 +220,12 @@ namespace apListaLigada
                               MessageBoxButtons.OK,
                               MessageBoxIcon.Error);
             }
-            
+
         }
 
 
-    private void btnBuscar_Click(object sender, EventArgs e)
-    {
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
             // se a palavra digitada não é vazia:
             // criar um objeto da classe de Palavra e Dica para busca
             // se a palavra existe na lista1, posicionar o ponteiro atual nesse nó e exibir o registro atual
@@ -332,74 +292,99 @@ namespace apListaLigada
             // se não, manter como está
 
 
-            
-            // Verifica se há um nó atual válido
             if (listaPalavras.Atual == null || listaPalavras.QuantosNos == 0)
             {
-                MessageBox.Show("Não existe palavras para excluir.",
+                MessageBox.Show("Não existem palavras para excluir.",
                               "Aviso",
                               MessageBoxButtons.OK,
                               MessageBoxIcon.Information);
                 return;
             }
 
-            // Pega a palavra atual para exibir na confirmação
             string palavraAtual = listaPalavras.Atual.Info.Palavra;
 
-            // Pergunta ao usuário se deseja realmente excluir
             DialogResult resposta = MessageBox.Show(
                 $"Tem certeza que deseja excluir a palavra: {palavraAtual}?",
                 "Confirmar Exclusão",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button2); // Default = Não
+                MessageBoxDefaultButton.Button2);
 
             if (resposta == DialogResult.Yes)
             {
                 try
                 {
-                    // Guarda a posição atual antes de excluir
+                    // Guarda a informação antes de remover
+                    PalavraDica palavraARemover = listaPalavras.Atual.Info;
                     int posicaoOriginal = posicaoAtual;
 
-                    // Remove o nó atual
-                    PalavraDica palavraARemover = listaPalavras.Atual.Info;
+                    // Remove da lista em memória
                     if (listaPalavras.Remover(palavraARemover))
                     {
                         totalPalavras--;
 
+                        // Atualiza o arquivo físico IMEDIATAMENTE
+                        string caminhoArquivo = Path.Combine(Application.StartupPath, "palavras.txt");
+                        string[] linhas = File.ReadAllLines(caminhoArquivo);
+
+                        var novasLinhas = new List<string>();
+                        bool cabecalhoMantido = false;
+
+                        for (int i = 0; i < linhas.Length; i++)
+                        {
+                            // Mantém o cabeçalho
+                            if (i == 0 && linhas[i].StartsWith("Palavra com 30 caractere"))
+                            {
+                                novasLinhas.Add(linhas[i]);
+                                cabecalhoMantido = true;
+                                continue;
+                            }
+
+                            // Verifica se a linha NÃO contém a palavra a ser removida
+                            if (i > 0 || !cabecalhoMantido)
+                            {
+                                string palavraLinha = linhas[i].Length >= 30 ?
+                                    linhas[i].Substring(0, 30).Trim() :
+                                    linhas[i].Trim();
+
+                                if (!palavraLinha.Equals(palavraARemover.Palavra, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    novasLinhas.Add(linhas[i]);
+                                }
+                            }
+                        }
+
+                        // Reescreve o arquivo completo
+                        File.WriteAllLines(caminhoArquivo, novasLinhas);
+
                         // Atualiza a exibição
                         if (listaPalavras.QuantosNos > 0)
                         {
-                            // Se não era o último item, mantém a posição
-                            if (posicaoOriginal < totalPalavras)
+                            if (posicaoOriginal >= totalPalavras)
                             {
-                                // Navega até a posição correta
-                                listaPalavras.PosicionarNoInicio();
-                                for (int i = 0; i < posicaoOriginal; i++)
-                                {
-                                    listaPalavras.Avancar();
-                                }
-                            }
-                            else
-                            {
-                                // Se era o último item, vai para o novo último
                                 listaPalavras.PosicionarNoFinal();
                                 posicaoAtual = totalPalavras - 1;
                             }
-
+                            else
+                            {
+                                listaPalavras.PosicionarNoInicio();
+                                posicaoAtual = 0;
+                                for (int i = 0; i < posicaoOriginal && i < totalPalavras; i++)
+                                {
+                                    listaPalavras.Avancar();
+                                    posicaoAtual++;
+                                }
+                            }
                             ExibirRegistroAtual();
                         }
                         else
                         {
-                            // Lista ficou vazia
                             txtRA.Clear();
                             txtNome.Clear();
                             posicaoAtual = 0;
                         }
 
-                        // Atualiza o contador
                         slRegistro.Text = $"Registro: {(listaPalavras.QuantosNos > 0 ? (posicaoAtual + 1) : 0)}/{totalPalavras}";
-
                         MessageBox.Show("Palavra excluída com sucesso!",
                                       "Sucesso",
                                       MessageBoxButtons.OK,
@@ -414,15 +399,18 @@ namespace apListaLigada
                                   MessageBoxIcon.Error);
                 }
             }
-            
- 
+
+
         }
 
-    private void FrmAlunos_FormClosing(object sender, FormClosingEventArgs e)
-    {
+        private void FrmAlunos_FormClosing(object sender, FormClosingEventArgs e)
+        {
             // solicitar ao usuário que escolha o arquivo de saída
             // percorrer a lista ligada e gravar seus dados no arquivo de saída
 
+
+
+            /*
             // Só prossegue se houver palavras na lista
             if (listaPalavras == null || listaPalavras.QuantosNos == 0)
                 return;
@@ -491,58 +479,206 @@ namespace apListaLigada
                     }
                 }
             }
+            */
+
+
+
+            if (listaPalavras == null || listaPalavras.QuantosNos == 0)
+                return;
+
+            DialogResult resposta = MessageBox.Show(
+                "Deseja salvar as alterações antes de sair?",
+                "Salvar dados",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            if (resposta == DialogResult.Cancel)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            if (resposta == DialogResult.Yes)
+            {
+                string caminhoOriginal = Path.Combine(Application.StartupPath, "palavras.txt");
+
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.FileName = "palavras.txt"; // Sugere o mesmo arquivo
+                    saveFileDialog.InitialDirectory = Application.StartupPath;
+                    saveFileDialog.Filter = "Arquivos de texto (*.txt)|*.txt";
+                    saveFileDialog.Title = "Salvar palavras e dicas";
+                    saveFileDialog.DefaultExt = "txt";
+                    saveFileDialog.OverwritePrompt = true;
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
+                            {
+                                writer.WriteLine("Palavra com 30 caractere      Dica até o final da linha");
+
+                                NoDuplo<PalavraDica> noAtual = listaPalavras.Primeiro;
+                                while (noAtual != null)
+                                {
+                                    string palavraFormatada = noAtual.Info.Palavra.PadRight(30).Substring(0, 30);
+                                    writer.WriteLine($"{palavraFormatada}{noAtual.Info.Dica}");
+                                    noAtual = noAtual.Prox;
+                                }
+                            }
+
+                            MessageBox.Show("Dados salvos com sucesso!",
+                                          "Sucesso",
+                                          MessageBoxButtons.OK,
+                                          MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Erro ao salvar arquivo: {ex.Message}",
+                                          "Erro",
+                                          MessageBoxButtons.OK,
+                                          MessageBoxIcon.Error);
+                            e.Cancel = true;
+                        }
+                    }
+                    else
+                    {
+                        e.Cancel = true;
+                    }
+                }
+            }
         }
 
-    private void ExibirDados(ListaDupla<PalavraDica> aLista, ListBox lsb, Direcao qualDirecao)         //   ListaDupla<Aluno> aLista, ListBox lsb, Direcao qualDirecao
-    {
-      lsb.Items.Clear();
-      var dadosDaLista = aLista.Listagem(qualDirecao);
-      foreach (PalavraDica palavraDica in dadosDaLista)
-        lsb.Items.Add(palavraDica);
+        private void ExibirDados(ListaDupla<PalavraDica> aLista, ListBox lsb, Direcao qualDirecao)         //   ListaDupla<Aluno> aLista, ListBox lsb, Direcao qualDirecao
+        {
+            lsb.Items.Clear();
+            var dadosDaLista = aLista.Listagem(qualDirecao);
+            foreach (PalavraDica palavraDica in dadosDaLista)
+                lsb.Items.Add(palavraDica);
 
 
-      //foreach (Aluno aluno in dadosDaLista)
-        //lsb.Items.Add(aluno);
-    }
+            //foreach (Aluno aluno in dadosDaLista)
+            //lsb.Items.Add(aluno);
+        }
 
-    private void tabControl1_Enter(object sender, EventArgs e)
-    {
-      rbFrente.PerformClick();
-    }
+        private void tabControl1_Enter(object sender, EventArgs e)
+        {
+            rbFrente.PerformClick();
+        }
 
-    private void rbFrente_Click(object sender, EventArgs e)
-    {
-      ExibirDados(listaPalavras, lsbDados, Direcao.paraFrente);         // ExibirDados(lista1, lsbDados, Direcao.paraFrente);
-    }
+        private void rbFrente_Click(object sender, EventArgs e)
+        {
+            ExibirDados(listaPalavras, lsbDados, Direcao.paraFrente);         // ExibirDados(lista1, lsbDados, Direcao.paraFrente);
+        }
 
-    private void rbTras_Click(object sender, EventArgs e)
-    {
-      ExibirDados(listaPalavras, lsbDados, Direcao.paraTras);          // ExibirDados(lista1, lsbDados, Direcao.paraTras);
-    }
+        private void rbTras_Click(object sender, EventArgs e)
+        {
+            ExibirDados(listaPalavras, lsbDados, Direcao.paraTras);          // ExibirDados(lista1, lsbDados, Direcao.paraTras);
+        }
 
-    private void FrmAlunos_Load(object sender, EventArgs e)
-    {
+        private void FrmAlunos_Load(object sender, EventArgs e)
+        {
             // fazer a leitura do arquivo escolhido pelo usuário e armazená-lo na lista1
             // posicionar o ponteiro atual no início da lista duplamente ligada
             // Exibir o Registro Atual;
 
+            FazerLeitura(ref listaPalavras);
 
-            //FazerLeitura(ref listaPalavras);
+            //string caminho = Path.Combine(Application.StartupPath, "palavras.txt");
+            //MessageBox.Show($"Tentando carregar de: {caminho}");
+
+            try
+            {
+                // Carrega o arquivo padrão ou pede para o usuário selecionar
+                string caminhoPadrao = Path.Combine(Application.StartupPath, "palavras.txt");
+
+                if (File.Exists(caminhoPadrao))
+                {
+                    // Se existir o arquivo na pasta bin, carrega automaticamente
+                    CarregarArquivo(caminhoPadrao);
+                }
+                else
+                {
+                    // Se não existir, pede para o usuário selecionar
+                    using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                    {
+                        openFileDialog.Filter = "Arquivos de texto (*.txt)|*.txt";
+                        openFileDialog.Title = "Selecione o arquivo de palavras e dicas";
+
+                        if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            CarregarArquivo(openFileDialog.FileName);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nenhum arquivo selecionado. Você pode adicionar palavras manualmente.",
+                                        "Atenção",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Information);
+                        }
+                    }
+                }
+
+                // Posiciona no início e exibe o primeiro registro
+                if (listaPalavras.QuantosNos > 0)
+                {
+                    listaPalavras.PosicionarNoInicio();
+                    posicaoAtual = 0;
+                    totalPalavras = listaPalavras.QuantosNos;
+                    ExibirRegistroAtual();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao carregar arquivo: {ex.Message}",
+                              "Erro",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
+            }
 
         }
 
-    private void btnInicio_Click(object sender, EventArgs e)
-    {
+
+        private void CarregarArquivo(string caminhoArquivo)
+        {
+            listaPalavras = new ListaDupla<PalavraDica>();
+
+            string[] linhas = File.ReadAllLines(caminhoArquivo)
+                                 .Where(l => !string.IsNullOrWhiteSpace(l))
+                                 .ToArray();
+
+            // Ignora o cabeçalho se existir
+            int inicio = linhas.Length > 0 && linhas[0].StartsWith("Palavra com 30 caractere") ? 1 : 0;
+
+            for (int i = inicio; i < linhas.Length; i++)
+            {
+                string linha = linhas[i];
+                if (linha.Length >= 30)
+                {
+                    string palavra = linha.Substring(0, 30).Trim();
+                    string dica = linha.Length > 30 ? linha.Substring(30).Trim() : "";
+
+                    if (!string.IsNullOrEmpty(palavra))
+                    {
+                        listaPalavras.InserirEmOrdem(new PalavraDica(palavra, dica));
+                    }
+                }
+            }
+        }
+
+        private void btnInicio_Click(object sender, EventArgs e)
+        {
             // posicionar o ponteiro atual no início da lista duplamente ligada
             // Exibir o Registro Atual;
 
             listaPalavras.PosicionarNoInicio();
             posicaoAtual = 0;
-            ExibirRegistroAtual();    
-    }
+            ExibirRegistroAtual();
+        }
 
-    private void btnAnterior_Click(object sender, EventArgs e)
-    {
+        private void btnAnterior_Click(object sender, EventArgs e)
+        {
             // Retroceder o ponteiro atual para o nó imediatamente anterior 
             // Exibir o Registro Atual;
 
@@ -550,33 +686,39 @@ namespace apListaLigada
             listaPalavras.Retroceder();
             if (posicaoAtual > 0) posicaoAtual--;
             ExibirRegistroAtual();
-    }
+        }
 
-    private void btnProximo_Click(object sender, EventArgs e)
-    {
+        private void btnProximo_Click(object sender, EventArgs e)
+        {
             // Retroceder o ponteiro atual para o nó seguinte 
             // Exibir o Registro Atual;
 
             listaPalavras.Avancar();
             if (posicaoAtual < totalPalavras - 1) posicaoAtual++;
             ExibirRegistroAtual();
-    }
+        }
 
-    private void btnFim_Click(object sender, EventArgs e)
-    {
+        private void btnFim_Click(object sender, EventArgs e)
+        {
             // posicionar o ponteiro atual no último nó da lista 
             // Exibir o Registro Atual;
 
             listaPalavras.PosicionarNoFinal();
             posicaoAtual = totalPalavras - 1;
             ExibirRegistroAtual();
-    }
+        }
 
-    private void ExibirRegistroAtual()
-    {
+        private void ExibirRegistroAtual()
+        {
             // se a lista não está vazia:
             // acessar o nó atual e exibir seus campos em txtDica e txtPalavra
             // atualizar no status bar o número do registro atual / quantos nós na lista
+
+
+
+            /*
+            if (modoEdicao)
+                return;
 
             if (listaPalavras.Atual != null)
             {
@@ -584,11 +726,58 @@ namespace apListaLigada
                 txtNome.Text = listaPalavras.Atual.Info.Dica;
                 slRegistro.Text = $"Registro: {posicaoAtual + 1}/{totalPalavras}";
             }
+            else if (totalPalavras > 0)
+            {
+                slRegistro.Text = $"Registro: {totalPalavras}/{totalPalavras}";
+            }
+            else
+            {
+                txtRA.Clear();
+                txtNome.Clear();
+                slRegistro.Text = "Registro: 0/0";
+            }
+            */
 
-    }
 
-    private void btnEditar_Click(object sender, EventArgs e)
-    {
+            // Não atualiza durante edição
+            if (modoEdicao) return;
+
+            // Atualiza controles com base no estado atual
+            if (listaPalavras.Atual != null)
+            {
+                txtRA.Text = listaPalavras.Atual.Info.Palavra;
+                txtNome.Text = listaPalavras.Atual.Info.Dica;
+                slRegistro.Text = $"Registro: {posicaoAtual + 1}/{totalPalavras}";
+
+                // Habilita/desabilita controles de navegação
+                btnAnterior.Enabled = (posicaoAtual > 0);
+                btnProximo.Enabled = (posicaoAtual < totalPalavras - 1);
+                btnInicio.Enabled = (totalPalavras > 1 && posicaoAtual > 0);
+                btnFim.Enabled = (totalPalavras > 1 && posicaoAtual < totalPalavras - 1);
+            }
+            else if (totalPalavras > 0)
+            {
+                // Caso especial quando atual é null mas há itens
+                slRegistro.Text = $"Registro: {totalPalavras}/{totalPalavras}";
+            }
+            else
+            {
+                // Lista vazia
+                txtRA.Clear();
+                txtNome.Clear();
+                slRegistro.Text = "Registro: 0/0";
+
+                // Desabilita todos os botões de navegação
+                btnAnterior.Enabled = false;
+                btnProximo.Enabled = false;
+                btnInicio.Enabled = false;
+                btnFim.Enabled = false;
+            }
+
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
             // alterar a dica e guardar seu novo valor no nó exibido
 
             // Verifica se há um nó atual válido
@@ -627,7 +816,7 @@ namespace apListaLigada
                 btnInicio.Enabled = false;
                 btnFim.Enabled = false;
             }
-    }
+        }
 
         private void SalvarEdicao(object sender, EventArgs e)
         {
@@ -650,13 +839,13 @@ namespace apListaLigada
             }
             finally
             {
-                
+
                 // Restaura o estado original
                 txtNome.ReadOnly = true;
                 btnEditar.Text = "Editar";
                 btnEditar.Click -= SalvarEdicao;
                 btnEditar.Click += btnEditar_Click;
-                
+
 
                 // Limpa os campos após edição
                 txtRA.Text = "";
@@ -706,7 +895,7 @@ namespace apListaLigada
             btnInicio.Enabled = (totalPalavras > 1);
             btnFim.Enabled = (totalPalavras > 1);
 
-            // Limpa os campos (opcional - pode comentar esta parte se preferir manter os valores)
+            // Limpa os campos
             txtRA.Clear();
             txtNome.Clear();
 
@@ -715,15 +904,10 @@ namespace apListaLigada
             {
                 ExibirRegistroAtual();
             }
-            else
-            {
-                // Se não houver registros, mantém os campos limpos
-                txtRA.Text = "";
-                txtNome.Text = "";
-            }
 
             // Coloca o foco no campo RA
             txtRA.Focus();
+
         }
     }
 
