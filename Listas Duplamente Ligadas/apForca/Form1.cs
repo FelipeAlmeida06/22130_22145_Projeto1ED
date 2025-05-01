@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -223,7 +224,7 @@ namespace apListaLigada
 
         }
 
-
+        private bool buscaEmAndamento = false;
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             // se a palavra digitada não é vazia:
@@ -232,54 +233,192 @@ namespace apListaLigada
             // senão, avisar usuário que a palavra não existe
             // exibir o nó atual
 
-            // Verifica se o campo de busca não está vazio
+
+            /*
+            if (!modoEdicao)
+            {
+                // Enable edit mode
+                modoEdicao = true;
+                btnAnterior.Enabled = false;
+                btnProximo.Enabled = false;
+                btnInicio.Enabled = false;
+                btnFim.Enabled = false;
+
+                txtRA.Clear();
+                txtNome.Clear();
+                txtRA.Focus();
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(txtRA.Text))
             {
-                MessageBox.Show("Digite uma palavra para buscar.",
-                              "Campo vazio",
-                              MessageBoxButtons.OK,
-                              MessageBoxIcon.Warning);
+                MessageBox.Show("Digite uma palavra para buscar.", "Aviso",
+                               MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtRA.Focus();
                 return;
             }
 
             try
             {
-                // Cria um objeto temporário para busca (usando apenas a palavra)
-                PalavraDica palavraBusca = new PalavraDica(txtRA.Text.Trim(), "");
+                string palavraBuscada = txtRA.Text.Trim();
+                bool encontrou = false;
 
-                // Verifica se a palavra existe na lista
-                if (listaPalavras.Existe(palavraBusca))
+                // Salva a posição atual
+                int posicaoOriginal = listaPalavras.NumeroDoNoAtual;
+
+                // Começa a busca do início
+                listaPalavras.PosicionarNoInicio();
+
+                // Percorre toda a lista
+                while (listaPalavras.Atual != null)
                 {
-                    // Posiciona no nó encontrado
-                    listaPalavras.PosicionarNoInicio();
-                    while (listaPalavras.Atual != null &&
-                           !listaPalavras.Atual.Info.Palavra.Equals(txtRA.Text.Trim(), StringComparison.OrdinalIgnoreCase))
+                    var palavraAtual = (PalavraDica)listaPalavras.Atual.Info;
+
+                    // Comparação case-insensitive
+                    if (palavraAtual.Palavra.Equals(palavraBuscada, StringComparison.OrdinalIgnoreCase))
                     {
-                        listaPalavras.Avancar();
+                        encontrou = true;
+                        break;
                     }
+
+                    listaPalavras.Avancar();
+                }
+
+                if (encontrou)
+                {
+                    var palavraEncontrada = (PalavraDica)listaPalavras.Atual.Info;
+                    txtRA.Text = palavraEncontrada.Palavra;
+                    txtNome.Text = palavraEncontrada.Dica; // Autocompleta a dica
 
                     // Atualiza a exibição
                     ExibirRegistroAtual();
 
-                    // Mostra mensagem de encontrado
-                    statusStrip1.Items[0].Text = "Palavra encontrada!";
+                    slRegistro.Text = $"Palavra encontrada: {listaPalavras.NumeroDoNoAtual + 1}/{listaPalavras.QuantosNos}";
                 }
                 else
                 {
-                    MessageBox.Show($"A palavra '{txtRA.Text.Trim()}' não foi encontrada.",
-                                  "Não encontrado",
-                                  MessageBoxButtons.OK,
-                                  MessageBoxIcon.Information);
-                    statusStrip1.Items[0].Text = "Palavra não encontrada";
+                    // Volta para a posição original se não encontrou
+                    if (posicaoOriginal >= 0 && posicaoOriginal < listaPalavras.QuantosNos)
+                        listaPalavras.PosicionarEm(posicaoOriginal);
+
+                    txtNome.Text = "";
+                    MessageBox.Show($"A palavra '{palavraBuscada}' não foi encontrada.",
+                                  "Não encontrada",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    slRegistro.Text = "Palavra não encontrada";
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erro durante a busca: {ex.Message}",
-                              "Erro",
-                              MessageBoxButtons.OK,
-                              MessageBoxIcon.Error);
+                MessageBox.Show($"Erro na busca: {ex.Message}", "Erro",
+                               MessageBoxButtons.OK, MessageBoxIcon.Error);
+                slRegistro.Text = "Erro durante a busca";
+            }
+            */
+
+
+            // Primeiro clique - prepara para busca
+            if (!buscaEmAndamento)
+            {
+                buscaEmAndamento = true;
+
+                // Desabilita navegação durante busca
+                btnAnterior.Enabled = false;
+                btnProximo.Enabled = false;
+                btnInicio.Enabled = false;
+                btnFim.Enabled = false;
+
+                // Limpa campos e prepara para nova busca
+                txtRA.Clear();
+                txtNome.Clear();
+                txtRA.Focus();
+
+                // Altera o texto do botão
+                btnBuscar.Text = "Buscar";
+
+                return;
+            }
+
+            // Segundo clique - executa a busca
+            if (string.IsNullOrWhiteSpace(txtRA.Text))
+            {
+                MessageBox.Show("Digite uma palavra para buscar.", "Aviso",
+                               MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtRA.Focus();
+                return;
+            }
+
+            try
+            {
+                string palavraBuscada = txtRA.Text.Trim();
+                bool encontrou = false;
+
+                // Salva a posição atual
+                int posicaoOriginal = listaPalavras.NumeroDoNoAtual;
+
+                // Começa a busca do início
+                listaPalavras.PosicionarNoInicio();
+
+                // Percorre toda a lista
+                while (listaPalavras.Atual != null)
+                {
+                    var palavraAtual = (PalavraDica)listaPalavras.Atual.Info;
+
+                    // Comparação case-insensitive
+                    if (palavraAtual.Palavra.Equals(palavraBuscada, StringComparison.OrdinalIgnoreCase))
+                    {
+                        encontrou = true;
+                        break;
+                    }
+
+                    listaPalavras.Avancar();
+                }
+
+                if (encontrou)
+                {
+                    var palavraEncontrada = (PalavraDica)listaPalavras.Atual.Info;
+                    txtRA.Text = palavraEncontrada.Palavra;
+                    txtNome.Text = palavraEncontrada.Dica; // Autocompleta a dica
+
+                    // Atualiza a exibição
+                    ExibirRegistroAtual();
+
+                    //slRegistro.Text = $"Palavra encontrada: {listaPalavras.NumeroDoNoAtual + 1}/{listaPalavras.QuantosNos}";
+                    slRegistro.Text = $"Palavra encontrada | Registro: {listaPalavras.NumeroDoNoAtual + 1}/{listaPalavras.QuantosNos}";
+                }
+                else
+                {
+                    // Volta para a posição original se não encontrou
+                    if (posicaoOriginal >= 0 && posicaoOriginal < listaPalavras.QuantosNos)
+                        listaPalavras.PosicionarEm(posicaoOriginal);
+
+                    txtNome.Text = "";
+                    MessageBox.Show($"A palavra '{palavraBuscada}' não foi encontrada.",
+                                  "Não encontrada",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    slRegistro.Text = "Palavra não encontrada";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro na busca: {ex.Message}", "Erro",
+                               MessageBoxButtons.OK, MessageBoxIcon.Error);
+                slRegistro.Text = "Erro durante a busca";
+            }
+            finally
+            {
+                // Reseta o estado para permitir nova busca
+                buscaEmAndamento = false;
+
+                // Restaura navegação se houver itens
+                bool podeNavegar = listaPalavras.QuantosNos > 1;
+                btnAnterior.Enabled = podeNavegar;
+                btnProximo.Enabled = podeNavegar;
+                btnInicio.Enabled = podeNavegar;
+                btnFim.Enabled = podeNavegar;
+
+                // Restaura texto do botão
+                btnBuscar.Text = "Buscar";
             }
         }
 
@@ -409,80 +548,6 @@ namespace apListaLigada
             // percorrer a lista ligada e gravar seus dados no arquivo de saída
 
 
-
-            /*
-            // Só prossegue se houver palavras na lista
-            if (listaPalavras == null || listaPalavras.QuantosNos == 0)
-                return;
-
-            // Pergunta ao usuário se deseja salvar os dados
-            DialogResult resposta = MessageBox.Show(
-                "Deseja salvar as palavras e dicas antes de sair?",
-                "Salvar dados",
-                MessageBoxButtons.YesNoCancel,
-                MessageBoxIcon.Question);
-
-            if (resposta == DialogResult.Cancel)
-            {
-                e.Cancel = true; // Cancela o fechamento do formulário
-                return;
-            }
-
-            if (resposta == DialogResult.Yes)
-            {
-                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
-                {
-                    saveFileDialog.Filter = "Arquivos de texto (*.txt)|*.txt";
-                    saveFileDialog.Title = "Salvar palavras e dicas";
-                    saveFileDialog.DefaultExt = "txt";
-
-                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        try
-                        {
-                            using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
-                            {
-                                // Dentro do using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
-                                // Escreve o cabeçalho
-                                writer.WriteLine("Palavra com 30 caractere      Dica até o final da linha");
-
-                                // Usar um NoDuplo<Dado> auxiliar em vez de depender do atual da lista
-                                NoDuplo<PalavraDica> noAtual = listaPalavras.Primeiro;
-                                while (noAtual != null)
-                                {
-                                    string palavra = noAtual.Info.Palavra.PadRight(30).Substring(0, 30);
-                                    string dica = noAtual.Info.Dica;
-
-                                    writer.WriteLine($"{palavra}{dica}");
-
-                                    noAtual = noAtual.Prox; // Avança diretamente sem usar o método Avancar()
-                                }
-                            }
-
-                            MessageBox.Show("Dados salvos com sucesso!",
-                                          "Sucesso",
-                                          MessageBoxButtons.OK,
-                                          MessageBoxIcon.Information);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Erro ao salvar arquivo: {ex.Message}",
-                                          "Erro",
-                                          MessageBoxButtons.OK,
-                                          MessageBoxIcon.Error);
-                            e.Cancel = true; // Cancela o fechamento para permitir nova tentativa
-                        }
-                    }
-                    else
-                    {
-                        e.Cancel = true; // Usuário cancelou o save
-                    }
-                }
-            }
-            */
-
-
-
             if (listaPalavras == null || listaPalavras.QuantosNos == 0)
                 return;
 
@@ -550,16 +615,31 @@ namespace apListaLigada
             }
         }
 
-        private void ExibirDados(ListaDupla<PalavraDica> aLista, ListBox lsb, Direcao qualDirecao)         //   ListaDupla<Aluno> aLista, ListBox lsb, Direcao qualDirecao
+        private void ExibirDados(ListaDupla<PalavraDica> listaPalavras, ListBox lsb, Direcao qualDirecao)         //   ListaDupla<Aluno> aLista, ListBox lsb, Direcao qualDirecao
         {
-            lsb.Items.Clear();
-            var dadosDaLista = aLista.Listagem(qualDirecao);
-            foreach (PalavraDica palavraDica in dadosDaLista)
-                lsb.Items.Add(palavraDica);
+            //lsb.Items.Clear();
+            //var dadosDaLista = listaPalavras.Listagem(qualDirecao);
+            //foreach (PalavraDica palavraDica in dadosDaLista)
+                //lsb.Items.Add(palavraDica);
 
 
             //foreach (Aluno aluno in dadosDaLista)
             //lsb.Items.Add(aluno);
+
+
+            lsb.Items.Clear();
+            var dadosDaLista = listaPalavras.Listagem(qualDirecao);
+
+            foreach (var dado in dadosDaLista)
+            {
+                if (dado is PalavraDica palavraDica)
+                {
+                    lsb.Items.Add(palavraDica);
+                }
+            }
+
+            // Atualiza a mensagem de registro
+            slRegistro.Text = $"Registro: {lsb.Items.Count}/{listaPalavras.QuantosNos}";
         }
 
         private void tabControl1_Enter(object sender, EventArgs e)
@@ -584,9 +664,6 @@ namespace apListaLigada
             // Exibir o Registro Atual;
 
             FazerLeitura(ref listaPalavras);
-
-            //string caminho = Path.Combine(Application.StartupPath, "palavras.txt");
-            //MessageBox.Show($"Tentando carregar de: {caminho}");
 
             try
             {
@@ -638,7 +715,6 @@ namespace apListaLigada
             }
 
         }
-
 
         private void CarregarArquivo(string caminhoArquivo)
         {
@@ -886,6 +962,7 @@ namespace apListaLigada
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            /*
             // Sai do modo de edição
             modoEdicao = false;
 
@@ -907,7 +984,33 @@ namespace apListaLigada
 
             // Coloca o foco no campo RA
             txtRA.Focus();
+            */
 
+
+            if (modoEdicao)
+            {
+                modoEdicao = false;
+
+                // Restaura controles de edição
+                txtRA.ReadOnly = true;
+                txtNome.ReadOnly = true;
+
+                // Restaura botão Editar
+                btnEditar.Text = "Editar";
+                btnEditar.Click -= SalvarEdicao;
+                btnEditar.Click += btnEditar_Click;
+
+                // Reabilita controles
+                btnNovo.Enabled = true;
+                btnExcluir.Enabled = listaPalavras.QuantosNos > 0;
+                btnCancelar.Enabled = false;
+
+                // Força atualização após cancelar edição
+                ExibirRegistroAtual();
+            }
+
+            // Coloca o foco no campo RA
+            txtRA.Focus();
         }
     }
 

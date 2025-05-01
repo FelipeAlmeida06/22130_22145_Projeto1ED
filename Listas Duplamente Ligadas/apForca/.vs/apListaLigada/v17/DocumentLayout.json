@@ -11,12 +11,12 @@
       "RelativeMoniker": "D:0:0:{2BFB39FF-63A8-4EBA-BED7-CA5A08AA9F55}|apListaLigada.csproj|solutionrelative:listadupla.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2BFB39FF-63A8-4EBA-BED7-CA5A08AA9F55}|apListaLigada.csproj|C:\\Users\\Felipe Almeida\\Documents\\GitHub\\22130_22145_Projeto1ED\\Listas Duplamente Ligadas\\apForca\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{2BFB39FF-63A8-4EBA-BED7-CA5A08AA9F55}|apListaLigada.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2BFB39FF-63A8-4EBA-BED7-CA5A08AA9F55}|apListaLigada.csproj|C:\\Users\\Felipe Almeida\\Documents\\GitHub\\22130_22145_Projeto1ED\\Listas Duplamente Ligadas\\apForca\\palavradica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2BFB39FF-63A8-4EBA-BED7-CA5A08AA9F55}|apListaLigada.csproj|solutionrelative:palavradica.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2BFB39FF-63A8-4EBA-BED7-CA5A08AA9F55}|apListaLigada.csproj|C:\\Users\\Felipe Almeida\\Documents\\GitHub\\22130_22145_Projeto1ED\\Listas Duplamente Ligadas\\apForca\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{2BFB39FF-63A8-4EBA-BED7-CA5A08AA9F55}|apListaLigada.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2BFB39FF-63A8-4EBA-BED7-CA5A08AA9F55}|apListaLigada.csproj|C:\\Users\\Felipe Almeida\\Documents\\GitHub\\22130_22145_Projeto1ED\\Listas Duplamente Ligadas\\apForca\\noduplo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -121,13 +121,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "PalavraDica.cs",
               "DocumentMoniker": "C:\\Users\\Felipe Almeida\\Documents\\GitHub\\22130_22145_Projeto1ED\\Listas Duplamente Ligadas\\apForca\\PalavraDica.cs",
               "RelativeDocumentMoniker": "PalavraDica.cs",
               "ToolTip": "C:\\Users\\Felipe Almeida\\Documents\\GitHub\\22130_22145_Projeto1ED\\Listas Duplamente Ligadas\\apForca\\PalavraDica.cs",
               "RelativeToolTip": "PalavraDica.cs",
-              "ViewState": "AQIAACoAAAAAAAAAAAAkwC8AAAAAAAAA",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAkwC8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-26T19:43:39.491Z",
               "EditorCaption": ""
@@ -150,7 +150,7 @@
               "RelativeDocumentMoniker": "ListaDupla.cs",
               "ToolTip": "C:\\Users\\Felipe Almeida\\Documents\\GitHub\\22130_22145_Projeto1ED\\Listas Duplamente Ligadas\\apForca\\ListaDupla.cs",
               "RelativeToolTip": "ListaDupla.cs",
-              "ViewState": "AQIAAD8BAAAAAAAAAAAwwG0BAAAAAAAA",
+              "ViewState": "AQIAAKMBAAAAAAAAAAAwwKYBAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-12T13:07:56.46Z",
               "EditorCaption": ""
@@ -177,8 +177,7 @@
               "RelativeToolTip": "Aluno.cs",
               "ViewState": "AQIAABEAAAAAAAAAAAAAwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T13:07:55.879Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-12T13:07:55.879Z"
             },
             {
               "$type": "Document",
@@ -188,7 +187,7 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\Felipe Almeida\\Documents\\GitHub\\22130_22145_Projeto1ED\\Listas Duplamente Ligadas\\apForca\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAAHEDAAAAAAAAAAAswHUDAAAAAAAA",
+              "ViewState": "AQIAAGkCAAAAAAAAAAAAAG8CAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-12T13:07:56.216Z",
               "EditorCaption": ""
@@ -201,14 +200,14 @@
               "RelativeDocumentMoniker": "NoDuplo.cs",
               "ToolTip": "C:\\Users\\Felipe Almeida\\Documents\\GitHub\\22130_22145_Projeto1ED\\Listas Duplamente Ligadas\\apForca\\NoDuplo.cs",
               "RelativeToolTip": "NoDuplo.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAAkwBIAAAADAAAA",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAkwBUAAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-12T13:07:56.444Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Felipe Almeida\\Documents\\GitHub\\22130_22145_Projeto1ED\\Listas Duplamente Ligadas\\apForca\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",

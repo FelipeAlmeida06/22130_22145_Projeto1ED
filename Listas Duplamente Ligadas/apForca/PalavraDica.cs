@@ -60,7 +60,9 @@ public class PalavraDica : IComparable<PalavraDica>, IRegistro
 
     public override string ToString()
     {
-        return $"{palavra.Trim()} - {dica}";
+        return $"{Palavra?.Trim()} - {Dica}";
+        //return $"{palavra.Trim()} - {dica}";
+
     }
 
     public string FormatoDeArquivo()
