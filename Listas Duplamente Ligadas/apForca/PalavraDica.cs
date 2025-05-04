@@ -5,71 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-// Semelhante a classe Aluno
-// Verificar com o professor se é necessário criar essa classe PalavraDica
-// ou deve se usar a classe Aluno, ajustando alguns valores
 public class PalavraDica : IComparable<PalavraDica>, IRegistro 
 {
-    const int tamanhoPalavra = 30;
-   
+    public string Palavra { get; private set; }   // private set indica que valor Palavra só pode ser definido dentro da classe
+    public string Dica { get; set; }  // permite leitura e modificação do valor Dica de fora da classe 
 
-    private string palavra;
-    private string dica;
-
-    public string Palavra { get; private set; }         // public string Palavra { get; private set; }
-    public string Dica { get; set; }            // public string Dica { get; private set; }
-
-
-    /*
-    public string Palavra
-    {
-        get => palavra;
-        set
-        {
-            if (value != "")
-                palavra = value.PadRight(tamanhoPalavra, ' ').Substring(0, tamanhoPalavra);
-            else
-                throw new Exception("Palavra vazia é inválida.");
-        }
-    }
-
-    public string Dica
-    {
-        get => dica;
-        set
-        {
-            if (value != "")
-                dica = value;
-            else
-                throw new Exception("Dica vazia é inválida.");
-        }
-    }
-    */
-
+    // construtor
     public PalavraDica(string palavra, string dica)
     {
         Palavra = palavra;
         Dica = dica;
     }
 
+    // método que implementa a interface IComparable, ele permite que os objetos dessa classe sejam comparados para ordenação
     public int CompareTo(PalavraDica outra)
     {
-        //return string.Compare(this.Palavra, outra?.Palavra, StringComparison.Ordinal);
-        return string.Compare(this.Palavra, outra?.Palavra, StringComparison.OrdinalIgnoreCase);
+        // a comparação é feita de forma insensível a se começarem com caracteres maiúsculas ou caracteres minúsculas. 
+        return string.Compare(this.Palavra, outra?.Palavra, StringComparison.OrdinalIgnoreCase); // 'A' e 'a' são considerados iguais
     }
 
+    // sobrescreve ToString da classe Object
+    // ele realiza uma formatação personalizada dos objetos 'Palavra e Dica'
     public override string ToString()
     {
+        // Trim() remove espaços em branco no início e no fim da palavra (e lida com null usando o operador ?)
         return $"{Palavra?.Trim()} - {Dica}";
-        //return $"{palavra.Trim()} - {dica}";
-
     }
 
+    // define um formato de arquivo para representar o objeto ao salvá-lo
     public string FormatoDeArquivo()
     {
-        //return $"{palavra}\n{dica}";
-
-        return $"{Palavra}\n{Dica}";
+        // retorna uma string com 'Palavra e Dica' para ser salvo em uma linha de um arquivo de texto
+        // Palavra (fixa em 30 caracteres) seguida por Dica (até o final da linha)
+        string palavraFormatada = Palavra?.PadRight(30, ' ').Substring(0, 30) ?? new string(' ', 30);
+        return $"{palavraFormatada}{Dica}";
     }
 }
 

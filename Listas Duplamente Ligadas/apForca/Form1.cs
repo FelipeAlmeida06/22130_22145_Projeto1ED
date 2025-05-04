@@ -1,17 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using static System.Resources.ResXFileRef;
 
 namespace apListaLigada
 {
     public partial class FrmAlunos : Form
     {
-        //ListaDupla<Aluno> lista1;
-
         private ListaDupla<PalavraDica> listaPalavras;
         private int posicaoAtual = 0;
         private int totalPalavras = 0;
@@ -20,25 +20,17 @@ namespace apListaLigada
         public FrmAlunos()
         {
             InitializeComponent();
-            //lista1 = new ListaDupla<Aluno>();
-
             listaPalavras = new ListaDupla<PalavraDica>();
         }
 
 
-        // Nao sei o que fazer nesse evento de botao
         //private void btnLerArquivo1_Click(object sender, EventArgs e)
         //{
         //        //FazerLeitura(ref listaPalavras);       // FazerLeitura(ref lista1);
         //}
 
 
-        //private void btnLerArquivo_Click(object sender, EventArgs e)
-        //{
-        //FazerLeitura(ref listaPalavras);
-        //}
-
-        private void FazerLeitura(ref ListaDupla<PalavraDica> qualLista)             // ref ListaDupla<Aluno> qualLista
+        private void FazerLeitura(ref ListaDupla<PalavraDica> qualLista)
         {
             // instanciar a lista de palavras e dicas
             // pedir ao usuário o nome do arquivo de entrada
@@ -46,18 +38,19 @@ namespace apListaLigada
             // para cada linha, criar um objeto da classe de Palavra e Dica
             // e inseri-0lo no final da lista duplamente ligada
 
-
-            qualLista = new ListaDupla<PalavraDica>();
+           
+            qualLista = new ListaDupla<PalavraDica>(); // inicializa uma nova lista duplamente ligada de PalavraDica
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "Arquivos de texto (*.txt)|*.txt";
-                openFileDialog.Title = "Selecione o arquivo de palavras e dicas";
+                openFileDialog.Filter = "Arquivos de texto (*.txt)|*.txt";   // filtra arquivos textos
+                openFileDialog.Title = "Selecione o arquivo de palavras e dicas";  // titulo da janela de diálogo
 
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                if (openFileDialog.ShowDialog() == DialogResult.OK)  // se o usuário selecionar um arquivo e confirmar
                 {
                     try
                     {
+                        // lê todas as linhas do arquivo e remove linhas em branco
                         string[] linhas = File.ReadAllLines(openFileDialog.FileName)
                                               .Where(l => !string.IsNullOrWhiteSpace(l))
                                               .ToArray();
@@ -68,56 +61,52 @@ namespace apListaLigada
 
                             if (linha.Length >= 30)
                             {
+                                // extrai os primeiros 30 caracteres como palavra e o resto como dica
                                 string palavra = linha.Substring(0, 30).Trim();
                                 string dica = linha.Substring(30).Trim();
 
-                                //PalavraDica nova = new PalavraDica(palavra, dica);
-                                //qualLista.InserirAposFim(nova);
-
-                                // Verifica se a palavra não está vazia
+                                // verifica se a palavra não está vazia
                                 if (!string.IsNullOrWhiteSpace(palavra))
                                 {
-                                    PalavraDica nova = new PalavraDica(palavra, dica);
-                                    qualLista.InserirAposFim(nova);
+                                    PalavraDica nova = new PalavraDica(palavra, dica);  // cria um novo objeto PalavraDica com os dados da linha
+                                    qualLista.InserirAposFim(nova);  // insere o objeto no final da lista
                                 }
                             }
                             else
                             {
-                                MessageBox.Show($"Linha {i + 1} inválida. Linha muito curta: \"{linha}\"", "Aviso",
-                                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                // não faz nada
                             }
                         }
-
+                        
+                        // atualiza a variável 'totalPalavras' com o número de nós da lista
                         totalPalavras = qualLista.QuantosNos;
                         if (totalPalavras > 0)
                         {
-                            qualLista.PosicionarNoInicio();
-                            ExibirRegistroAtual();
+                            qualLista.PosicionarNoInicio();  // posiciona o ponteiro da lista no início
+                            ExibirRegistroAtual();  // exibe o registro atual (primeiro elemento do arquivo texto)
                         }
-                        else
+                        else   // mensagem de aviso
                         {
                             MessageBox.Show("O arquivo selecionado não contém palavras válidas.", "Aviso",
                                           MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
-                    catch (Exception ex)
+                    catch (Exception ex)    // mensagem de erro
                     {
                         MessageBox.Show($"Erro ao processar arquivo: {ex.Message}", "Erro",
                                       MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                else
+                else    // mensagem de aviso
                 {
                     MessageBox.Show("Nenhum arquivo foi selecionado. Por favor, selecione um arquivo para continuar.",
                                   "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-            //MessageBox.Show($"Total de linhas lidas: {qualLista.QuantosNos}");        // $"Total de palavras lidas: {qualLista.QuantosNos}"
-             
+            }    
         }
 
 
-        private bool modoEdicao = false; // Variável para controlar o estado
+        private bool modoEdicao = false;  // variável para controlar o estado
 
         private void btnIncluir_Click(object sender, EventArgs e)
         {
@@ -129,7 +118,7 @@ namespace apListaLigada
 
             if (!modoEdicao)
             {
-                // Enable edit mode
+
                 modoEdicao = true;
                 btnAnterior.Enabled = false;
                 btnProximo.Enabled = false;
@@ -142,9 +131,10 @@ namespace apListaLigada
                 return;
             }
 
-            // Validate fields
-            if (string.IsNullOrWhiteSpace(txtRA.Text) || string.IsNullOrWhiteSpace(txtNome.Text))
+
+            if (string.IsNullOrWhiteSpace(txtRA.Text) || string.IsNullOrWhiteSpace(txtNome.Text))   // se os dois campos estiverem em branco (vazios)
             {
+                // exibe mensagem de aviso
                 MessageBox.Show("Por favor, preencha os campos de palavra e dica.",
                               "Campos vazios",
                               MessageBoxButtons.OK,
@@ -154,48 +144,51 @@ namespace apListaLigada
 
             try
             {
+                // cria um objeto da classe PalavraDica, passando dois valores como parâmetros para o construtor da classe
                 PalavraDica novaPalavra = new PalavraDica(
-                    txtRA.Text.Trim(),
-                    txtNome.Text.Trim()
+                    txtRA.Text.Trim(),    // campo Palavra
+                    txtNome.Text.Trim()   // campo Dica
                 );
 
-                // Use the fixed version of InserirEmOrdem
+                // tenta inserir a nova palavra na lista em ordem
                 bool inserido = listaPalavras.InserirEmOrdem(novaPalavra);
 
-                if (inserido)
+                if (inserido)   // se a inserção foi bem-sucedida
                 {
-                    // Atualizar arquivo
+                    // atualizar arquivo
                     string caminhoArquivo = Path.Combine(Application.StartupPath, "palavras.txt");
                     List<string> linhas;
 
-                    // Check if file exists first
+                    // verifica se o arquivo já existe
                     if (File.Exists(caminhoArquivo))
-                        linhas = File.ReadAllLines(caminhoArquivo).ToList();
+                        linhas = File.ReadAllLines(caminhoArquivo).ToList(); // lê todas as linhas do arquivo e converte para uma lista
                     else
                         linhas = new List<string> { "Palavra com 30 caractere      Dica até o final da linha" };
 
-                    // Format new line properly
+
+                    // cria uma nova linha no formato exigido: palavra com 30 caracteres + dica
                     string novaLinha = $"{novaPalavra.Palavra.PadRight(30).Substring(0, 30)}{novaPalavra.Dica}";
 
-                    // Add the new line after the header if it exists
+                    // se a primeira linha for o cabeçalho esperado, adiciona a nova linha no final
                     if (linhas.Count > 0 && linhas[0].StartsWith("Palavra com 30 caractere"))
-                        linhas.Add(novaLinha); // Add at the end, as order doesn't matter in file
-                    else
                         linhas.Add(novaLinha);
+                    else
+                        linhas.Add(novaLinha);  // adiciona a nova linha
 
-                    // Write all lines to file
+                    // escreve todas as linhas atualizadas de volta no arquivo
                     File.WriteAllLines(caminhoArquivo, linhas);
 
+                    // a palavra foi adicionada com sucesso
                     MessageBox.Show("Palavra adicionada com sucesso!",
                                   "Sucesso",
                                   MessageBoxButtons.OK,
                                   MessageBoxIcon.Information);
 
-                    totalPalavras = listaPalavras.QuantosNos;
-                    listaPalavras.PosicionarNoFinal();
-                    ExibirRegistroAtual();
+                    totalPalavras = listaPalavras.QuantosNos;  // atualiza o total de palavras na lista
+                    listaPalavras.PosicionarNoFinal();  // último elemento inserido
+                    ExibirRegistroAtual();  // exibe o conteúdo do item atual
 
-                    // Reset UI state
+                    // limpa os campos de texto
                     txtRA.Clear();
                     txtNome.Clear();
                     txtRA.Focus();
@@ -206,7 +199,7 @@ namespace apListaLigada
                     btnInicio.Enabled = true;
                     btnFim.Enabled = true;
                 }
-                else
+                else   // mensagem de aviso
                 {
                     MessageBox.Show("Esta palavra já existe na lista!",
                                   "Palavra duplicada",
@@ -214,7 +207,7 @@ namespace apListaLigada
                                   MessageBoxIcon.Warning);
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex)   // mensagem de erro
             {
                 MessageBox.Show($"Erro ao adicionar palavra: {ex.Message}",
                               "Erro",
@@ -234,112 +227,29 @@ namespace apListaLigada
             // exibir o nó atual
 
 
-            /*
-            if (!modoEdicao)
-            {
-                // Enable edit mode
-                modoEdicao = true;
-                btnAnterior.Enabled = false;
-                btnProximo.Enabled = false;
-                btnInicio.Enabled = false;
-                btnFim.Enabled = false;
-
-                txtRA.Clear();
-                txtNome.Clear();
-                txtRA.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtRA.Text))
-            {
-                MessageBox.Show("Digite uma palavra para buscar.", "Aviso",
-                               MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtRA.Focus();
-                return;
-            }
-
-            try
-            {
-                string palavraBuscada = txtRA.Text.Trim();
-                bool encontrou = false;
-
-                // Salva a posição atual
-                int posicaoOriginal = listaPalavras.NumeroDoNoAtual;
-
-                // Começa a busca do início
-                listaPalavras.PosicionarNoInicio();
-
-                // Percorre toda a lista
-                while (listaPalavras.Atual != null)
-                {
-                    var palavraAtual = (PalavraDica)listaPalavras.Atual.Info;
-
-                    // Comparação case-insensitive
-                    if (palavraAtual.Palavra.Equals(palavraBuscada, StringComparison.OrdinalIgnoreCase))
-                    {
-                        encontrou = true;
-                        break;
-                    }
-
-                    listaPalavras.Avancar();
-                }
-
-                if (encontrou)
-                {
-                    var palavraEncontrada = (PalavraDica)listaPalavras.Atual.Info;
-                    txtRA.Text = palavraEncontrada.Palavra;
-                    txtNome.Text = palavraEncontrada.Dica; // Autocompleta a dica
-
-                    // Atualiza a exibição
-                    ExibirRegistroAtual();
-
-                    slRegistro.Text = $"Palavra encontrada: {listaPalavras.NumeroDoNoAtual + 1}/{listaPalavras.QuantosNos}";
-                }
-                else
-                {
-                    // Volta para a posição original se não encontrou
-                    if (posicaoOriginal >= 0 && posicaoOriginal < listaPalavras.QuantosNos)
-                        listaPalavras.PosicionarEm(posicaoOriginal);
-
-                    txtNome.Text = "";
-                    MessageBox.Show($"A palavra '{palavraBuscada}' não foi encontrada.",
-                                  "Não encontrada",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    slRegistro.Text = "Palavra não encontrada";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Erro na busca: {ex.Message}", "Erro",
-                               MessageBoxButtons.OK, MessageBoxIcon.Error);
-                slRegistro.Text = "Erro durante a busca";
-            }
-            */
-
-
-            // Primeiro clique - prepara para busca
+            // primeiro clique - prepara para busca
             if (!buscaEmAndamento)
             {
                 buscaEmAndamento = true;
 
-                // Desabilita navegação durante busca
+                // desabilita navegação durante busca
                 btnAnterior.Enabled = false;
                 btnProximo.Enabled = false;
                 btnInicio.Enabled = false;
                 btnFim.Enabled = false;
 
-                // Limpa campos e prepara para nova busca
+                // limpa campos e prepara para nova busca
                 txtRA.Clear();
                 txtNome.Clear();
                 txtRA.Focus();
 
-                // Altera o texto do botão
+                // altera o texto do botão
                 btnBuscar.Text = "Buscar";
 
                 return;
             }
 
-            // Segundo clique - executa a busca
+            // segundo clique - executa a busca
             if (string.IsNullOrWhiteSpace(txtRA.Text))
             {
                 MessageBox.Show("Digite uma palavra para buscar.", "Aviso",
@@ -353,42 +263,40 @@ namespace apListaLigada
                 string palavraBuscada = txtRA.Text.Trim();
                 bool encontrou = false;
 
-                // Salva a posição atual
+                // salva a posição atual
                 int posicaoOriginal = listaPalavras.NumeroDoNoAtual;
 
-                // Começa a busca do início
+                // começa a busca do início
                 listaPalavras.PosicionarNoInicio();
 
-                // Percorre toda a lista
+                // percorre toda a lista
                 while (listaPalavras.Atual != null)
                 {
                     var palavraAtual = (PalavraDica)listaPalavras.Atual.Info;
 
-                    // Comparação case-insensitive
+                    // comparação case-insensitive (caracteres maiúsculas ou minúsculas)
                     if (palavraAtual.Palavra.Equals(palavraBuscada, StringComparison.OrdinalIgnoreCase))
                     {
                         encontrou = true;
                         break;
                     }
 
-                    listaPalavras.Avancar();
+                    listaPalavras.Avancar();   // avança na navegação
                 }
 
                 if (encontrou)
                 {
                     var palavraEncontrada = (PalavraDica)listaPalavras.Atual.Info;
                     txtRA.Text = palavraEncontrada.Palavra;
-                    txtNome.Text = palavraEncontrada.Dica; // Autocompleta a dica
+                    txtNome.Text = palavraEncontrada.Dica; // autocompleta a dica
 
-                    // Atualiza a exibição
-                    ExibirRegistroAtual();
+                    ExibirRegistroAtual();   // exibe o registro atual
 
-                    //slRegistro.Text = $"Palavra encontrada: {listaPalavras.NumeroDoNoAtual + 1}/{listaPalavras.QuantosNos}";
                     slRegistro.Text = $"Palavra encontrada | Registro: {listaPalavras.NumeroDoNoAtual + 1}/{listaPalavras.QuantosNos}";
                 }
                 else
                 {
-                    // Volta para a posição original se não encontrou
+                    // volta para a posição original se não encontrou
                     if (posicaoOriginal >= 0 && posicaoOriginal < listaPalavras.QuantosNos)
                         listaPalavras.PosicionarEm(posicaoOriginal);
 
@@ -407,17 +315,17 @@ namespace apListaLigada
             }
             finally
             {
-                // Reseta o estado para permitir nova busca
+                // reseta o estado para permitir nova busca
                 buscaEmAndamento = false;
 
-                // Restaura navegação se houver itens
+                // restaura navegação se houver itens
                 bool podeNavegar = listaPalavras.QuantosNos > 1;
                 btnAnterior.Enabled = podeNavegar;
                 btnProximo.Enabled = podeNavegar;
                 btnInicio.Enabled = podeNavegar;
                 btnFim.Enabled = podeNavegar;
 
-                // Restaura texto do botão
+                // restaura texto do botão
                 btnBuscar.Text = "Buscar";
             }
         }
@@ -440,7 +348,7 @@ namespace apListaLigada
                 return;
             }
 
-            string palavraAtual = listaPalavras.Atual.Info.Palavra;
+            string palavraAtual = listaPalavras.Atual.Info.Palavra; // acessa a palavra do nó atual da lista
 
             DialogResult resposta = MessageBox.Show(
                 $"Tem certeza que deseja excluir a palavra: {palavraAtual}?",
@@ -453,39 +361,40 @@ namespace apListaLigada
             {
                 try
                 {
-                    // Guarda a informação antes de remover
+                    // guarda a informação antes de remover
                     PalavraDica palavraARemover = listaPalavras.Atual.Info;
                     int posicaoOriginal = posicaoAtual;
 
-                    // Remove da lista em memória
+                    // remove da lista em memória
                     if (listaPalavras.Remover(palavraARemover))
                     {
-                        totalPalavras--;
+                        totalPalavras--;   // atualiza o total de palavras na lista
 
-                        // Atualiza o arquivo físico IMEDIATAMENTE
-                        string caminhoArquivo = Path.Combine(Application.StartupPath, "palavras.txt");
-                        string[] linhas = File.ReadAllLines(caminhoArquivo);
+                        string caminhoArquivo = Path.Combine(Application.StartupPath, "palavras.txt");  // arquivo de entrada
+                        string[] linhas = File.ReadAllLines(caminhoArquivo);  // lê todas as linhas do arquivo
 
-                        var novasLinhas = new List<string>();
-                        bool cabecalhoMantido = false;
+                        var novasLinhas = new List<string>();  // lista para armazenar as linhas do arquivo
+                        bool cabecalhoMantido = false;  // manter o cabeçalho do arquivo
 
                         for (int i = 0; i < linhas.Length; i++)
                         {
-                            // Mantém o cabeçalho
+                            // mantém o cabeçalho
                             if (i == 0 && linhas[i].StartsWith("Palavra com 30 caractere"))
                             {
                                 novasLinhas.Add(linhas[i]);
                                 cabecalhoMantido = true;
-                                continue;
+                                continue; // pula para a próxima linha
                             }
 
-                            // Verifica se a linha NÃO contém a palavra a ser removida
+                            // verifica se a linha NÃO contém a palavra a ser removida
                             if (i > 0 || !cabecalhoMantido)
                             {
+                                // extrai a palavra da linha (primeiros 30 caracteres ou menos)
                                 string palavraLinha = linhas[i].Length >= 30 ?
                                     linhas[i].Substring(0, 30).Trim() :
                                     linhas[i].Trim();
 
+                                // compara ignorando case-sensitive. Se for diferente, mantém a linha
                                 if (!palavraLinha.Equals(palavraARemover.Palavra, StringComparison.OrdinalIgnoreCase))
                                 {
                                     novasLinhas.Add(linhas[i]);
@@ -493,44 +402,43 @@ namespace apListaLigada
                             }
                         }
 
-                        // Reescreve o arquivo completo
-                        File.WriteAllLines(caminhoArquivo, novasLinhas);
+                        File.WriteAllLines(caminhoArquivo, novasLinhas);  // reescreve o arquivo completo
 
-                        // Atualiza a exibição
-                        if (listaPalavras.QuantosNos > 0)
+                        if (listaPalavras.QuantosNos > 0)  // atualiza a exibição
                         {
-                            if (posicaoOriginal >= totalPalavras)
+                            if (posicaoOriginal >= totalPalavras) // se excluiu a última palavra
                             {
-                                listaPalavras.PosicionarNoFinal();
+                                listaPalavras.PosicionarNoFinal();  // vai para a nova última palavra
                                 posicaoAtual = totalPalavras - 1;
                             }
                             else
                             {
-                                listaPalavras.PosicionarNoInicio();
+                                listaPalavras.PosicionarNoInicio();  // vai para o início e avança até a posição original
                                 posicaoAtual = 0;
                                 for (int i = 0; i < posicaoOriginal && i < totalPalavras; i++)
                                 {
-                                    listaPalavras.Avancar();
+                                    listaPalavras.Avancar();  // avançar um nó
                                     posicaoAtual++;
                                 }
                             }
-                            ExibirRegistroAtual();
+                            ExibirRegistroAtual(); // atualiza a exibição com a nova palavra atual
                         }
                         else
                         {
-                            txtRA.Clear();
-                            txtNome.Clear();
-                            posicaoAtual = 0;
+                            txtRA.Clear();   // limpa o campo 
+                            txtNome.Clear(); // limpa o campo
+                            posicaoAtual = 0;   // zera a posição
                         }
 
+                        // atualiza o rótulo com a posição atual e total de registros
                         slRegistro.Text = $"Registro: {(listaPalavras.QuantosNos > 0 ? (posicaoAtual + 1) : 0)}/{totalPalavras}";
                         MessageBox.Show("Palavra excluída com sucesso!",
                                       "Sucesso",
                                       MessageBoxButtons.OK,
-                                      MessageBoxIcon.Information);
+                                      MessageBoxIcon.Information);// a palavra foi excluida com sucesso
                     }
                 }
-                catch (Exception ex)
+                catch (Exception ex)    // mensagem de erro
                 {
                     MessageBox.Show($"Erro ao excluir palavra: {ex.Message}",
                                   "Erro",
@@ -547,16 +455,18 @@ namespace apListaLigada
             // solicitar ao usuário que escolha o arquivo de saída
             // percorrer a lista ligada e gravar seus dados no arquivo de saída
 
-
+            // não há nada para salvar
             if (listaPalavras == null || listaPalavras.QuantosNos == 0)
                 return;
 
+            // pergunta ao usuário se ele deseja salvar as alterações antes de sair
             DialogResult resposta = MessageBox.Show(
                 "Deseja salvar as alterações antes de sair?",
                 "Salvar dados",
                 MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Question);
 
+            // se o usuário clicar em "Cancelar"
             if (resposta == DialogResult.Cancel)
             {
                 e.Cancel = true;
@@ -569,36 +479,38 @@ namespace apListaLigada
 
                 using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                 {
-                    saveFileDialog.FileName = "palavras.txt"; // Sugere o mesmo arquivo
-                    saveFileDialog.InitialDirectory = Application.StartupPath;
-                    saveFileDialog.Filter = "Arquivos de texto (*.txt)|*.txt";
-                    saveFileDialog.Title = "Salvar palavras e dicas";
-                    saveFileDialog.DefaultExt = "txt";
+                    saveFileDialog.FileName = "palavras.txt"; // arquivo de entrada
+                    saveFileDialog.InitialDirectory = Application.StartupPath; ; // diretório padrão
+                    saveFileDialog.Filter = "Arquivos de texto (*.txt)|*.txt"; // filtro de extensão
+                    saveFileDialog.Title = "Salvar palavras e dicas"; // título da janela
+                    saveFileDialog.DefaultExt = "txt"; // extensão padrão
                     saveFileDialog.OverwritePrompt = true;
 
                     if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     {
                         try
                         {
+                            // abre o arquivo para escrita
                             using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
                             {
                                 writer.WriteLine("Palavra com 30 caractere      Dica até o final da linha");
 
+                                // começa do primeiro nó da lista
                                 NoDuplo<PalavraDica> noAtual = listaPalavras.Primeiro;
-                                while (noAtual != null)
+                                while (noAtual != null)// percorre a lista
                                 {
                                     string palavraFormatada = noAtual.Info.Palavra.PadRight(30).Substring(0, 30);
-                                    writer.WriteLine($"{palavraFormatada}{noAtual.Info.Dica}");
-                                    noAtual = noAtual.Prox;
+                                    writer.WriteLine($"{palavraFormatada}{noAtual.Info.Dica}");  // escreve a linha no arquivo com a palavra formatada + dica
+                                    noAtual = noAtual.Prox;  // avança para o próximo nó
                                 }
                             }
 
                             MessageBox.Show("Dados salvos com sucesso!",
                                           "Sucesso",
                                           MessageBoxButtons.OK,
-                                          MessageBoxIcon.Information);
+                                          MessageBoxIcon.Information);    // dados foram salvos com sucesso
                         }
-                        catch (Exception ex)
+                        catch (Exception ex)  // mensagem de erro
                         {
                             MessageBox.Show($"Erro ao salvar arquivo: {ex.Message}",
                                           "Erro",
@@ -609,7 +521,7 @@ namespace apListaLigada
                     }
                     else
                     {
-                        e.Cancel = true;
+                        e.Cancel = true;  // se o usuário cancelar o diálogo de salvar, cancela o fechamento do formulário
                     }
                 }
             }
@@ -617,29 +529,18 @@ namespace apListaLigada
 
         private void ExibirDados(ListaDupla<PalavraDica> listaPalavras, ListBox lsb, Direcao qualDirecao)         //   ListaDupla<Aluno> aLista, ListBox lsb, Direcao qualDirecao
         {
-            //lsb.Items.Clear();
-            //var dadosDaLista = listaPalavras.Listagem(qualDirecao);
-            //foreach (PalavraDica palavraDica in dadosDaLista)
-                //lsb.Items.Add(palavraDica);
+            lsb.Items.Clear();   // limpa todos os itens atuais do ListBox antes de exibir novos
+            var dadosDaLista = listaPalavras.Listagem(qualDirecao);   // obtém os dados da lista na direção (para frente ou para trás)
 
-
-            //foreach (Aluno aluno in dadosDaLista)
-            //lsb.Items.Add(aluno);
-
-
-            lsb.Items.Clear();
-            var dadosDaLista = listaPalavras.Listagem(qualDirecao);
-
-            foreach (var dado in dadosDaLista)
+            foreach (var dado in dadosDaLista) // percorre todos os dados obtidos
             {
-                if (dado is PalavraDica palavraDica)
+                if (dado is PalavraDica palavraDica) // verifica se o objeto é do tipo PalavraDica
                 {
-                    lsb.Items.Add(palavraDica);
+                    lsb.Items.Add(palavraDica);// adiciona o objeto ao ListBox
                 }
             }
 
-            // Atualiza a mensagem de registro
-            slRegistro.Text = $"Registro: {lsb.Items.Count}/{listaPalavras.QuantosNos}";
+            slRegistro.Text = $"Registro: {lsb.Items.Count}/{listaPalavras.QuantosNos}";  // atualiza a mensagem de registro
         }
 
         private void tabControl1_Enter(object sender, EventArgs e)
@@ -649,12 +550,12 @@ namespace apListaLigada
 
         private void rbFrente_Click(object sender, EventArgs e)
         {
-            ExibirDados(listaPalavras, lsbDados, Direcao.paraFrente);         // ExibirDados(lista1, lsbDados, Direcao.paraFrente);
+            ExibirDados(listaPalavras, lsbDados, Direcao.paraFrente);
         }
 
         private void rbTras_Click(object sender, EventArgs e)
         {
-            ExibirDados(listaPalavras, lsbDados, Direcao.paraTras);          // ExibirDados(lista1, lsbDados, Direcao.paraTras);
+            ExibirDados(listaPalavras, lsbDados, Direcao.paraTras);
         }
 
         private void FrmAlunos_Load(object sender, EventArgs e)
@@ -663,31 +564,31 @@ namespace apListaLigada
             // posicionar o ponteiro atual no início da lista duplamente ligada
             // Exibir o Registro Atual;
 
-            FazerLeitura(ref listaPalavras);
+            FazerLeitura(ref listaPalavras);  // realiza a leitura inicial do arquivo e carrega na listaPalavras
 
             try
             {
-                // Carrega o arquivo padrão ou pede para o usuário selecionar
+                // carrega o arquivo padrão ou pede para o usuário selecionar
                 string caminhoPadrao = Path.Combine(Application.StartupPath, "palavras.txt");
 
                 if (File.Exists(caminhoPadrao))
                 {
-                    // Se existir o arquivo na pasta bin, carrega automaticamente
+                    // carrega o conteúdo do arquivo padrão
                     CarregarArquivo(caminhoPadrao);
                 }
                 else
                 {
-                    // Se não existir, pede para o usuário selecionar
+                    // se não existir, pede para o usuário selecionar
                     using (OpenFileDialog openFileDialog = new OpenFileDialog())
                     {
-                        openFileDialog.Filter = "Arquivos de texto (*.txt)|*.txt";
-                        openFileDialog.Title = "Selecione o arquivo de palavras e dicas";
+                        openFileDialog.Filter = "Arquivos de texto (*.txt)|*.txt";     // filtra arquivos texto
+                        openFileDialog.Title = "Selecione o arquivo de palavras e dicas";  // titulo da janela de diálogo
 
                         if (openFileDialog.ShowDialog() == DialogResult.OK)
                         {
-                            CarregarArquivo(openFileDialog.FileName);
+                            CarregarArquivo(openFileDialog.FileName); // carrega o arquivo escolhido
                         }
-                        else
+                        else  // mensagem de aviso, nenhum arquivo selecionado
                         {
                             MessageBox.Show("Nenhum arquivo selecionado. Você pode adicionar palavras manualmente.",
                                         "Atenção",
@@ -697,16 +598,16 @@ namespace apListaLigada
                     }
                 }
 
-                // Posiciona no início e exibe o primeiro registro
+                // posiciona no início e exibe o primeiro registro
                 if (listaPalavras.QuantosNos > 0)
                 {
-                    listaPalavras.PosicionarNoInicio();
-                    posicaoAtual = 0;
-                    totalPalavras = listaPalavras.QuantosNos;
-                    ExibirRegistroAtual();
+                    listaPalavras.PosicionarNoInicio();// move o ponteiro atual para o primeiro nó da lista
+                    posicaoAtual = 0;// define que a posição atual é a primeira
+                    totalPalavras = listaPalavras.QuantosNos;// atualiza o total de palavras
+                    ExibirRegistroAtual();// mostra o primeiro item na interface
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex)    // mensagem de erro
             {
                 MessageBox.Show($"Erro ao carregar arquivo: {ex.Message}",
                               "Erro",
@@ -718,25 +619,28 @@ namespace apListaLigada
 
         private void CarregarArquivo(string caminhoArquivo)
         {
-            listaPalavras = new ListaDupla<PalavraDica>();
+            listaPalavras = new ListaDupla<PalavraDica>();// cria nova lista
 
+            // lê todas as linhas do arquivo, ignorando linhas em branco
             string[] linhas = File.ReadAllLines(caminhoArquivo)
                                  .Where(l => !string.IsNullOrWhiteSpace(l))
                                  .ToArray();
 
-            // Ignora o cabeçalho se existir
+            // ignora o cabeçalho se existir
             int inicio = linhas.Length > 0 && linhas[0].StartsWith("Palavra com 30 caractere") ? 1 : 0;
 
-            for (int i = inicio; i < linhas.Length; i++)
+            for (int i = inicio; i < linhas.Length; i++) // percorre cada linha do arquivo
             {
                 string linha = linhas[i];
                 if (linha.Length >= 30)
                 {
+                    // extrai a palavra (30 primeiros caracteres) e a dica (restante da linha)
                     string palavra = linha.Substring(0, 30).Trim();
                     string dica = linha.Length > 30 ? linha.Substring(30).Trim() : "";
 
-                    if (!string.IsNullOrEmpty(palavra))
+                    if (!string.IsNullOrEmpty(palavra)) // se a palavra não estiver vazia
                     {
+                        // cria novo objeto PalavraDica e insere ordenadamente na lista
                         listaPalavras.InserirEmOrdem(new PalavraDica(palavra, dica));
                     }
                 }
@@ -757,7 +661,6 @@ namespace apListaLigada
         {
             // Retroceder o ponteiro atual para o nó imediatamente anterior 
             // Exibir o Registro Atual;
-
 
             listaPalavras.Retroceder();
             if (posicaoAtual > 0) posicaoAtual--;
@@ -791,59 +694,35 @@ namespace apListaLigada
             // atualizar no status bar o número do registro atual / quantos nós na lista
 
 
-
-            /*
-            if (modoEdicao)
-                return;
-
-            if (listaPalavras.Atual != null)
-            {
-                txtRA.Text = listaPalavras.Atual.Info.Palavra;
-                txtNome.Text = listaPalavras.Atual.Info.Dica;
-                slRegistro.Text = $"Registro: {posicaoAtual + 1}/{totalPalavras}";
-            }
-            else if (totalPalavras > 0)
-            {
-                slRegistro.Text = $"Registro: {totalPalavras}/{totalPalavras}";
-            }
-            else
-            {
-                txtRA.Clear();
-                txtNome.Clear();
-                slRegistro.Text = "Registro: 0/0";
-            }
-            */
-
-
-            // Não atualiza durante edição
+            // não atualiza durante edição
             if (modoEdicao) return;
 
-            // Atualiza controles com base no estado atual
+            // atualiza controles com base no estado atual
             if (listaPalavras.Atual != null)
             {
-                txtRA.Text = listaPalavras.Atual.Info.Palavra;
-                txtNome.Text = listaPalavras.Atual.Info.Dica;
+                txtRA.Text = listaPalavras.Atual.Info.Palavra; // mostra a palavra no txt
+                txtNome.Text = listaPalavras.Atual.Info.Dica;// mostra a dica no txt
+                // atualiza a barra de status com o número do registro atual e total de registros
                 slRegistro.Text = $"Registro: {posicaoAtual + 1}/{totalPalavras}";
 
-                // Habilita/desabilita controles de navegação
-                btnAnterior.Enabled = (posicaoAtual > 0);
-                btnProximo.Enabled = (posicaoAtual < totalPalavras - 1);
-                btnInicio.Enabled = (totalPalavras > 1 && posicaoAtual > 0);
-                btnFim.Enabled = (totalPalavras > 1 && posicaoAtual < totalPalavras - 1);
+                // habilita/desabilita controles de navegação
+                btnAnterior.Enabled = (posicaoAtual > 0);// só habilita "Anterior" se não estiver no início
+                btnProximo.Enabled = (posicaoAtual < totalPalavras - 1);// só habilita "Próximo" se não estiver no fim
+                btnInicio.Enabled = (totalPalavras > 1 && posicaoAtual > 0);// só habilita "Início" se houver mais de 1 item e não estiver no primeiro
+                btnFim.Enabled = (totalPalavras > 1 && posicaoAtual < totalPalavras - 1);// só habilita "Fim" se houver mais de 1 item e não estiver no último
             }
-            else if (totalPalavras > 0)
+            else if (totalPalavras > 0) // caso a lista tenha itens, mas o ponteiro atual esteja nulo
             {
-                // Caso especial quando atual é null mas há itens
-                slRegistro.Text = $"Registro: {totalPalavras}/{totalPalavras}";
+                slRegistro.Text = $"Registro: {totalPalavras}/{totalPalavras}";// mostra o total de registros
             }
             else
             {
-                // Lista vazia
+                // lista está vazia
                 txtRA.Clear();
                 txtNome.Clear();
                 slRegistro.Text = "Registro: 0/0";
 
-                // Desabilita todos os botões de navegação
+                // desabilita todos os botões de navegação
                 btnAnterior.Enabled = false;
                 btnProximo.Enabled = false;
                 btnInicio.Enabled = false;
@@ -856,7 +735,7 @@ namespace apListaLigada
         {
             // alterar a dica e guardar seu novo valor no nó exibido
 
-            // Verifica se há um nó atual válido
+            // verifica se há um nó atual válido
             if (listaPalavras.Atual == null)
             {
                 MessageBox.Show("Nenhuma palavra selecionada para editar.",
@@ -866,7 +745,7 @@ namespace apListaLigada
                 return;
             }
 
-            // Pede confirmação para editar
+            // pede confirmação para editar
             DialogResult resposta = MessageBox.Show("Deseja editar a dica desta palavra?",
                                                  "Confirmar Edição",
                                                  MessageBoxButtons.YesNo,
@@ -874,18 +753,18 @@ namespace apListaLigada
 
             if (resposta == DialogResult.Yes)
             {
-                // Habilita apenas o campo de dica para edição
+                // habilita apenas o campo de dica para edição
                 txtNome.ReadOnly = false;
                 txtNome.Focus();
-                txtNome.SelectAll(); // Seleciona todo o texto para facilitar a edição
+                txtNome.SelectAll();
 
-                // Altera o botão Editar para "Salvar"
+                // altera o botão Editar para "Salvar"
                 btnEditar.Text = "Salvar";
                 btnEditar.Click -= btnEditar_Click;
                 btnEditar.Click += SalvarEdicao;
 
-                // Desabilita outros botões durante a edição
-                btnNovo.Enabled = false;             // btnIncluir
+                // desabilita outros botões durante a edição
+                btnNovo.Enabled = false;
                 btnExcluir.Enabled = false;
                 btnAnterior.Enabled = false;
                 btnProximo.Enabled = false;
@@ -898,15 +777,15 @@ namespace apListaLigada
         {
             try
             {
-                // Atualiza apenas a dica no nó atual
+                // atualiza apenas a dica no nó atual
                 listaPalavras.Atual.Info.Dica = txtNome.Text.Trim();
 
                 MessageBox.Show("Dica atualizada com sucesso!",
                               "Sucesso",
                               MessageBoxButtons.OK,
-                              MessageBoxIcon.Information);
+                              MessageBoxIcon.Information);   // a dica foi atualizada com sucesso
             }
-            catch (Exception ex)
+            catch (Exception ex)   // mensagem de erro
             {
                 MessageBox.Show($"Erro ao atualizar dica: {ex.Message}",
                               "Erro",
@@ -915,42 +794,39 @@ namespace apListaLigada
             }
             finally
             {
-
-                // Restaura o estado original
+                // restaura o estado original
                 txtNome.ReadOnly = true;
                 btnEditar.Text = "Editar";
                 btnEditar.Click -= SalvarEdicao;
                 btnEditar.Click += btnEditar_Click;
 
-
-                // Limpa os campos após edição
+                // limpa os campos após edição
                 txtRA.Text = "";
                 txtNome.Text = "";
 
-                // Restaura o estado original dos controles
+                // restaura o estado original dos controles
                 txtNome.ReadOnly = true;
                 btnEditar.Text = "Editar";
                 btnEditar.Click -= SalvarEdicao;
                 btnEditar.Click += btnEditar_Click;
 
-                // Reabilita os botões
-                btnNovo.Enabled = true;              // btnIncluir
+                // reabilita os botões
+                btnNovo.Enabled = true;
                 btnExcluir.Enabled = true;
 
-                // Só reabilita navegação se houver mais de um registro
+                // só reabilita navegação se houver mais de um registro
                 bool podeNavegar = listaPalavras.QuantosNos > 1;
                 btnAnterior.Enabled = podeNavegar;
                 btnProximo.Enabled = podeNavegar;
                 btnInicio.Enabled = podeNavegar;
                 btnFim.Enabled = podeNavegar;
 
-                // Atualiza a exibição se ainda houver dados
+                // atualiza a exibição se ainda houver dados
                 if (listaPalavras.QuantosNos > 0)
                 {
                     ExibirRegistroAtual();
                 }
 
-                // Foco no campo RA para nova operação
                 txtRA.Focus();
             }
         }
@@ -962,54 +838,27 @@ namespace apListaLigada
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            /*
-            // Sai do modo de edição
-            modoEdicao = false;
-
-            // Reabilita os botões de navegação
-            btnAnterior.Enabled = (totalPalavras > 1);
-            btnProximo.Enabled = (totalPalavras > 1);
-            btnInicio.Enabled = (totalPalavras > 1);
-            btnFim.Enabled = (totalPalavras > 1);
-
-            // Limpa os campos
-            txtRA.Clear();
-            txtNome.Clear();
-
-            // Reposiciona e exibe o registro atual (se houver registros)
-            if (totalPalavras > 0)
-            {
-                ExibirRegistroAtual();
-            }
-
-            // Coloca o foco no campo RA
-            txtRA.Focus();
-            */
-
-
             if (modoEdicao)
             {
                 modoEdicao = false;
 
-                // Restaura controles de edição
+                // restaura controles de edição
                 txtRA.ReadOnly = true;
                 txtNome.ReadOnly = true;
 
-                // Restaura botão Editar
+                // restaura botão Editar
                 btnEditar.Text = "Editar";
                 btnEditar.Click -= SalvarEdicao;
                 btnEditar.Click += btnEditar_Click;
 
-                // Reabilita controles
+                // reabilita controles
                 btnNovo.Enabled = true;
                 btnExcluir.Enabled = listaPalavras.QuantosNos > 0;
                 btnCancelar.Enabled = false;
 
-                // Força atualização após cancelar edição
                 ExibirRegistroAtual();
             }
 
-            // Coloca o foco no campo RA
             txtRA.Focus();
         }
     }
