@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Nome: Felipe Antônio de Oliveira Almeida     RA: 22130
+// Nome: Miguel de Castro Chaga Silva           RA: 22145
+
+using System;
 
 public class NoDuplo<Dado> where Dado : IComparable<Dado>, IRegistro                                      
 {
