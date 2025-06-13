@@ -61,12 +61,16 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.slRegistro = new System.Windows.Forms.ToolStripStatusLabel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Palavra = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Dica = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpCadastro.SuspendLayout();
             this.tpListagem.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -123,7 +127,7 @@
             this.toolStripSeparator4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(674, 47);
+            this.toolStrip1.Size = new System.Drawing.Size(870, 47);
             this.toolStrip1.TabIndex = 21;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -258,12 +262,13 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 55);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(657, 326);
+            this.tabControl1.Size = new System.Drawing.Size(853, 450);
             this.tabControl1.TabIndex = 22;
             this.tabControl1.Enter += new System.EventHandler(this.tabControl1_Enter);
             // 
             // tpCadastro
             // 
+            this.tpCadastro.Controls.Add(this.dataGridView1);
             this.tpCadastro.Controls.Add(this.label1);
             this.tpCadastro.Controls.Add(this.label2);
             this.tpCadastro.Controls.Add(this.txtRA);
@@ -271,7 +276,7 @@
             this.tpCadastro.Location = new System.Drawing.Point(4, 30);
             this.tpCadastro.Name = "tpCadastro";
             this.tpCadastro.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCadastro.Size = new System.Drawing.Size(649, 292);
+            this.tpCadastro.Size = new System.Drawing.Size(845, 416);
             this.tpCadastro.TabIndex = 0;
             this.tpCadastro.Text = "Cadastro";
             this.tpCadastro.UseVisualStyleBackColor = true;
@@ -289,10 +294,10 @@
             // 
             this.tpListagem.Controls.Add(this.groupBox1);
             this.tpListagem.Controls.Add(this.lsbDados);
-            this.tpListagem.Location = new System.Drawing.Point(4, 25);
+            this.tpListagem.Location = new System.Drawing.Point(4, 30);
             this.tpListagem.Name = "tpListagem";
             this.tpListagem.Padding = new System.Windows.Forms.Padding(3);
-            this.tpListagem.Size = new System.Drawing.Size(649, 297);
+            this.tpListagem.Size = new System.Drawing.Size(845, 416);
             this.tpListagem.TabIndex = 1;
             this.tpListagem.Text = "Listagem";
             this.tpListagem.UseVisualStyleBackColor = true;
@@ -343,10 +348,10 @@
             // 
             // tpForca
             // 
-            this.tpForca.Location = new System.Drawing.Point(4, 25);
+            this.tpForca.Location = new System.Drawing.Point(4, 30);
             this.tpForca.Name = "tpForca";
             this.tpForca.Padding = new System.Windows.Forms.Padding(3);
-            this.tpForca.Size = new System.Drawing.Size(649, 297);
+            this.tpForca.Size = new System.Drawing.Size(845, 416);
             this.tpForca.TabIndex = 2;
             this.tpForca.Text = "Forca";
             this.tpForca.UseVisualStyleBackColor = true;
@@ -357,9 +362,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.slRegistro});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 383);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 507);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(674, 26);
+            this.statusStrip1.Size = new System.Drawing.Size(870, 26);
             this.statusStrip1.TabIndex = 23;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -375,10 +380,37 @@
             this.slRegistro.Size = new System.Drawing.Size(89, 20);
             this.slRegistro.Text = "Registro:0/0";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Palavra,
+            this.Dica});
+            this.dataGridView1.Location = new System.Drawing.Point(16, 151);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(791, 245);
+            this.dataGridView1.TabIndex = 6;
+            // 
+            // Palavra
+            // 
+            this.Palavra.HeaderText = "Palavra";
+            this.Palavra.MinimumWidth = 6;
+            this.Palavra.Name = "Palavra";
+            this.Palavra.Width = 125;
+            // 
+            // Dica
+            // 
+            this.Dica.HeaderText = "Dica";
+            this.Dica.MinimumWidth = 6;
+            this.Dica.Name = "Dica";
+            this.Dica.Width = 125;
+            // 
             // FrmAlunos
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(674, 409);
+            this.ClientSize = new System.Drawing.Size(870, 533);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.toolStrip1);
@@ -397,6 +429,7 @@
             this.groupBox1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -435,6 +468,9 @@
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.TabPage tpForca;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Palavra;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Dica;
     }
 }
 
