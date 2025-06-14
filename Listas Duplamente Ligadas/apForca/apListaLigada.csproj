@@ -157,5 +157,8 @@
   <ItemGroup>
     <None Include="projetoForcaImagens\Forca_17.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Vivo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
