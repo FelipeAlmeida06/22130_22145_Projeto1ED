@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aluno.cs" />
+    <Compile Include="Dicionario.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +61,7 @@
     <Compile Include="PalavraDica.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VetorDicionario.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -71,6 +73,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -84,6 +87,75 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Com Dica e Tempo ganhou.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Com Dica e Tempo perdeu.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Com Dica e Tempo.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Enforcado.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca__01.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca__02.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca__03.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca__05.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca__08.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca__09.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca__13.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca_1_05.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca_2_03.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca_2_04.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca_2_07.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca_05.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca_07.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca_08.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca_09.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca_10.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca_14.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca_16.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="projetoForcaImagens\Forca_17.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,7 +1,6 @@
-Palavra com 30 caractere      Dica até o final da linha
-Francisco da Fonseca RodriguesO humilde professor
-Arroz                         Alimento muito usado na Ásia
-Cachorro                      Melhor amigo das pessoas
-Fentanil                      Pesadelo do Trump
-Processador                   Aquele que processa
-Truco                         Jogo de cartas
+FRANCISCO DA FO O humilde professor
+ARROZ           Alimento muito usado na Ásia
+CACHORRO        Melhor amigo das pessoas
+FENTANIL        Pesadelo do Trump
+PROCESSADOR     Aquele que processa
+TRUCO           Jogo de cartas

@@ -24,6 +24,10 @@ namespace apListaLigada
         {
             InitializeComponent();
             listaPalavras = new ListaDupla<PalavraDica>();
+
+            // Jogo da Forca
+            dicio = new VetorDicionario(100);
+            ConfigurarDataGridView();
         }
 
 
@@ -563,6 +567,7 @@ namespace apListaLigada
 
         private void FrmAlunos_Load(object sender, EventArgs e)
         {
+            /*
             // fazer a leitura do arquivo escolhido pelo usuário e armazená-lo na lista1
             // posicionar o ponteiro atual no início da lista duplamente ligada
             // Exibir o Registro Atual;
@@ -618,6 +623,13 @@ namespace apListaLigada
                               MessageBoxIcon.Error);
             }
 
+
+            */
+
+            CarregarDadosDoArquivoJogoDaForca();
+            dicio.PosicionarNoPrimeiro(); // Posiciona no primeiro registro após carregar
+            AtualizarTela(); // Atualiza todos os campos e o DataGridView
+
         }
 
         private void CarregarArquivo(string caminhoArquivo)
@@ -655,9 +667,13 @@ namespace apListaLigada
             // posicionar o ponteiro atual no início da lista duplamente ligada
             // Exibir o Registro Atual;
 
-            listaPalavras.PosicionarNoInicio();
-            posicaoAtual = 0;
-            ExibirRegistroAtual();
+            //listaPalavras.PosicionarNoInicio();
+            //posicaoAtual = 0;
+            //ExibirRegistroAtual();
+
+
+            dicio.PosicionarNoPrimeiro();
+            AtualizarTela();
         }
 
         private void btnAnterior_Click(object sender, EventArgs e)
@@ -665,9 +681,12 @@ namespace apListaLigada
             // Retroceder o ponteiro atual para o nó imediatamente anterior 
             // Exibir o Registro Atual;
 
-            listaPalavras.Retroceder();
-            if (posicaoAtual > 0) posicaoAtual--;
-            ExibirRegistroAtual();
+            //listaPalavras.Retroceder();
+            //if (posicaoAtual > 0) posicaoAtual--;
+            //ExibirRegistroAtual();
+
+            dicio.RetrocederPosicao();
+            AtualizarTela();
         }
 
         private void btnProximo_Click(object sender, EventArgs e)
@@ -675,9 +694,12 @@ namespace apListaLigada
             // Retroceder o ponteiro atual para o nó seguinte 
             // Exibir o Registro Atual;
 
-            listaPalavras.Avancar();
-            if (posicaoAtual < totalPalavras - 1) posicaoAtual++;
-            ExibirRegistroAtual();
+            //listaPalavras.Avancar();
+            //if (posicaoAtual < totalPalavras - 1) posicaoAtual++;
+            //ExibirRegistroAtual();
+
+            dicio.AvancarPosicao();
+            AtualizarTela();
         }
 
         private void btnFim_Click(object sender, EventArgs e)
@@ -685,9 +707,12 @@ namespace apListaLigada
             // posicionar o ponteiro atual no último nó da lista 
             // Exibir o Registro Atual;
 
-            listaPalavras.PosicionarNoFinal();
-            posicaoAtual = totalPalavras - 1;
-            ExibirRegistroAtual();
+            //listaPalavras.PosicionarNoFinal();
+            //posicaoAtual = totalPalavras - 1;
+            //ExibirRegistroAtual();
+
+            dicio.PosicionarNoUltimo();
+            AtualizarTela();
         }
 
         private void ExibirRegistroAtual()
@@ -864,6 +889,423 @@ namespace apListaLigada
 
             txtRA.Focus();
         }
+
+
+        // =========================== PROJETO DE FORCA ===========================
+
+        // Variáveis para a parte do jogo de forca
+        VetorDicionario dicio;
+
+        int posicaoDeInclusao;
+        int indiceAleatorio;
+
+        int tempoForca;
+
+        int pontos = 0;
+        int erros = 0;
+
+        bool emJogo;
+
+        string inspiracao = "Inspirado em http://www.velhosamigos.com.br/jogos/forca.htm";
+        string nome;
+
+        Button[] letraPressionada = new Button[30];
+        int qualLetra = 0;
+        private void btnIniciar_Click(object sender, EventArgs e)
+        {
+            if (txtNome.Text == "") // se o usuário não inseriu um nome antes de começar a jogar
+            {
+                MessageBox.Show("Por favor, insira um nome válido antes de começar a jogar.", "Aviso: Nome inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning); // um MessageBox o alerta
+                txtNome.Focus(); // txt nome é focado
+                return; // a inicialização é cancelada
+            }
+
+            Random rdn = new Random();
+            indiceAleatorio = rdn.Next(dicio.Tamanho); // escolhe um índice aleatório do VetorDicionario
+            string palavraSorteada = dicio[indiceAleatorio].Palavra.TrimEnd(); // TrimEnd() = remove os espaços em branco no fim da string
+            string dicaDaPalavraSorteada = dicio[indiceAleatorio].Dica;
+
+            if (chkComDica.Checked) // verifica se o usuário jogará com dica
+            {
+                tempoForca = 60; // seta o tempo para 60 segundos
+                tmrForca.Enabled = true; // habilita o timer
+                lbDica.Text = "Dica: " + dicaDaPalavraSorteada; // printa a dica na lbDica
+            }
+
+            else
+            {
+                lbDica.Enabled = false; // a lbDica é desativada
+                lbTempo.Enabled = false; // a lbTempo é desativada
+            }
+
+            emJogo = true; // a variável emJogo recebe true, impedindo que o usuário acesse a guia 'Cadastro'
+
+            btnIniciar.Enabled = false; // o btnIniciar recebe false, uma vez que um jogo não pode ser iniciado duas vezes
+            //panelTeclado.Enabled = true; // o panelTeclado, que contém todas as letras, é habilitado
+
+            nome = txtNome.Text; // a variável nome recebe o valor do txtNome
+            txtNome.Enabled = false; // o txtNome é desabilitado para evitar que o usuário troque de nome em jogo
+
+            chkComDica.Enabled = false; // o chkComDica é desabilitado para evitar que o usuário o marque já depois que o jogo foi iniciado
+
+            lbErros.Text = "Erros: 0"; // a lbErros é zerada
+            lbPontos.Text = "Pontos: 0"; // a lbPontos é zerada
+
+            //ResetarImagens(); // reinicia as imagens
+
+            dgvPalavra.ColumnCount = palavraSorteada.Length; // define o número de colunas do DataGridView de acordo com o tamanho da palavra
+            dgvPalavra.BackgroundColor = System.Drawing.Color.White; // seta a cor de fundo como branco
+
+            for (int i = 0; i < dgvPalavra.ColumnCount; i++)
+                dgvPalavra.Columns[i].Width = 31; // define uma largura para cada coluna do DataGridView
+        }
+
+        private void tpCadastro_Enter(object sender, EventArgs e)
+        {
+            if (emJogo) // se o usuário tentar entrar na aba cadastro em jogo
+            {
+                MessageBox.Show("Não é possível acessar a aba 'Cadastro' em jogo.", "Aba bloqueada", MessageBoxButtons.OK, MessageBoxIcon.Warning); // uma mensagem é exibida o alertando
+                //tabJogoDaForca.SelectedTab = tabForca; 
+                tabControl1.SelectedTab = tpCadastro;
+            }
+
+            else // se não, a execução segue
+            {
+                dicio.ExibirDados(dgvPalavrasEDicas);
+                dicio.PosicionarNoPrimeiro();
+                //AtualizarTela();
+            }
+        }
+
+
+        private void CarregarDadosDoArquivoJogoDaForca()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            // Configurações do OpenFileDialog
+            openFileDialog.Title = "Selecione o arquivo de palavras e dicas";
+            openFileDialog.Filter = "Arquivos de Texto (*.txt)|*.txt|Todos os Arquivos (*.*)|*.*";
+            openFileDialog.InitialDirectory = Application.StartupPath; // Começa no diretório do executável
+
+            // Exibe a caixa de diálogo e verifica se o usuário selecionou um arquivo
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string caminhoDoArquivo = openFileDialog.FileName;
+
+                try
+                {
+                    // Limpa o dicio antes de carregar novos dados
+                    // (Você pode adicionar um método Clear() ou Reset() em VetorDicionario)
+                    // Por enquanto, vamos recriar a instância para garantir que esteja vazio.
+                    dicio = new VetorDicionario(5000); // Recria para zerar os dados
+
+                    using (StreamReader arq = new StreamReader(caminhoDoArquivo))
+                    {
+                        while (!arq.EndOfStream)
+                        {
+                            Dicionario novaEntrada = new Dicionario();
+                            novaEntrada.LerDados(arq); // Lê uma linha do arquivo e popula o objeto Dicionario
+                            dicio.Incluir(novaEntrada); // Inclui o objeto Dicionario no VetorDicionario
+                        }
+                    }
+
+                    // Agora que os dados foram carregados no dicio, exiba-os no DataGridView
+                    dicio.ExibirDados(dgvPalavrasEDicas);
+                }
+                catch (FileNotFoundException)
+                {
+                    MessageBox.Show("O arquivo não foi encontrado.", "Erro de Arquivo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ocorreu um erro ao carregar o arquivo: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                // O usuário cancelou a seleção do arquivo
+                MessageBox.Show("Nenhum arquivo selecionado. O programa pode não funcionar corretamente sem os dados.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                // Você pode optar por fechar o aplicativo ou desabilitar funcionalidades aqui
+                // Application.Exit();
+            }
+        }
+
+        private void ConfigurarDataGridView()
+        {
+            dgvPalavrasEDicas.AutoGenerateColumns = false; // Importante para usar colunas manuais
+
+            // Adiciona as colunas se elas ainda não existirem
+            if (dgvPalavrasEDicas.Columns.Count == 0)
+            {
+                dgvPalavrasEDicas.Columns.Add("Palavra", "Palavra");
+                dgvPalavrasEDicas.Columns.Add("Dica", "Dica");
+            }
+
+            // Opcional: ajustar largura das colunas
+            dgvPalavrasEDicas.Columns["Palavra"].Width = 150;
+            dgvPalavrasEDicas.Columns["Dica"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        private void processarLetraClicada(char letra)
+        {
+            // Exemplo: Mostrar a letra clicada (apenas para teste)
+            MessageBox.Show($"Você clicou na letra: {letra}");
+
+            // TODO: AQUI É ONDE VOCÊ COLOCARÁ TODA A LÓGICA DO SEU JOGO DA FORCA
+            // 1. Verificar se a letra está na palavra secreta.
+            // 2. Atualizar o display da palavra oculta (ex: mostrar os underlines preenchidos).
+            // 3. Se a letra estiver correta, verificar se o jogo foi ganho.
+            // 4. Se a letra estiver incorreta, incrementar o contador de erros.
+            // 5. Atualizar a imagem da forca (parte do boneco).
+            // 6. Se os erros atingirem o limite, o jogo foi perdido.
+            // 7. Desabilitar o botão da letra clicada para evitar repetições (importante!).
+            //    Para desabilitar o botão, você precisará passar o próprio botão como parâmetro
+            //    ou encontrar o botão pelo nome, o que é mais complexo.
+            //    A forma mais simples para esta estrutura é desabilitar o botão DENTRO DE CADA CLICK EVENT.
+            //    (Vou mostrar isso abaixo nos exemplos de click events)
+
+            // Exemplo de como você pode chamar métodos de lógica do jogo:
+            // VerificarLetraNaPalavra(letra);
+            // AtualizarInterfaceDoJogo();
+            // VerificarFimDeJogo();
+        }
+        private void btnA_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('A');
+            ((Button)sender).Enabled = false; // Desativa o botão 'A' após o clique
+        }
+        private void btnB_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('B');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnC_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('C');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnD_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('D');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnE_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('E');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnF_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('F');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnG_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('G');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnH_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('H');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnI_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('I');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnJ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('J');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnK_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('K');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnL_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('L');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnM_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('M');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnN_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('N');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnO_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('O');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnP_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('P');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnQ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Q');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnR_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('R');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnS_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('S');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnT_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('T');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnU_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('U');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnV_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('V');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnW_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('W');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnX_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('X');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnY_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Y');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnZ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Z');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnÇ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Ç');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnÁ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Á');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnÂ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Â');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnÃ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Ã');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnÉ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('É');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnÊ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Ê');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnÍ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Í');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnÓ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Ó');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnÔ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Ô');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnÕ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Õ');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnÚ_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('Ú');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnHifen_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada('-');
+            ((Button)sender).Enabled = false;
+        }
+        private void btnEspaco_Click(object sender, EventArgs e)
+        {
+            processarLetraClicada(' ');
+            ((Button)sender).Enabled = false;
+        }
+
+        private void AtualizarTela()
+        {
+            dicio.ExibirDados(dgvPalavrasEDicas); // Atualiza o DataGridView
+
+            if (!dicio.EstaVazio && dicio.RegistroAtual != null)
+            {
+                txtRA.Text = dicio.RegistroAtual.Palavra;
+                txtNome.Text = dicio.RegistroAtual.Dica;
+
+                if (dicio.PosicaoAtual >= 0 && dicio.PosicaoAtual < dgvPalavrasEDicas.Rows.Count)
+                {
+                    dgvPalavrasEDicas.ClearSelection();
+                    dgvPalavrasEDicas.Rows[dicio.PosicaoAtual].Selected = true;
+                    dgvPalavrasEDicas.FirstDisplayedScrollingRowIndex = dicio.PosicaoAtual;
+                }
+            }
+            else
+            {
+                txtRA.Text = "";
+                txtNome.Text = "";
+                dgvPalavrasEDicas.ClearSelection();
+            }
+
+            slRegistro.Text = $"Registro: {(dicio.EstaVazio ? 0 : dicio.PosicaoAtual + 1)}/{dicio.Tamanho}";
+
+            // Habilita/Desabilita botões de navegação
+            btnInicio.Enabled = !dicio.EstaVazio && !dicio.EstaNoInicio;
+            btnAnterior.Enabled = !dicio.EstaVazio && !dicio.EstaNoInicio;
+            btnProximo.Enabled = !dicio.EstaVazio && !dicio.EstaNoFim;
+            btnFim.Enabled = !dicio.EstaVazio && !dicio.EstaNoFim;
+
+            // Gerenciamento de botões de CRUD conforme SituacaoAtual
+            bool podeNavegar = dicio.SituacaoAtual == VetorDicionario.Situacao.navegando;
+            btnNovo.Enabled = podeNavegar;
+            btnEditar.Enabled = podeNavegar && !dicio.EstaVazio;
+            btnExcluir.Enabled = podeNavegar && !dicio.EstaVazio;
+            btnCancelar.Enabled = dicio.SituacaoAtual != VetorDicionario.Situacao.navegando;
+            btnSair.Enabled = true;
+        }
+
+        
     }
 
 }
