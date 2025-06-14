@@ -62,44 +62,28 @@
             this.rbFrente = new System.Windows.Forms.RadioButton();
             this.lsbDados = new System.Windows.Forms.ListBox();
             this.tpForca = new System.Windows.Forms.TabPage();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.slRegistro = new System.Windows.Forms.ToolStripStatusLabel();
-            this.picForcaUm = new System.Windows.Forms.PictureBox();
-            this.picForcaDois = new System.Windows.Forms.PictureBox();
-            this.picForcaTres = new System.Windows.Forms.PictureBox();
-            this.picForcaQuatro = new System.Windows.Forms.PictureBox();
-            this.picForcaCinco = new System.Windows.Forms.PictureBox();
-            this.picForca6 = new System.Windows.Forms.PictureBox();
-            this.picForcaSete = new System.Windows.Forms.PictureBox();
-            this.lbForca = new System.Windows.Forms.Label();
-            this.lbAdivinhe = new System.Windows.Forms.Label();
-            this.btnA = new System.Windows.Forms.Button();
-            this.btnB = new System.Windows.Forms.Button();
-            this.btnC = new System.Windows.Forms.Button();
-            this.btnD = new System.Windows.Forms.Button();
-            this.btnE = new System.Windows.Forms.Button();
-            this.btnF = new System.Windows.Forms.Button();
-            this.btnG = new System.Windows.Forms.Button();
-            this.btnH = new System.Windows.Forms.Button();
-            this.btnI = new System.Windows.Forms.Button();
-            this.btnJ = new System.Windows.Forms.Button();
-            this.btnK = new System.Windows.Forms.Button();
-            this.btnL = new System.Windows.Forms.Button();
-            this.btnM = new System.Windows.Forms.Button();
-            this.btnZ = new System.Windows.Forms.Button();
-            this.btnY = new System.Windows.Forms.Button();
-            this.btnX = new System.Windows.Forms.Button();
-            this.btnW = new System.Windows.Forms.Button();
-            this.btnV = new System.Windows.Forms.Button();
-            this.btnU = new System.Windows.Forms.Button();
-            this.btnT = new System.Windows.Forms.Button();
-            this.btnS = new System.Windows.Forms.Button();
-            this.btnR = new System.Windows.Forms.Button();
-            this.btnQ = new System.Windows.Forms.Button();
-            this.btnP = new System.Windows.Forms.Button();
-            this.btnO = new System.Windows.Forms.Button();
-            this.btnN = new System.Windows.Forms.Button();
+            this.picBoxBandeiraTres = new System.Windows.Forms.PictureBox();
+            this.picBoxBandeiraDois = new System.Windows.Forms.PictureBox();
+            this.picBoxBandeiraUm = new System.Windows.Forms.PictureBox();
+            this.picBoxBonecoXX = new System.Windows.Forms.PictureBox();
+            this.picBoxEspiritoBoneco = new System.Windows.Forms.PictureBox();
+            this.picBoxForca8 = new System.Windows.Forms.PictureBox();
+            this.picBoxForca6 = new System.Windows.Forms.PictureBox();
+            this.picBoxForca5 = new System.Windows.Forms.PictureBox();
+            this.picBoxForca4 = new System.Windows.Forms.PictureBox();
+            this.picBoxForca3 = new System.Windows.Forms.PictureBox();
+            this.picBoxForca2 = new System.Windows.Forms.PictureBox();
+            this.picBoxForca7 = new System.Windows.Forms.PictureBox();
+            this.picBoxForca1 = new System.Windows.Forms.PictureBox();
+            this.lbTempo = new System.Windows.Forms.Label();
+            this.lbErros = new System.Windows.Forms.Label();
+            this.btnIniciar = new System.Windows.Forms.Button();
+            this.chkComDica = new System.Windows.Forms.CheckBox();
+            this.lbPontos = new System.Windows.Forms.Label();
+            this.lbDica = new System.Windows.Forms.Label();
+            this.textNome = new System.Windows.Forms.TextBox();
+            this.lbNome = new System.Windows.Forms.Label();
+            this.dgvPalavra = new System.Windows.Forms.DataGridView();
             this.btnEspaco = new System.Windows.Forms.Button();
             this.btnHifen = new System.Windows.Forms.Button();
             this.btnÚ = new System.Windows.Forms.Button();
@@ -113,16 +97,46 @@
             this.btnÂ = new System.Windows.Forms.Button();
             this.btnÁ = new System.Windows.Forms.Button();
             this.btnÇ = new System.Windows.Forms.Button();
-            this.dgvPalavra = new System.Windows.Forms.DataGridView();
-            this.lbNome = new System.Windows.Forms.Label();
-            this.textNome = new System.Windows.Forms.TextBox();
-            this.lbDica = new System.Windows.Forms.Label();
-            this.lbPontos = new System.Windows.Forms.Label();
-            this.chkComDica = new System.Windows.Forms.CheckBox();
-            this.btnIniciar = new System.Windows.Forms.Button();
-            this.lbErros = new System.Windows.Forms.Label();
-            this.lbTempo = new System.Windows.Forms.Label();
+            this.btnZ = new System.Windows.Forms.Button();
+            this.btnY = new System.Windows.Forms.Button();
+            this.btnX = new System.Windows.Forms.Button();
+            this.btnW = new System.Windows.Forms.Button();
+            this.btnV = new System.Windows.Forms.Button();
+            this.btnU = new System.Windows.Forms.Button();
+            this.btnT = new System.Windows.Forms.Button();
+            this.btnS = new System.Windows.Forms.Button();
+            this.btnR = new System.Windows.Forms.Button();
+            this.btnQ = new System.Windows.Forms.Button();
+            this.btnP = new System.Windows.Forms.Button();
+            this.btnO = new System.Windows.Forms.Button();
+            this.btnN = new System.Windows.Forms.Button();
+            this.btnM = new System.Windows.Forms.Button();
+            this.btnL = new System.Windows.Forms.Button();
+            this.btnK = new System.Windows.Forms.Button();
+            this.btnJ = new System.Windows.Forms.Button();
+            this.btnI = new System.Windows.Forms.Button();
+            this.btnH = new System.Windows.Forms.Button();
+            this.btnG = new System.Windows.Forms.Button();
+            this.btnF = new System.Windows.Forms.Button();
+            this.btnE = new System.Windows.Forms.Button();
+            this.btnD = new System.Windows.Forms.Button();
+            this.btnC = new System.Windows.Forms.Button();
+            this.btnB = new System.Windows.Forms.Button();
+            this.btnA = new System.Windows.Forms.Button();
+            this.lbAdivinhe = new System.Windows.Forms.Label();
+            this.lbForca = new System.Windows.Forms.Label();
+            this.picForcaSete = new System.Windows.Forms.PictureBox();
+            this.picForcaSeis = new System.Windows.Forms.PictureBox();
+            this.picForcaCinco = new System.Windows.Forms.PictureBox();
+            this.picForcaQuatro = new System.Windows.Forms.PictureBox();
+            this.picForcaTres = new System.Windows.Forms.PictureBox();
+            this.picForcaDois = new System.Windows.Forms.PictureBox();
+            this.picForcaUm = new System.Windows.Forms.PictureBox();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.slRegistro = new System.Windows.Forms.ToolStripStatusLabel();
             this.tmrForca = new System.Windows.Forms.Timer(this.components);
+            this.tmrEspiritoBoneco = new System.Windows.Forms.Timer(this.components);
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tpCadastro.SuspendLayout();
@@ -130,15 +144,28 @@
             this.tpListagem.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tpForca.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picForcaUm)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picForcaDois)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picForcaTres)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picForcaQuatro)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picForcaCinco)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picForca6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picForcaSete)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxBandeiraTres)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxBandeiraDois)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxBandeiraUm)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxBonecoXX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxEspiritoBoneco)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPalavra)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaSete)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaSeis)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaCinco)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaQuatro)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaTres)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaDois)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaUm)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -390,10 +417,10 @@
             // 
             this.tpListagem.Controls.Add(this.groupBox1);
             this.tpListagem.Controls.Add(this.lsbDados);
-            this.tpListagem.Location = new System.Drawing.Point(4, 30);
+            this.tpListagem.Location = new System.Drawing.Point(4, 25);
             this.tpListagem.Name = "tpListagem";
             this.tpListagem.Padding = new System.Windows.Forms.Padding(3);
-            this.tpListagem.Size = new System.Drawing.Size(926, 527);
+            this.tpListagem.Size = new System.Drawing.Size(926, 532);
             this.tpListagem.TabIndex = 1;
             this.tpListagem.Text = "Listagem";
             this.tpListagem.UseVisualStyleBackColor = true;
@@ -444,6 +471,19 @@
             // 
             // tpForca
             // 
+            this.tpForca.Controls.Add(this.picBoxBandeiraTres);
+            this.tpForca.Controls.Add(this.picBoxBandeiraDois);
+            this.tpForca.Controls.Add(this.picBoxBandeiraUm);
+            this.tpForca.Controls.Add(this.picBoxBonecoXX);
+            this.tpForca.Controls.Add(this.picBoxEspiritoBoneco);
+            this.tpForca.Controls.Add(this.picBoxForca8);
+            this.tpForca.Controls.Add(this.picBoxForca6);
+            this.tpForca.Controls.Add(this.picBoxForca5);
+            this.tpForca.Controls.Add(this.picBoxForca4);
+            this.tpForca.Controls.Add(this.picBoxForca3);
+            this.tpForca.Controls.Add(this.picBoxForca2);
+            this.tpForca.Controls.Add(this.picBoxForca7);
+            this.tpForca.Controls.Add(this.picBoxForca1);
             this.tpForca.Controls.Add(this.lbTempo);
             this.tpForca.Controls.Add(this.lbErros);
             this.tpForca.Controls.Add(this.btnIniciar);
@@ -495,7 +535,7 @@
             this.tpForca.Controls.Add(this.lbAdivinhe);
             this.tpForca.Controls.Add(this.lbForca);
             this.tpForca.Controls.Add(this.picForcaSete);
-            this.tpForca.Controls.Add(this.picForca6);
+            this.tpForca.Controls.Add(this.picForcaSeis);
             this.tpForca.Controls.Add(this.picForcaCinco);
             this.tpForca.Controls.Add(this.picForcaQuatro);
             this.tpForca.Controls.Add(this.picForcaTres);
@@ -509,244 +549,337 @@
             this.tpForca.Text = "Forca";
             this.tpForca.UseVisualStyleBackColor = true;
             // 
-            // statusStrip1
+            // picBoxBandeiraTres
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.slRegistro});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 618);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(951, 26);
-            this.statusStrip1.TabIndex = 23;
-            this.statusStrip1.Text = "statusStrip1";
+            this.picBoxBandeiraTres.Image = global::apListaLigada.Properties.Resources.Forca_2_07;
+            this.picBoxBandeiraTres.Location = new System.Drawing.Point(159, 461);
+            this.picBoxBandeiraTres.Name = "picBoxBandeiraTres";
+            this.picBoxBandeiraTres.Size = new System.Drawing.Size(62, 44);
+            this.picBoxBandeiraTres.TabIndex = 69;
+            this.picBoxBandeiraTres.TabStop = false;
             // 
-            // toolStripStatusLabel1
+            // picBoxBandeiraDois
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(85, 20);
-            this.toolStripStatusLabel1.Text = "Mensagem:";
+            this.picBoxBandeiraDois.Image = global::apListaLigada.Properties.Resources.Forca_2_04;
+            this.picBoxBandeiraDois.Location = new System.Drawing.Point(159, 383);
+            this.picBoxBandeiraDois.Name = "picBoxBandeiraDois";
+            this.picBoxBandeiraDois.Size = new System.Drawing.Size(22, 94);
+            this.picBoxBandeiraDois.TabIndex = 68;
+            this.picBoxBandeiraDois.TabStop = false;
             // 
-            // slRegistro
+            // picBoxBandeiraUm
             // 
-            this.slRegistro.Name = "slRegistro";
-            this.slRegistro.Size = new System.Drawing.Size(89, 20);
-            this.slRegistro.Text = "Registro:0/0";
+            this.picBoxBandeiraUm.Image = global::apListaLigada.Properties.Resources.Forca_2_03;
+            this.picBoxBandeiraUm.Location = new System.Drawing.Point(47, 329);
+            this.picBoxBandeiraUm.Name = "picBoxBandeiraUm";
+            this.picBoxBandeiraUm.Size = new System.Drawing.Size(69, 192);
+            this.picBoxBandeiraUm.TabIndex = 67;
+            this.picBoxBandeiraUm.TabStop = false;
             // 
-            // picForcaUm
+            // picBoxBonecoXX
             // 
-            this.picForcaUm.Image = global::apListaLigada.Properties.Resources.Forca__13;
-            this.picForcaUm.Location = new System.Drawing.Point(16, 261);
-            this.picForcaUm.Name = "picForcaUm";
-            this.picForcaUm.Size = new System.Drawing.Size(100, 138);
-            this.picForcaUm.TabIndex = 0;
-            this.picForcaUm.TabStop = false;
+            this.picBoxBonecoXX.Image = global::apListaLigada.Properties.Resources.Forca_1_05;
+            this.picBoxBonecoXX.Location = new System.Drawing.Point(131, 105);
+            this.picBoxBonecoXX.Name = "picBoxBonecoXX";
+            this.picBoxBonecoXX.Size = new System.Drawing.Size(100, 100);
+            this.picBoxBonecoXX.TabIndex = 66;
+            this.picBoxBonecoXX.TabStop = false;
             // 
-            // picForcaDois
+            // picBoxEspiritoBoneco
             // 
-            this.picForcaDois.Image = global::apListaLigada.Properties.Resources.Forca__03;
-            this.picForcaDois.Location = new System.Drawing.Point(16, 79);
-            this.picForcaDois.Name = "picForcaDois";
-            this.picForcaDois.Size = new System.Drawing.Size(100, 182);
-            this.picForcaDois.TabIndex = 1;
-            this.picForcaDois.TabStop = false;
+            this.picBoxEspiritoBoneco.Image = global::apListaLigada.Properties.Resources.Enforcado;
+            this.picBoxEspiritoBoneco.Location = new System.Drawing.Point(808, 6);
+            this.picBoxEspiritoBoneco.Name = "picBoxEspiritoBoneco";
+            this.picBoxEspiritoBoneco.Size = new System.Drawing.Size(101, 119);
+            this.picBoxEspiritoBoneco.TabIndex = 65;
+            this.picBoxEspiritoBoneco.TabStop = false;
             // 
-            // picForcaTres
+            // picBoxForca8
             // 
-            this.picForcaTres.Image = global::apListaLigada.Properties.Resources.Forca__01;
-            this.picForcaTres.Location = new System.Drawing.Point(16, 46);
-            this.picForcaTres.Name = "picForcaTres";
-            this.picForcaTres.Size = new System.Drawing.Size(127, 47);
-            this.picForcaTres.TabIndex = 2;
-            this.picForcaTres.TabStop = false;
+            this.picBoxForca8.Image = global::apListaLigada.Properties.Resources.Forca_10;
+            this.picBoxForca8.Location = new System.Drawing.Point(203, 215);
+            this.picBoxForca8.Name = "picBoxForca8";
+            this.picBoxForca8.Size = new System.Drawing.Size(100, 50);
+            this.picBoxForca8.TabIndex = 64;
+            this.picBoxForca8.TabStop = false;
             // 
-            // picForcaQuatro
+            // picBoxForca6
             // 
-            this.picForcaQuatro.Image = global::apListaLigada.Properties.Resources.Forca__02;
-            this.picForcaQuatro.Location = new System.Drawing.Point(140, 46);
-            this.picForcaQuatro.Name = "picForcaQuatro";
-            this.picForcaQuatro.Size = new System.Drawing.Size(135, 61);
-            this.picForcaQuatro.TabIndex = 3;
-            this.picForcaQuatro.TabStop = false;
+            this.picBoxForca6.Image = global::apListaLigada.Properties.Resources.Forca_16;
+            this.picBoxForca6.Location = new System.Drawing.Point(104, 324);
+            this.picBoxForca6.Name = "picBoxForca6";
+            this.picBoxForca6.Size = new System.Drawing.Size(77, 75);
+            this.picBoxForca6.TabIndex = 63;
+            this.picBoxForca6.TabStop = false;
             // 
-            // picForcaCinco
+            // picBoxForca5
             // 
-            this.picForcaCinco.Image = global::apListaLigada.Properties.Resources.Forca__05;
-            this.picForcaCinco.Location = new System.Drawing.Point(131, 99);
-            this.picForcaCinco.Name = "picForcaCinco";
-            this.picForcaCinco.Size = new System.Drawing.Size(100, 97);
-            this.picForcaCinco.TabIndex = 4;
-            this.picForcaCinco.TabStop = false;
+            this.picBoxForca5.Image = global::apListaLigada.Properties.Resources.Forca_17;
+            this.picBoxForca5.Location = new System.Drawing.Point(175, 324);
+            this.picBoxForca5.Name = "picBoxForca5";
+            this.picBoxForca5.Size = new System.Drawing.Size(100, 95);
+            this.picBoxForca5.TabIndex = 62;
+            this.picBoxForca5.TabStop = false;
             // 
-            // picForca6
+            // picBoxForca4
             // 
-            this.picForca6.Image = global::apListaLigada.Properties.Resources.Forca__08;
-            this.picForca6.Location = new System.Drawing.Point(140, 193);
-            this.picForca6.Name = "picForca6";
-            this.picForca6.Size = new System.Drawing.Size(100, 22);
-            this.picForca6.TabIndex = 5;
-            this.picForca6.TabStop = false;
+            this.picBoxForca4.Image = global::apListaLigada.Properties.Resources.Forca_14;
+            this.picBoxForca4.Location = new System.Drawing.Point(140, 276);
+            this.picBoxForca4.Name = "picBoxForca4";
+            this.picBoxForca4.Size = new System.Drawing.Size(100, 50);
+            this.picBoxForca4.TabIndex = 61;
+            this.picBoxForca4.TabStop = false;
             // 
-            // picForcaSete
+            // picBoxForca3
             // 
-            this.picForcaSete.Image = global::apListaLigada.Properties.Resources.Forca__09;
-            this.picForcaSete.Location = new System.Drawing.Point(140, 211);
-            this.picForcaSete.Name = "picForcaSete";
-            this.picForcaSete.Size = new System.Drawing.Size(100, 50);
-            this.picForcaSete.TabIndex = 6;
-            this.picForcaSete.TabStop = false;
+            this.picBoxForca3.Image = global::apListaLigada.Properties.Resources.Forca_09;
+            this.picBoxForca3.Location = new System.Drawing.Point(140, 215);
+            this.picBoxForca3.Name = "picBoxForca3";
+            this.picBoxForca3.Size = new System.Drawing.Size(100, 66);
+            this.picBoxForca3.TabIndex = 60;
+            this.picBoxForca3.TabStop = false;
             // 
-            // lbForca
+            // picBoxForca2
             // 
-            this.lbForca.AutoSize = true;
-            this.lbForca.Font = new System.Drawing.Font("Arial", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbForca.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-            this.lbForca.Location = new System.Drawing.Point(498, 19);
-            this.lbForca.Name = "lbForca";
-            this.lbForca.Size = new System.Drawing.Size(181, 47);
-            this.lbForca.TabIndex = 7;
-            this.lbForca.Text = "FORCA!";
+            this.picBoxForca2.Image = global::apListaLigada.Properties.Resources.Forca_08;
+            this.picBoxForca2.Location = new System.Drawing.Point(140, 202);
+            this.picBoxForca2.Name = "picBoxForca2";
+            this.picBoxForca2.Size = new System.Drawing.Size(100, 50);
+            this.picBoxForca2.TabIndex = 59;
+            this.picBoxForca2.TabStop = false;
             // 
-            // lbAdivinhe
+            // picBoxForca7
             // 
-            this.lbAdivinhe.AutoSize = true;
-            this.lbAdivinhe.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbAdivinhe.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lbAdivinhe.Location = new System.Drawing.Point(504, 70);
-            this.lbAdivinhe.Name = "lbAdivinhe";
-            this.lbAdivinhe.Size = new System.Drawing.Size(216, 27);
-            this.lbAdivinhe.TabIndex = 8;
-            this.lbAdivinhe.Text = "Adivinhe a palavra!";
+            this.picBoxForca7.Image = global::apListaLigada.Properties.Resources.Forca_07;
+            this.picBoxForca7.Location = new System.Drawing.Point(81, 202);
+            this.picBoxForca7.Name = "picBoxForca7";
+            this.picBoxForca7.Size = new System.Drawing.Size(100, 50);
+            this.picBoxForca7.TabIndex = 58;
+            this.picBoxForca7.TabStop = false;
             // 
-            // btnA
+            // picBoxForca1
             // 
-            this.btnA.Location = new System.Drawing.Point(353, 166);
-            this.btnA.Name = "btnA";
-            this.btnA.Size = new System.Drawing.Size(29, 30);
-            this.btnA.TabIndex = 9;
-            this.btnA.Text = "A";
-            this.btnA.UseVisualStyleBackColor = true;
-            this.btnA.Click += new System.EventHandler(this.btnA_Click);
+            this.picBoxForca1.Image = global::apListaLigada.Properties.Resources.Forca_05;
+            this.picBoxForca1.Location = new System.Drawing.Point(131, 105);
+            this.picBoxForca1.Name = "picBoxForca1";
+            this.picBoxForca1.Size = new System.Drawing.Size(100, 102);
+            this.picBoxForca1.TabIndex = 57;
+            this.picBoxForca1.TabStop = false;
             // 
-            // btnB
+            // lbTempo
             // 
-            this.btnB.Location = new System.Drawing.Point(388, 166);
-            this.btnB.Name = "btnB";
-            this.btnB.Size = new System.Drawing.Size(29, 30);
-            this.btnB.TabIndex = 10;
-            this.btnB.Text = "B";
-            this.btnB.UseVisualStyleBackColor = true;
-            this.btnB.Click += new System.EventHandler(this.btnB_Click);
+            this.lbTempo.AutoSize = true;
+            this.lbTempo.ForeColor = System.Drawing.Color.Red;
+            this.lbTempo.Location = new System.Drawing.Point(504, 446);
+            this.lbTempo.Name = "lbTempo";
+            this.lbTempo.Size = new System.Drawing.Size(198, 22);
+            this.lbTempo.TabIndex = 56;
+            this.lbTempo.Text = "Tempo Restante:___s";
             // 
-            // btnC
+            // lbErros
             // 
-            this.btnC.Location = new System.Drawing.Point(423, 166);
-            this.btnC.Name = "btnC";
-            this.btnC.Size = new System.Drawing.Size(29, 30);
-            this.btnC.TabIndex = 11;
-            this.btnC.Text = "C";
-            this.btnC.UseVisualStyleBackColor = true;
-            this.btnC.Click += new System.EventHandler(this.btnC_Click);
+            this.lbErros.AutoSize = true;
+            this.lbErros.ForeColor = System.Drawing.Color.Red;
+            this.lbErros.Location = new System.Drawing.Point(353, 441);
+            this.lbErros.Name = "lbErros";
+            this.lbErros.Size = new System.Drawing.Size(116, 22);
+            this.lbErros.TabIndex = 55;
+            this.lbErros.Text = "Erros:_____";
             // 
-            // btnD
+            // btnIniciar
             // 
-            this.btnD.Location = new System.Drawing.Point(458, 166);
-            this.btnD.Name = "btnD";
-            this.btnD.Size = new System.Drawing.Size(29, 30);
-            this.btnD.TabIndex = 12;
-            this.btnD.Text = "D";
-            this.btnD.UseVisualStyleBackColor = true;
-            this.btnD.Click += new System.EventHandler(this.btnD_Click);
+            this.btnIniciar.Location = new System.Drawing.Point(703, 401);
+            this.btnIniciar.Name = "btnIniciar";
+            this.btnIniciar.Size = new System.Drawing.Size(93, 30);
+            this.btnIniciar.TabIndex = 54;
+            this.btnIniciar.Text = "Iniciar";
+            this.btnIniciar.UseVisualStyleBackColor = true;
+            this.btnIniciar.Click += new System.EventHandler(this.btnIniciar_Click);
             // 
-            // btnE
+            // chkComDica
             // 
-            this.btnE.Location = new System.Drawing.Point(493, 166);
-            this.btnE.Name = "btnE";
-            this.btnE.Size = new System.Drawing.Size(29, 30);
-            this.btnE.TabIndex = 13;
-            this.btnE.Text = "E";
-            this.btnE.UseVisualStyleBackColor = true;
-            this.btnE.Click += new System.EventHandler(this.btnE_Click);
+            this.chkComDica.AutoSize = true;
+            this.chkComDica.Location = new System.Drawing.Point(504, 399);
+            this.chkComDica.Name = "chkComDica";
+            this.chkComDica.Size = new System.Drawing.Size(116, 26);
+            this.chkComDica.TabIndex = 53;
+            this.chkComDica.Text = "Com Dica";
+            this.chkComDica.UseVisualStyleBackColor = true;
             // 
-            // btnF
+            // lbPontos
             // 
-            this.btnF.Location = new System.Drawing.Point(528, 166);
-            this.btnF.Name = "btnF";
-            this.btnF.Size = new System.Drawing.Size(29, 30);
-            this.btnF.TabIndex = 14;
-            this.btnF.Text = "F";
-            this.btnF.UseVisualStyleBackColor = true;
-            this.btnF.Click += new System.EventHandler(this.btnF_Click);
+            this.lbPontos.AutoSize = true;
+            this.lbPontos.ForeColor = System.Drawing.Color.Green;
+            this.lbPontos.Location = new System.Drawing.Point(349, 398);
+            this.lbPontos.Name = "lbPontos";
+            this.lbPontos.Size = new System.Drawing.Size(130, 22);
+            this.lbPontos.TabIndex = 52;
+            this.lbPontos.Text = "Pontos:_____";
             // 
-            // btnG
+            // lbDica
             // 
-            this.btnG.Location = new System.Drawing.Point(563, 166);
-            this.btnG.Name = "btnG";
-            this.btnG.Size = new System.Drawing.Size(29, 30);
-            this.btnG.TabIndex = 15;
-            this.btnG.Text = "G";
-            this.btnG.UseVisualStyleBackColor = true;
-            this.btnG.Click += new System.EventHandler(this.btnG_Click);
+            this.lbDica.AutoSize = true;
+            this.lbDica.ForeColor = System.Drawing.Color.Purple;
+            this.lbDica.Location = new System.Drawing.Point(349, 359);
+            this.lbDica.Name = "lbDica";
+            this.lbDica.Size = new System.Drawing.Size(504, 22);
+            this.lbDica.TabIndex = 51;
+            this.lbDica.Text = "Dica:_________________________________________";
             // 
-            // btnH
+            // textNome
             // 
-            this.btnH.Location = new System.Drawing.Point(598, 166);
-            this.btnH.Name = "btnH";
-            this.btnH.Size = new System.Drawing.Size(29, 30);
-            this.btnH.TabIndex = 16;
-            this.btnH.Text = "H";
-            this.btnH.UseVisualStyleBackColor = true;
-            this.btnH.Click += new System.EventHandler(this.btnH_Click);
+            this.textNome.Location = new System.Drawing.Point(458, 115);
+            this.textNome.Name = "textNome";
+            this.textNome.Size = new System.Drawing.Size(344, 29);
+            this.textNome.TabIndex = 50;
             // 
-            // btnI
+            // lbNome
             // 
-            this.btnI.Location = new System.Drawing.Point(633, 166);
-            this.btnI.Name = "btnI";
-            this.btnI.Size = new System.Drawing.Size(29, 30);
-            this.btnI.TabIndex = 17;
-            this.btnI.Text = "I";
-            this.btnI.UseVisualStyleBackColor = true;
-            this.btnI.Click += new System.EventHandler(this.btnI_Click);
+            this.lbNome.AutoSize = true;
+            this.lbNome.Location = new System.Drawing.Point(353, 116);
+            this.lbNome.Name = "lbNome";
+            this.lbNome.Size = new System.Drawing.Size(102, 22);
+            this.lbNome.TabIndex = 49;
+            this.lbNome.Text = "Seu nome:";
             // 
-            // btnJ
+            // dgvPalavra
             // 
-            this.btnJ.Location = new System.Drawing.Point(668, 166);
-            this.btnJ.Name = "btnJ";
-            this.btnJ.Size = new System.Drawing.Size(29, 30);
-            this.btnJ.TabIndex = 18;
-            this.btnJ.Text = "J";
-            this.btnJ.UseVisualStyleBackColor = true;
-            this.btnJ.Click += new System.EventHandler(this.btnJ_Click);
+            this.dgvPalavra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPalavra.Location = new System.Drawing.Point(353, 308);
+            this.dgvPalavra.Name = "dgvPalavra";
+            this.dgvPalavra.RowHeadersWidth = 51;
+            this.dgvPalavra.RowTemplate.Height = 24;
+            this.dgvPalavra.Size = new System.Drawing.Size(449, 28);
+            this.dgvPalavra.TabIndex = 48;
             // 
-            // btnK
+            // btnEspaco
             // 
-            this.btnK.Location = new System.Drawing.Point(703, 166);
-            this.btnK.Name = "btnK";
-            this.btnK.Size = new System.Drawing.Size(29, 30);
-            this.btnK.TabIndex = 19;
-            this.btnK.Text = "K";
-            this.btnK.UseVisualStyleBackColor = true;
-            this.btnK.Click += new System.EventHandler(this.btnK_Click);
+            this.btnEspaco.Location = new System.Drawing.Point(773, 251);
+            this.btnEspaco.Name = "btnEspaco";
+            this.btnEspaco.Size = new System.Drawing.Size(29, 30);
+            this.btnEspaco.TabIndex = 47;
+            this.btnEspaco.UseVisualStyleBackColor = true;
+            this.btnEspaco.Click += new System.EventHandler(this.btnEspaco_Click);
             // 
-            // btnL
+            // btnHifen
             // 
-            this.btnL.Location = new System.Drawing.Point(738, 166);
-            this.btnL.Name = "btnL";
-            this.btnL.Size = new System.Drawing.Size(29, 30);
-            this.btnL.TabIndex = 20;
-            this.btnL.Text = "L";
-            this.btnL.UseVisualStyleBackColor = true;
-            this.btnL.Click += new System.EventHandler(this.btnL_Click);
+            this.btnHifen.Location = new System.Drawing.Point(738, 251);
+            this.btnHifen.Name = "btnHifen";
+            this.btnHifen.Size = new System.Drawing.Size(29, 30);
+            this.btnHifen.TabIndex = 46;
+            this.btnHifen.Text = "-";
+            this.btnHifen.UseVisualStyleBackColor = true;
+            this.btnHifen.Click += new System.EventHandler(this.btnHifen_Click);
             // 
-            // btnM
+            // btnÚ
             // 
-            this.btnM.Location = new System.Drawing.Point(773, 166);
-            this.btnM.Name = "btnM";
-            this.btnM.Size = new System.Drawing.Size(29, 30);
-            this.btnM.TabIndex = 21;
-            this.btnM.Text = "M";
-            this.btnM.UseVisualStyleBackColor = true;
-            this.btnM.Click += new System.EventHandler(this.btnM_Click);
+            this.btnÚ.Location = new System.Drawing.Point(703, 251);
+            this.btnÚ.Name = "btnÚ";
+            this.btnÚ.Size = new System.Drawing.Size(29, 30);
+            this.btnÚ.TabIndex = 45;
+            this.btnÚ.Text = "Ú";
+            this.btnÚ.UseVisualStyleBackColor = true;
+            this.btnÚ.Click += new System.EventHandler(this.btnÚ_Click);
+            // 
+            // btnÕ
+            // 
+            this.btnÕ.Location = new System.Drawing.Point(668, 251);
+            this.btnÕ.Name = "btnÕ";
+            this.btnÕ.Size = new System.Drawing.Size(29, 30);
+            this.btnÕ.TabIndex = 44;
+            this.btnÕ.Text = "Õ";
+            this.btnÕ.UseVisualStyleBackColor = true;
+            this.btnÕ.Click += new System.EventHandler(this.btnÕ_Click);
+            // 
+            // btnÔ
+            // 
+            this.btnÔ.Location = new System.Drawing.Point(633, 251);
+            this.btnÔ.Name = "btnÔ";
+            this.btnÔ.Size = new System.Drawing.Size(29, 30);
+            this.btnÔ.TabIndex = 43;
+            this.btnÔ.Text = "Ô";
+            this.btnÔ.UseVisualStyleBackColor = true;
+            this.btnÔ.Click += new System.EventHandler(this.btnÔ_Click);
+            // 
+            // btnÓ
+            // 
+            this.btnÓ.Location = new System.Drawing.Point(598, 251);
+            this.btnÓ.Name = "btnÓ";
+            this.btnÓ.Size = new System.Drawing.Size(29, 30);
+            this.btnÓ.TabIndex = 42;
+            this.btnÓ.Text = "Ó";
+            this.btnÓ.UseVisualStyleBackColor = true;
+            this.btnÓ.Click += new System.EventHandler(this.btnÓ_Click);
+            // 
+            // btnÍ
+            // 
+            this.btnÍ.Location = new System.Drawing.Point(563, 251);
+            this.btnÍ.Name = "btnÍ";
+            this.btnÍ.Size = new System.Drawing.Size(29, 30);
+            this.btnÍ.TabIndex = 41;
+            this.btnÍ.Text = "Í";
+            this.btnÍ.UseVisualStyleBackColor = true;
+            this.btnÍ.Click += new System.EventHandler(this.btnÍ_Click);
+            // 
+            // btnÊ
+            // 
+            this.btnÊ.Location = new System.Drawing.Point(528, 251);
+            this.btnÊ.Name = "btnÊ";
+            this.btnÊ.Size = new System.Drawing.Size(29, 30);
+            this.btnÊ.TabIndex = 40;
+            this.btnÊ.Text = "Ê";
+            this.btnÊ.UseVisualStyleBackColor = true;
+            this.btnÊ.Click += new System.EventHandler(this.btnÊ_Click);
+            // 
+            // btnÉ
+            // 
+            this.btnÉ.Location = new System.Drawing.Point(493, 251);
+            this.btnÉ.Name = "btnÉ";
+            this.btnÉ.Size = new System.Drawing.Size(29, 30);
+            this.btnÉ.TabIndex = 39;
+            this.btnÉ.Text = "É";
+            this.btnÉ.UseVisualStyleBackColor = true;
+            this.btnÉ.Click += new System.EventHandler(this.btnÉ_Click);
+            // 
+            // btnÃ
+            // 
+            this.btnÃ.Location = new System.Drawing.Point(458, 251);
+            this.btnÃ.Name = "btnÃ";
+            this.btnÃ.Size = new System.Drawing.Size(29, 30);
+            this.btnÃ.TabIndex = 38;
+            this.btnÃ.Text = "Ã";
+            this.btnÃ.UseVisualStyleBackColor = true;
+            this.btnÃ.Click += new System.EventHandler(this.btnÃ_Click);
+            // 
+            // btnÂ
+            // 
+            this.btnÂ.Location = new System.Drawing.Point(423, 251);
+            this.btnÂ.Name = "btnÂ";
+            this.btnÂ.Size = new System.Drawing.Size(29, 30);
+            this.btnÂ.TabIndex = 37;
+            this.btnÂ.Text = "Â";
+            this.btnÂ.UseVisualStyleBackColor = true;
+            this.btnÂ.Click += new System.EventHandler(this.btnÂ_Click);
+            // 
+            // btnÁ
+            // 
+            this.btnÁ.Location = new System.Drawing.Point(388, 251);
+            this.btnÁ.Name = "btnÁ";
+            this.btnÁ.Size = new System.Drawing.Size(29, 30);
+            this.btnÁ.TabIndex = 36;
+            this.btnÁ.Text = "Á";
+            this.btnÁ.UseVisualStyleBackColor = true;
+            this.btnÁ.Click += new System.EventHandler(this.btnÁ_Click);
+            // 
+            // btnÇ
+            // 
+            this.btnÇ.Location = new System.Drawing.Point(353, 251);
+            this.btnÇ.Name = "btnÇ";
+            this.btnÇ.Size = new System.Drawing.Size(29, 30);
+            this.btnÇ.TabIndex = 35;
+            this.btnÇ.Text = "Ç";
+            this.btnÇ.UseVisualStyleBackColor = true;
+            this.btnÇ.Click += new System.EventHandler(this.btnÇ_Click);
             // 
             // btnZ
             // 
@@ -878,220 +1011,248 @@
             this.btnN.UseVisualStyleBackColor = true;
             this.btnN.Click += new System.EventHandler(this.btnN_Click);
             // 
-            // btnEspaco
+            // btnM
             // 
-            this.btnEspaco.Location = new System.Drawing.Point(773, 251);
-            this.btnEspaco.Name = "btnEspaco";
-            this.btnEspaco.Size = new System.Drawing.Size(29, 30);
-            this.btnEspaco.TabIndex = 47;
-            this.btnEspaco.UseVisualStyleBackColor = true;
-            this.btnEspaco.Click += new System.EventHandler(this.btnEspaco_Click);
+            this.btnM.Location = new System.Drawing.Point(773, 166);
+            this.btnM.Name = "btnM";
+            this.btnM.Size = new System.Drawing.Size(29, 30);
+            this.btnM.TabIndex = 21;
+            this.btnM.Text = "M";
+            this.btnM.UseVisualStyleBackColor = true;
+            this.btnM.Click += new System.EventHandler(this.btnM_Click);
             // 
-            // btnHifen
+            // btnL
             // 
-            this.btnHifen.Location = new System.Drawing.Point(738, 251);
-            this.btnHifen.Name = "btnHifen";
-            this.btnHifen.Size = new System.Drawing.Size(29, 30);
-            this.btnHifen.TabIndex = 46;
-            this.btnHifen.Text = "-";
-            this.btnHifen.UseVisualStyleBackColor = true;
-            this.btnHifen.Click += new System.EventHandler(this.btnHifen_Click);
+            this.btnL.Location = new System.Drawing.Point(738, 166);
+            this.btnL.Name = "btnL";
+            this.btnL.Size = new System.Drawing.Size(29, 30);
+            this.btnL.TabIndex = 20;
+            this.btnL.Text = "L";
+            this.btnL.UseVisualStyleBackColor = true;
+            this.btnL.Click += new System.EventHandler(this.btnL_Click);
             // 
-            // btnÚ
+            // btnK
             // 
-            this.btnÚ.Location = new System.Drawing.Point(703, 251);
-            this.btnÚ.Name = "btnÚ";
-            this.btnÚ.Size = new System.Drawing.Size(29, 30);
-            this.btnÚ.TabIndex = 45;
-            this.btnÚ.Text = "Ú";
-            this.btnÚ.UseVisualStyleBackColor = true;
-            this.btnÚ.Click += new System.EventHandler(this.btnÚ_Click);
+            this.btnK.Location = new System.Drawing.Point(703, 166);
+            this.btnK.Name = "btnK";
+            this.btnK.Size = new System.Drawing.Size(29, 30);
+            this.btnK.TabIndex = 19;
+            this.btnK.Text = "K";
+            this.btnK.UseVisualStyleBackColor = true;
+            this.btnK.Click += new System.EventHandler(this.btnK_Click);
             // 
-            // btnÕ
+            // btnJ
             // 
-            this.btnÕ.Location = new System.Drawing.Point(668, 251);
-            this.btnÕ.Name = "btnÕ";
-            this.btnÕ.Size = new System.Drawing.Size(29, 30);
-            this.btnÕ.TabIndex = 44;
-            this.btnÕ.Text = "Õ";
-            this.btnÕ.UseVisualStyleBackColor = true;
-            this.btnÕ.Click += new System.EventHandler(this.btnÕ_Click);
+            this.btnJ.Location = new System.Drawing.Point(668, 166);
+            this.btnJ.Name = "btnJ";
+            this.btnJ.Size = new System.Drawing.Size(29, 30);
+            this.btnJ.TabIndex = 18;
+            this.btnJ.Text = "J";
+            this.btnJ.UseVisualStyleBackColor = true;
+            this.btnJ.Click += new System.EventHandler(this.btnJ_Click);
             // 
-            // btnÔ
+            // btnI
             // 
-            this.btnÔ.Location = new System.Drawing.Point(633, 251);
-            this.btnÔ.Name = "btnÔ";
-            this.btnÔ.Size = new System.Drawing.Size(29, 30);
-            this.btnÔ.TabIndex = 43;
-            this.btnÔ.Text = "Ô";
-            this.btnÔ.UseVisualStyleBackColor = true;
-            this.btnÔ.Click += new System.EventHandler(this.btnÔ_Click);
+            this.btnI.Location = new System.Drawing.Point(633, 166);
+            this.btnI.Name = "btnI";
+            this.btnI.Size = new System.Drawing.Size(29, 30);
+            this.btnI.TabIndex = 17;
+            this.btnI.Text = "I";
+            this.btnI.UseVisualStyleBackColor = true;
+            this.btnI.Click += new System.EventHandler(this.btnI_Click);
             // 
-            // btnÓ
+            // btnH
             // 
-            this.btnÓ.Location = new System.Drawing.Point(598, 251);
-            this.btnÓ.Name = "btnÓ";
-            this.btnÓ.Size = new System.Drawing.Size(29, 30);
-            this.btnÓ.TabIndex = 42;
-            this.btnÓ.Text = "Ó";
-            this.btnÓ.UseVisualStyleBackColor = true;
-            this.btnÓ.Click += new System.EventHandler(this.btnÓ_Click);
+            this.btnH.Location = new System.Drawing.Point(598, 166);
+            this.btnH.Name = "btnH";
+            this.btnH.Size = new System.Drawing.Size(29, 30);
+            this.btnH.TabIndex = 16;
+            this.btnH.Text = "H";
+            this.btnH.UseVisualStyleBackColor = true;
+            this.btnH.Click += new System.EventHandler(this.btnH_Click);
             // 
-            // btnÍ
+            // btnG
             // 
-            this.btnÍ.Location = new System.Drawing.Point(563, 251);
-            this.btnÍ.Name = "btnÍ";
-            this.btnÍ.Size = new System.Drawing.Size(29, 30);
-            this.btnÍ.TabIndex = 41;
-            this.btnÍ.Text = "Í";
-            this.btnÍ.UseVisualStyleBackColor = true;
-            this.btnÍ.Click += new System.EventHandler(this.btnÍ_Click);
+            this.btnG.Location = new System.Drawing.Point(563, 166);
+            this.btnG.Name = "btnG";
+            this.btnG.Size = new System.Drawing.Size(29, 30);
+            this.btnG.TabIndex = 15;
+            this.btnG.Text = "G";
+            this.btnG.UseVisualStyleBackColor = true;
+            this.btnG.Click += new System.EventHandler(this.btnG_Click);
             // 
-            // btnÊ
+            // btnF
             // 
-            this.btnÊ.Location = new System.Drawing.Point(528, 251);
-            this.btnÊ.Name = "btnÊ";
-            this.btnÊ.Size = new System.Drawing.Size(29, 30);
-            this.btnÊ.TabIndex = 40;
-            this.btnÊ.Text = "Ê";
-            this.btnÊ.UseVisualStyleBackColor = true;
-            this.btnÊ.Click += new System.EventHandler(this.btnÊ_Click);
+            this.btnF.Location = new System.Drawing.Point(528, 166);
+            this.btnF.Name = "btnF";
+            this.btnF.Size = new System.Drawing.Size(29, 30);
+            this.btnF.TabIndex = 14;
+            this.btnF.Text = "F";
+            this.btnF.UseVisualStyleBackColor = true;
+            this.btnF.Click += new System.EventHandler(this.btnF_Click);
             // 
-            // btnÉ
+            // btnE
             // 
-            this.btnÉ.Location = new System.Drawing.Point(493, 251);
-            this.btnÉ.Name = "btnÉ";
-            this.btnÉ.Size = new System.Drawing.Size(29, 30);
-            this.btnÉ.TabIndex = 39;
-            this.btnÉ.Text = "É";
-            this.btnÉ.UseVisualStyleBackColor = true;
-            this.btnÉ.Click += new System.EventHandler(this.btnÉ_Click);
+            this.btnE.Location = new System.Drawing.Point(493, 166);
+            this.btnE.Name = "btnE";
+            this.btnE.Size = new System.Drawing.Size(29, 30);
+            this.btnE.TabIndex = 13;
+            this.btnE.Text = "E";
+            this.btnE.UseVisualStyleBackColor = true;
+            this.btnE.Click += new System.EventHandler(this.btnE_Click);
             // 
-            // btnÃ
+            // btnD
             // 
-            this.btnÃ.Location = new System.Drawing.Point(458, 251);
-            this.btnÃ.Name = "btnÃ";
-            this.btnÃ.Size = new System.Drawing.Size(29, 30);
-            this.btnÃ.TabIndex = 38;
-            this.btnÃ.Text = "Ã";
-            this.btnÃ.UseVisualStyleBackColor = true;
-            this.btnÃ.Click += new System.EventHandler(this.btnÃ_Click);
+            this.btnD.Location = new System.Drawing.Point(458, 166);
+            this.btnD.Name = "btnD";
+            this.btnD.Size = new System.Drawing.Size(29, 30);
+            this.btnD.TabIndex = 12;
+            this.btnD.Text = "D";
+            this.btnD.UseVisualStyleBackColor = true;
+            this.btnD.Click += new System.EventHandler(this.btnD_Click);
             // 
-            // btnÂ
+            // btnC
             // 
-            this.btnÂ.Location = new System.Drawing.Point(423, 251);
-            this.btnÂ.Name = "btnÂ";
-            this.btnÂ.Size = new System.Drawing.Size(29, 30);
-            this.btnÂ.TabIndex = 37;
-            this.btnÂ.Text = "Â";
-            this.btnÂ.UseVisualStyleBackColor = true;
-            this.btnÂ.Click += new System.EventHandler(this.btnÂ_Click);
+            this.btnC.Location = new System.Drawing.Point(423, 166);
+            this.btnC.Name = "btnC";
+            this.btnC.Size = new System.Drawing.Size(29, 30);
+            this.btnC.TabIndex = 11;
+            this.btnC.Text = "C";
+            this.btnC.UseVisualStyleBackColor = true;
+            this.btnC.Click += new System.EventHandler(this.btnC_Click);
             // 
-            // btnÁ
+            // btnB
             // 
-            this.btnÁ.Location = new System.Drawing.Point(388, 251);
-            this.btnÁ.Name = "btnÁ";
-            this.btnÁ.Size = new System.Drawing.Size(29, 30);
-            this.btnÁ.TabIndex = 36;
-            this.btnÁ.Text = "Á";
-            this.btnÁ.UseVisualStyleBackColor = true;
-            this.btnÁ.Click += new System.EventHandler(this.btnÁ_Click);
+            this.btnB.Location = new System.Drawing.Point(388, 166);
+            this.btnB.Name = "btnB";
+            this.btnB.Size = new System.Drawing.Size(29, 30);
+            this.btnB.TabIndex = 10;
+            this.btnB.Text = "B";
+            this.btnB.UseVisualStyleBackColor = true;
+            this.btnB.Click += new System.EventHandler(this.btnB_Click);
             // 
-            // btnÇ
+            // btnA
             // 
-            this.btnÇ.Location = new System.Drawing.Point(353, 251);
-            this.btnÇ.Name = "btnÇ";
-            this.btnÇ.Size = new System.Drawing.Size(29, 30);
-            this.btnÇ.TabIndex = 35;
-            this.btnÇ.Text = "Ç";
-            this.btnÇ.UseVisualStyleBackColor = true;
-            this.btnÇ.Click += new System.EventHandler(this.btnÇ_Click);
+            this.btnA.Location = new System.Drawing.Point(353, 166);
+            this.btnA.Name = "btnA";
+            this.btnA.Size = new System.Drawing.Size(29, 30);
+            this.btnA.TabIndex = 9;
+            this.btnA.Text = "A";
+            this.btnA.UseVisualStyleBackColor = true;
+            this.btnA.Click += new System.EventHandler(this.btnA_Click);
             // 
-            // dgvPalavra
+            // lbAdivinhe
             // 
-            this.dgvPalavra.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPalavra.Location = new System.Drawing.Point(353, 308);
-            this.dgvPalavra.Name = "dgvPalavra";
-            this.dgvPalavra.RowHeadersWidth = 51;
-            this.dgvPalavra.RowTemplate.Height = 24;
-            this.dgvPalavra.Size = new System.Drawing.Size(449, 28);
-            this.dgvPalavra.TabIndex = 48;
+            this.lbAdivinhe.AutoSize = true;
+            this.lbAdivinhe.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbAdivinhe.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lbAdivinhe.Location = new System.Drawing.Point(504, 70);
+            this.lbAdivinhe.Name = "lbAdivinhe";
+            this.lbAdivinhe.Size = new System.Drawing.Size(216, 27);
+            this.lbAdivinhe.TabIndex = 8;
+            this.lbAdivinhe.Text = "Adivinhe a palavra!";
             // 
-            // lbNome
+            // lbForca
             // 
-            this.lbNome.AutoSize = true;
-            this.lbNome.Location = new System.Drawing.Point(353, 116);
-            this.lbNome.Name = "lbNome";
-            this.lbNome.Size = new System.Drawing.Size(102, 22);
-            this.lbNome.TabIndex = 49;
-            this.lbNome.Text = "Seu nome:";
+            this.lbForca.AutoSize = true;
+            this.lbForca.Font = new System.Drawing.Font("Arial", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbForca.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.lbForca.Location = new System.Drawing.Point(498, 19);
+            this.lbForca.Name = "lbForca";
+            this.lbForca.Size = new System.Drawing.Size(181, 47);
+            this.lbForca.TabIndex = 7;
+            this.lbForca.Text = "FORCA!";
             // 
-            // textNome
+            // picForcaSete
             // 
-            this.textNome.Location = new System.Drawing.Point(458, 115);
-            this.textNome.Name = "textNome";
-            this.textNome.Size = new System.Drawing.Size(344, 29);
-            this.textNome.TabIndex = 50;
+            this.picForcaSete.Image = global::apListaLigada.Properties.Resources.Forca__09;
+            this.picForcaSete.Location = new System.Drawing.Point(140, 205);
+            this.picForcaSete.Name = "picForcaSete";
+            this.picForcaSete.Size = new System.Drawing.Size(100, 50);
+            this.picForcaSete.TabIndex = 6;
+            this.picForcaSete.TabStop = false;
             // 
-            // lbDica
+            // picForcaSeis
             // 
-            this.lbDica.AutoSize = true;
-            this.lbDica.ForeColor = System.Drawing.Color.Purple;
-            this.lbDica.Location = new System.Drawing.Point(349, 359);
-            this.lbDica.Name = "lbDica";
-            this.lbDica.Size = new System.Drawing.Size(504, 22);
-            this.lbDica.TabIndex = 51;
-            this.lbDica.Text = "Dica:_________________________________________";
+            this.picForcaSeis.Image = global::apListaLigada.Properties.Resources.Forca__08;
+            this.picForcaSeis.Location = new System.Drawing.Point(140, 185);
+            this.picForcaSeis.Name = "picForcaSeis";
+            this.picForcaSeis.Size = new System.Drawing.Size(100, 22);
+            this.picForcaSeis.TabIndex = 5;
+            this.picForcaSeis.TabStop = false;
             // 
-            // lbPontos
+            // picForcaCinco
             // 
-            this.lbPontos.AutoSize = true;
-            this.lbPontos.ForeColor = System.Drawing.Color.Green;
-            this.lbPontos.Location = new System.Drawing.Point(349, 398);
-            this.lbPontos.Name = "lbPontos";
-            this.lbPontos.Size = new System.Drawing.Size(130, 22);
-            this.lbPontos.TabIndex = 52;
-            this.lbPontos.Text = "Pontos:_____";
+            this.picForcaCinco.Image = global::apListaLigada.Properties.Resources.Forca__05;
+            this.picForcaCinco.Location = new System.Drawing.Point(131, 99);
+            this.picForcaCinco.Name = "picForcaCinco";
+            this.picForcaCinco.Size = new System.Drawing.Size(100, 97);
+            this.picForcaCinco.TabIndex = 4;
+            this.picForcaCinco.TabStop = false;
             // 
-            // chkComDica
+            // picForcaQuatro
             // 
-            this.chkComDica.AutoSize = true;
-            this.chkComDica.Location = new System.Drawing.Point(504, 399);
-            this.chkComDica.Name = "chkComDica";
-            this.chkComDica.Size = new System.Drawing.Size(116, 26);
-            this.chkComDica.TabIndex = 53;
-            this.chkComDica.Text = "Com Dica";
-            this.chkComDica.UseVisualStyleBackColor = true;
+            this.picForcaQuatro.Image = global::apListaLigada.Properties.Resources.Forca__02;
+            this.picForcaQuatro.Location = new System.Drawing.Point(140, 46);
+            this.picForcaQuatro.Name = "picForcaQuatro";
+            this.picForcaQuatro.Size = new System.Drawing.Size(135, 61);
+            this.picForcaQuatro.TabIndex = 3;
+            this.picForcaQuatro.TabStop = false;
             // 
-            // btnIniciar
+            // picForcaTres
             // 
-            this.btnIniciar.Location = new System.Drawing.Point(703, 401);
-            this.btnIniciar.Name = "btnIniciar";
-            this.btnIniciar.Size = new System.Drawing.Size(93, 30);
-            this.btnIniciar.TabIndex = 54;
-            this.btnIniciar.Text = "Iniciar";
-            this.btnIniciar.UseVisualStyleBackColor = true;
-            this.btnIniciar.Click += new System.EventHandler(this.btnIniciar_Click);
+            this.picForcaTres.Image = global::apListaLigada.Properties.Resources.Forca__01;
+            this.picForcaTres.Location = new System.Drawing.Point(16, 46);
+            this.picForcaTres.Name = "picForcaTres";
+            this.picForcaTres.Size = new System.Drawing.Size(127, 47);
+            this.picForcaTres.TabIndex = 2;
+            this.picForcaTres.TabStop = false;
             // 
-            // lbErros
+            // picForcaDois
             // 
-            this.lbErros.AutoSize = true;
-            this.lbErros.ForeColor = System.Drawing.Color.Red;
-            this.lbErros.Location = new System.Drawing.Point(353, 441);
-            this.lbErros.Name = "lbErros";
-            this.lbErros.Size = new System.Drawing.Size(116, 22);
-            this.lbErros.TabIndex = 55;
-            this.lbErros.Text = "Erros:_____";
+            this.picForcaDois.Image = global::apListaLigada.Properties.Resources.Forca__03;
+            this.picForcaDois.Location = new System.Drawing.Point(16, 79);
+            this.picForcaDois.Name = "picForcaDois";
+            this.picForcaDois.Size = new System.Drawing.Size(100, 182);
+            this.picForcaDois.TabIndex = 1;
+            this.picForcaDois.TabStop = false;
             // 
-            // lbTempo
+            // picForcaUm
             // 
-            this.lbTempo.AutoSize = true;
-            this.lbTempo.ForeColor = System.Drawing.Color.Red;
-            this.lbTempo.Location = new System.Drawing.Point(504, 446);
-            this.lbTempo.Name = "lbTempo";
-            this.lbTempo.Size = new System.Drawing.Size(198, 22);
-            this.lbTempo.TabIndex = 56;
-            this.lbTempo.Text = "Tempo Restante:___s";
+            this.picForcaUm.Image = global::apListaLigada.Properties.Resources.Forca__13;
+            this.picForcaUm.Location = new System.Drawing.Point(16, 261);
+            this.picForcaUm.Name = "picForcaUm";
+            this.picForcaUm.Size = new System.Drawing.Size(100, 138);
+            this.picForcaUm.TabIndex = 0;
+            this.picForcaUm.TabStop = false;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.slRegistro});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 618);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(951, 26);
+            this.statusStrip1.TabIndex = 23;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(85, 20);
+            this.toolStripStatusLabel1.Text = "Mensagem:";
+            // 
+            // slRegistro
+            // 
+            this.slRegistro.Name = "slRegistro";
+            this.slRegistro.Size = new System.Drawing.Size(89, 20);
+            this.slRegistro.Text = "Registro:0/0";
+            // 
+            // tmrForca
+            // 
+            //  this.tmrForca.Tick += new System.EventHandler(this.tmrForca_Tick);
             // 
             // FrmAlunos
             // 
@@ -1116,16 +1277,29 @@
             this.groupBox1.PerformLayout();
             this.tpForca.ResumeLayout(false);
             this.tpForca.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxBandeiraTres)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxBandeiraDois)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxBandeiraUm)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxBonecoXX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxEspiritoBoneco)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBoxForca1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPalavra)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaSete)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaSeis)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaCinco)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaQuatro)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaTres)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaDois)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picForcaUm)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picForcaUm)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picForcaDois)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picForcaTres)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picForcaQuatro)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picForcaCinco)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picForca6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picForcaSete)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPalavra)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1168,7 +1342,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Palavra;
         private System.Windows.Forms.DataGridViewTextBoxColumn Dica;
         private System.Windows.Forms.PictureBox picForcaSete;
-        private System.Windows.Forms.PictureBox picForca6;
+        private System.Windows.Forms.PictureBox picForcaSeis;
         private System.Windows.Forms.PictureBox picForcaCinco;
         private System.Windows.Forms.PictureBox picForcaQuatro;
         private System.Windows.Forms.PictureBox picForcaTres;
@@ -1225,6 +1399,20 @@
         private System.Windows.Forms.Label lbTempo;
         private System.Windows.Forms.Label lbErros;
         private System.Windows.Forms.Timer tmrForca;
+        private System.Windows.Forms.PictureBox picBoxForca2;
+        private System.Windows.Forms.PictureBox picBoxForca7;
+        private System.Windows.Forms.PictureBox picBoxForca1;
+        private System.Windows.Forms.PictureBox picBoxForca8;
+        private System.Windows.Forms.PictureBox picBoxForca6;
+        private System.Windows.Forms.PictureBox picBoxForca5;
+        private System.Windows.Forms.PictureBox picBoxForca4;
+        private System.Windows.Forms.PictureBox picBoxForca3;
+        private System.Windows.Forms.PictureBox picBoxBandeiraDois;
+        private System.Windows.Forms.PictureBox picBoxBandeiraUm;
+        private System.Windows.Forms.PictureBox picBoxBonecoXX;
+        private System.Windows.Forms.PictureBox picBoxEspiritoBoneco;
+        private System.Windows.Forms.PictureBox picBoxBandeiraTres;
+        private System.Windows.Forms.Timer tmrEspiritoBoneco;
     }
 }
 

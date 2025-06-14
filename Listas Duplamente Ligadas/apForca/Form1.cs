@@ -8,8 +8,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 using static System.Resources.ResXFileRef;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace apListaLigada
 {
@@ -19,7 +22,6 @@ namespace apListaLigada
         private int posicaoAtual = 0;
         private int totalPalavras = 0;
 
-
         public FrmAlunos()
         {
             InitializeComponent();
@@ -28,6 +30,8 @@ namespace apListaLigada
             // Jogo da Forca
             dicio = new VetorDicionario(100);
             ConfigurarDataGridView();
+
+            botoesAlfabeto = new List<Button>(); // Inicializa a lista de botões
         }
 
 
@@ -630,6 +634,48 @@ namespace apListaLigada
             dicio.PosicionarNoPrimeiro(); // Posiciona no primeiro registro após carregar
             AtualizarTela(); // Atualiza todos os campos e o DataGridView
 
+            
+            dicio = new VetorDicionario(5000); // Inicializa o VetorDicionario
+            ConfigurarDataGridView(); // Configura dgvPalavrasEDicas
+
+            // Carrega os dados do arquivo ao iniciar o formulário (ou você pode ter um botão para isso)
+            CarregarDadosDoArquivoJogoDaForca();
+
+            // Adicione todos os botões do alfabeto à lista.
+            // ESTA PARTE É FUNDAMENTAL: Você deve listar CADA UM dos seus botões de letra aqui.
+            AdicionarBotoesAlfabeto(btnA, btnB, btnC, btnD, btnE, btnF, btnG, btnH, btnI, btnJ, btnK, btnL, btnM,
+                                    btnN, btnO, btnP, btnQ, btnR, btnS, btnT, btnU, btnV, btnW, btnX, btnY, btnZ,
+                                    btnÇ, btnÁ, btnÂ, btnÃ, btnÉ, btnÊ, btnÍ, btnÓ, btnÔ, btnÕ, btnÚ,
+                                    btnHifen, btnEspaco); // Certifique-se de que esses nomes de botões correspondem aos do seu designer.
+
+            // Desabilita os botões do teclado no início do formulário
+            foreach (Button btn in botoesAlfabeto)
+            {
+                btn.Enabled = false;
+            }
+
+            btnIniciar.Enabled = true; // Garante que o botão Iniciar esteja habilitado para começar o jogo
+            txtNome.Enabled = true;
+            chkComDica.Enabled = true;
+
+            // Configuração do dgvPalavra
+            if (dgvPalavra.Columns.Count == 0)
+            {
+                dgvPalavra.Columns.Add("Placeholder", ""); // Uma coluna inicial para evitar erro, será reconfigurada no IniciarNovoJogoForca
+            }
+            dgvPalavra.ReadOnly = true;
+            dgvPalavra.AllowUserToAddRows = false;
+            dgvPalavra.AllowUserToDeleteRows = false;
+            dgvPalavra.AllowUserToResizeColumns = false;
+            dgvPalavra.AllowUserToResizeRows = false;
+            dgvPalavra.ColumnHeadersVisible = false;
+            dgvPalavra.RowHeadersVisible = false;
+            dgvPalavra.ScrollBars = ScrollBars.None;
+            dgvPalavra.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            dgvPalavra.DefaultCellStyle.SelectionBackColor = dgvPalavra.DefaultCellStyle.BackColor;
+            dgvPalavra.DefaultCellStyle.SelectionForeColor = dgvPalavra.DefaultCellStyle.ForeColor;
+            dgvPalavra.BackgroundColor = System.Drawing.Color.LightGray;
+
         }
 
         private void CarregarArquivo(string caminhoArquivo)
@@ -911,15 +957,121 @@ namespace apListaLigada
 
         Button[] letraPressionada = new Button[30];
         int qualLetra = 0;
-        private void btnIniciar_Click(object sender, EventArgs e)
+
+
+        private string palavraSecreta; // A palavra que o jogador deve adivinhar
+        private StringBuilder palavraOcultaDisplay; // A palavra com underlines, que será mostrada ao jogador
+        private int errosCometidos; // Contador de erros
+        private const int MAX_ERROS_VISUAIS = 7; // Número máximo de erros permitidos (para 6 partes do boneco)
+        private const int LIMITE_ERROS_PARA_PERDER = 8;
+
+
+
+        // Botões do alfabeto (certifique-se de que todos esses nomes existem no designer)
+        private List<Button> botoesAlfabeto;
+        private void IniciarNovoJogoForca()
         {
-            if (txtNome.Text == "") // se o usuário não inseriu um nome antes de começar a jogar
+            // 1. Verificar se há palavras carregadas
+            if (dicio == null || dicio.EstaVazio)
             {
-                MessageBox.Show("Por favor, insira um nome válido antes de começar a jogar.", "Aviso: Nome inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning); // um MessageBox o alerta
-                txtNome.Focus(); // txt nome é focado
-                return; // a inicialização é cancelada
+                MessageBox.Show("Não há palavras carregadas para iniciar o jogo da Forca. Por favor, carregue um arquivo.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                btnIniciar.Enabled = true; // Permite tentar iniciar novamente
+                return;
             }
 
+            // 2. Resetar variáveis de controle do jogo
+            pontos = 0;
+            erros = 0; // Zera o contador de erros
+            emJogo = true; // Define o estado do jogo como "em andamento"
+
+            // 3. Escolher uma palavra secreta do dicionário
+            Random rand = new Random();
+            indiceAleatorio = rand.Next(0, dicio.Tamanho);
+            Dicionario entradaSelecionada = dicio[indiceAleatorio];
+
+            palavraSecreta = entradaSelecionada.Palavra.ToUpper().Trim(); // Converte para maiúsculas e remove espaços
+
+            // 4. Inicializar o display da palavra oculta (com underlines) e o DataGridView
+            palavraOcultaDisplay = new StringBuilder();
+            // Limpa e reconfigura as colunas do dgvPalavra a cada novo jogo
+            dgvPalavra.Columns.Clear();
+            dgvPalavra.Rows.Clear();
+            //dgvPalavra.Rows[0].Height = 30; // Ajusta a altura da linha se desejar
+
+            for (int i = 0; i < palavraSecreta.Length; i++)
+            {
+                // Adiciona uma coluna para cada caractere da palavra secreta
+                dgvPalavra.Columns.Add($"col{i}", ""); // Nome da coluna e texto do cabeçalho vazio
+                dgvPalavra.Columns[i].Width = 31; // Define largura da coluna
+                dgvPalavra.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Centraliza o texto
+
+                char charOriginal = palavraSecreta[i];
+                if (char.IsLetter(charOriginal))
+                {
+                    palavraOcultaDisplay.Append("_");
+                }
+                else // Mantém caracteres que não são letras (espaços, hífens, etc.)
+                {
+                    palavraOcultaDisplay.Append(charOriginal);
+                }
+            }
+
+            // 5. Atualizar o DataGridView com o display inicial (underlines ou caracteres não-letras)
+            AtualizarDisplayPalavraOculta();
+
+            // 6. Atualizar os Labels de status
+            lbPontos.Text = $"Pontos: {pontos}";
+            lbErros.Text = $"Erros: {erros}/{MAX_ERROS_VISUAIS}"; // Mostra erros/total de partes visíveis
+            lbDica.Text = "Dica: " + entradaSelecionada.Dica;
+
+            // 7. Resetar as imagens da forca (apenas a forca base visível)
+            ResetarImagens(); // Seu método para resetar a visibilidade de todos os PictureBoxes
+            AtualizarImagemForca(); // Exibe a imagem inicial (forca vazia, ou a primeira parte se 'erros' já fosse 1)
+
+            // 8. Reabilitar todos os botões do alfabeto do teclado
+            ReabilitarBotoesAlfabeto();
+
+            // 9. Configurar o timer e a exibição da dica/tempo
+            if (chkComDica.Checked)
+            {
+                tempoForca = 60; // Seta o tempo para 60 segundos
+                tmrForca.Enabled = true; // Habilita o timer
+                lbDica.Visible = true; // Mostra a dica
+                lbTempo.Visible = true; // Mostra o label de tempo
+                lbTempo.Text = $"Tempo Restante: {tempoForca}s";
+            }
+            else
+            {
+                tempoForca = 0; // Desabilita o tempo se não tiver dica
+                tmrForca.Enabled = false;
+                lbDica.Visible = false; // Esconde a dica
+                lbTempo.Visible = false; // Esconde o label de tempo
+            }
+
+
+            // 10. Desabilitar/habilitar controles durante o jogo
+            btnIniciar.Enabled = false; // Botão Iniciar desabilitado
+            txtNome.Enabled = false; // Nome do jogador desabilitado
+            chkComDica.Enabled = false; // Checkbox de dica desabilitado
+
+            // Bloqueia a aba de Cadastro (abordagem no evento tabControl1_Selecting)
+            // tabControl1.TabPages[tpCadastro.Name].Enabled = false; // (Isso não é o ideal, use tabControl1_Selecting)
+        }
+
+        private void btnIniciar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtNome.Text)) // Usar String.IsNullOrWhiteSpace para melhor validação
+            {
+                MessageBox.Show("Por favor, insira um nome válido antes de começar a jogar.", "Aviso: Nome inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtNome.Focus();
+                return;
+            }
+
+            // Chame o novo método IniciarNovoJogoForca() aqui
+            IniciarNovoJogoForca();
+
+
+            /*
             Random rdn = new Random();
             indiceAleatorio = rdn.Next(dicio.Tamanho); // escolhe um índice aleatório do VetorDicionario
             string palavraSorteada = dicio[indiceAleatorio].Palavra.TrimEnd(); // TrimEnd() = remove os espaços em branco no fim da string
@@ -958,6 +1110,7 @@ namespace apListaLigada
 
             for (int i = 0; i < dgvPalavra.ColumnCount; i++)
                 dgvPalavra.Columns[i].Width = 31; // define uma largura para cada coluna do DataGridView
+            */
         }
 
         private void tpCadastro_Enter(object sender, EventArgs e)
@@ -976,7 +1129,6 @@ namespace apListaLigada
                 //AtualizarTela();
             }
         }
-
 
         private void CarregarDadosDoArquivoJogoDaForca()
         {
@@ -1046,28 +1198,171 @@ namespace apListaLigada
             dgvPalavrasEDicas.Columns["Dica"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
+        private void AtualizarDisplayPalavraOculta()
+        {
+            // Limpa as linhas e colunas existentes
+            dgvPalavra.Rows.Clear();
+            dgvPalavra.Columns.Clear();
+
+            // Adiciona as colunas primeiro
+            for (int i = 0; i < palavraOcultaDisplay.Length; i++)
+            {
+                dgvPalavra.Columns.Add($"col{i}", "");
+                dgvPalavra.Columns[i].Width = 31;
+                dgvPalavra.Columns[i].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+
+            // Agora que as colunas existem, adiciona uma linha
+            dgvPalavra.Rows.Add();
+            dgvPalavra.Rows[0].Height = 30; // Ajusta a altura da linha se desejar
+
+            // Preenche as células da linha com os caracteres da palavra oculta/descoberta
+            for (int i = 0; i < palavraOcultaDisplay.Length; i++)
+            {
+                dgvPalavra.Rows[0].Cells[i].Value = palavraOcultaDisplay[i].ToString();
+            }
+        }
+
+        private void FinalizarJogo(bool ganhou)
+        {
+            emJogo = false; // Sai do estado de jogo
+
+            // Desabilitar todos os botões do alfabeto
+            foreach (Button btn in botoesAlfabeto)
+            {
+                btn.Enabled = false;
+            }
+
+            tmrForca.Enabled = false; // Para o timer
+
+            // Reabilitar controles para novo jogo
+            btnIniciar.Enabled = true;
+            txtNome.Enabled = true;
+            chkComDica.Enabled = true;
+            lbDica.Visible = true; // Volta a mostrar a dica, mesmo se não estiver usando.
+
+            // Se perdeu, exiba a palavra completa
+            if (!ganhou)
+            {
+                palavraOcultaDisplay = new StringBuilder(palavraSecreta);
+                AtualizarDisplayPalavraOculta();
+                // Você pode adicionar uma mensagem na lbDica ou em outro lugar, tipo "A palavra era: XXX"
+            }
+        }
+
+        private void AtualizarImagemForca()
+        {
+            // Garante que a forca base esteja sempre visível
+            ComputarImagensDaForca(true);
+
+            // Reseta o estado do boneco vivo e enforcado a cada atualização
+            ComputarImagensBonecoEnforcado(false);
+            BonecoEstaVivo(false); // Garante que o boneco vivo não esteja visível
+
+            // Chame a função ComputarImagens com o número atual de erros.
+            // O `erros` é a variável de classe que você incrementa.
+            // Cuidado: se 'erros' for 0, ComputarImagens não fará nada, o que é o desejado (só a forca).
+            // Se 'erros' for maior que 7 (ou MAX_ERROS_VISUAIS), não haverá um case correspondente,
+            // mas a lógica de derrota já terá sido acionada em processarLetraClicada.
+            if (erros > 0 && erros <= MAX_ERROS_VISUAIS) // Apenas se houver um erro para mostrar uma parte do boneco
+            {
+                ComputarImagens(erros);
+            }
+        }
+
+        private void ReabilitarBotoesAlfabeto()
+        {
+            foreach (Button btn in botoesAlfabeto)
+            {
+                btn.Enabled = true;
+            }
+        }
+
+        // Método para adicionar os botões do alfabeto à lista (chame no Form_Load ou em IniciarNovoJogoForca)
+        private void AdicionarBotoesAlfabeto(params Button[] buttons)
+        {
+            botoesAlfabeto.AddRange(buttons);
+        }
+
+        private void ResetarJogo()
+        {
+            FinalizarJogo(false); 
+        }
+
         private void processarLetraClicada(char letra)
         {
             // Exemplo: Mostrar a letra clicada (apenas para teste)
-            MessageBox.Show($"Você clicou na letra: {letra}");
+            //MessageBox.Show($"Você clicou na letra: {letra}");
 
-            // TODO: AQUI É ONDE VOCÊ COLOCARÁ TODA A LÓGICA DO SEU JOGO DA FORCA
-            // 1. Verificar se a letra está na palavra secreta.
-            // 2. Atualizar o display da palavra oculta (ex: mostrar os underlines preenchidos).
-            // 3. Se a letra estiver correta, verificar se o jogo foi ganho.
-            // 4. Se a letra estiver incorreta, incrementar o contador de erros.
-            // 5. Atualizar a imagem da forca (parte do boneco).
-            // 6. Se os erros atingirem o limite, o jogo foi perdido.
-            // 7. Desabilitar o botão da letra clicada para evitar repetições (importante!).
-            //    Para desabilitar o botão, você precisará passar o próprio botão como parâmetro
-            //    ou encontrar o botão pelo nome, o que é mais complexo.
-            //    A forma mais simples para esta estrutura é desabilitar o botão DENTRO DE CADA CLICK EVENT.
-            //    (Vou mostrar isso abaixo nos exemplos de click events)
+            // 1. Desabilitar o botão clicado imediatamente
+            //btnClicado.Enabled = false;
 
-            // Exemplo de como você pode chamar métodos de lógica do jogo:
-            // VerificarLetraNaPalavra(letra);
-            // AtualizarInterfaceDoJogo();
-            // VerificarFimDeJogo();
+            // Se você usava letraPressionada e qualLetra, ajuste aqui se ainda precisar:
+            // letraPressionada[qualLetra] = btnClicado;
+            // qualLetra++;
+
+            // Converte a letra para maiúscula para padronização na comparação
+            letra = char.ToUpper(letra);
+
+            string palavra = dicio[indiceAleatorio].Palavra.Trim(); // Obter a palavra do dicionário
+
+            bool achouLetraNaPalavra = false;
+
+            // Itera sobre a palavra secreta para verificar a letra
+            for (int i = 0; i < palavra.Length; i++)
+            {
+                // Converte o caractere da palavra para maiúscula para comparação case-insensitive
+                if (char.ToUpper(palavra[i]) == letra)
+                {
+                    pontos++; // Incrementa os pontos
+                    achouLetraNaPalavra = true;
+
+                    // Atualiza o display da palavra oculta com a letra encontrada
+                    palavraOcultaDisplay[i] = letra;
+                    // E atualiza a célula correspondente no DataGridView
+                    if (dgvPalavra.Columns.Count > i && dgvPalavra.Rows.Count > 0)
+                    {
+                        dgvPalavra.Rows[0].Cells[i].Value = letra.ToString();
+                    }
+                    // Não precisa mais de dicio[indiceAleatorio].Acertou[i] = true; se você usa palavraOcultaDisplay
+                }
+            }
+
+            if (!achouLetraNaPalavra) // Se a letra não foi achada na palavra
+            {
+                erros++; // Erros é acrescido
+
+                //btnClicado.BackColor = System.Drawing.Color.Red; // A letra clicada fica vermelha
+
+                lbErros.Text = "Erros: " + erros; // Atualiza o label de erros
+
+                AtualizarImagemForca(); // Chama a função para atualizar a imagem da forca/boneco
+
+                if (erros == LIMITE_ERROS_PARA_PERDER) // Se o usuário errou o limite de vezes
+                {
+                    PerdeuOJogo(); // Exibe as imagens de derrota
+                    MessageBox.Show($"Ah, não, {nome}! Que pena, parece que não foi dessa vez. A palavra correta era: {palavraSecreta}", "GAME OVER!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    ResetarJogo(); // Reinicia ou prepara para um novo jogo
+                }
+            }
+            else // Se a letra for encontrada
+            {
+                //btnClicado.BackColor = System.Drawing.Color.Green; // A letra clicada fica verde
+                lbPontos.Text = "Pontos: " + pontos; // Atualiza o label de pontos
+
+                // Verifica se a palavra foi completamente adivinhada
+                // Compara o display atual (sem underlines ou caracteres especiais que não sejam letras)
+                // com a palavra secreta original (apenas letras).
+                string displayAtualLimpo = new string(palavraOcultaDisplay.ToString().Where(char.IsLetter).ToArray());
+                string palavraSecretaLimpa = new string(palavraSecreta.Where(char.IsLetter).ToArray());
+
+                if (displayAtualLimpo.Length == palavraSecretaLimpa.Length)
+                {
+                    ImagensGanhou(); // Exibe as imagens de vitória
+                    MessageBox.Show($"Parabéns, {nome}! Você ganhou!", "GOOD GAME!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    ResetarJogo(); // Reinicia ou prepara para um novo jogo
+                }
+            }
         }
         private void btnA_Click(object sender, EventArgs e)
         {
@@ -1305,7 +1600,132 @@ namespace apListaLigada
             btnSair.Enabled = true;
         }
 
-        
+        /*
+        private void tmrForca_Tick(object sender, EventArgs e)
+        {
+            if (emJogo && chkComDica.Checked) // Apenas decrementar se estiver em jogo e com dica
+            {
+                tempoForca--;
+                lbTempo.Text = $"Tempo Restante: {tempoForca}s";
+
+                if (tempoForca <= 0)
+                {
+                    tmrForca.Enabled = false; // Para o timer
+                    MessageBox.Show("Tempo esgotado! Você perdeu.", "Fim de Jogo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    FinalizarJogo(false); // Termina o jogo como perda
+                }
+            }
+        }
+        */
+
+        // ===========================    Imagens    ===========================
+
+        public void ComputarImagens(int erro)
+        {
+            // Torna todas as partes do boneco enforcado invisíveis inicialmente,
+            // para que apenas a parte correspondente ao erro seja exibida.
+            picBoxForca1.Visible = false;
+            picBoxForca2.Visible = false;
+            picBoxForca3.Visible = false;
+            picBoxForca4.Visible = false;
+            picBoxForca5.Visible = false;
+            picBoxForca6.Visible = false;
+            picBoxForca7.Visible = false;
+            picBoxForca8.Visible = false; // Se você tem 8 partes, inclua.
+            picBoxBonecoXX.Visible = false; // Inclua se aplicável.
+            picBoxEspiritoBoneco.Visible = false; // O espírito só aparece quando perde.
+
+
+            switch (erro)
+            {
+                case 1:
+                    picBoxForca1.Visible = true;
+                    break;
+                case 2:
+                    picBoxForca2.Visible = true;
+                    break;
+                case 3:
+                    picBoxForca3.Visible = true;
+                    break;
+                case 4:
+                    picBoxForca4.Visible = true;
+                    break;
+                case 5:
+                    picBoxForca5.Visible = true;
+                    break;
+                case 6:
+                    picBoxForca6.Visible = true;
+                    break;
+                case 7:
+                    picBoxForca7.Visible = true;
+                    break;
+                case 8: // caso erros chegue a 8, o usuário perde
+                    PerdeuOJogo(); // e as imagens correspondentes são exibidas
+                    break;
+            }
+        }
+
+        public void ResetarImagens()
+        {
+            // reseta as imagens, deixando a forca visível e o enforcado e o vivo invisíveis
+            ComputarImagensDaForca(true);
+            ComputarImagensBonecoEnforcado(false);
+            BonecoEstaVivo(false);
+
+            // a picEspirito é resetada, ficando invisível e tendo sua localização restaurada
+            picBoxEspiritoBoneco.Visible = false;
+            picBoxEspiritoBoneco.Left = 108;
+            picBoxEspiritoBoneco.Top = 129;
+            tmrEspiritoBoneco.Enabled = false;
+        }
+
+        public void ComputarImagensDaForca(bool estado) // muda a visibilidade da forca de acordo com a variável bool estado
+        {
+            picForcaUm.Visible = estado;
+            picForcaDois.Visible = estado;
+            picForcaTres.Visible = estado;
+            picForcaQuatro.Visible = estado;
+            picForcaCinco.Visible = estado;
+            picForcaSeis.Visible = estado;
+            picForcaSete.Visible = estado;
+        }
+
+        public void ComputarImagensBonecoEnforcado(bool estado) // muda a visibilidade da forca de acordo com a variável bool estado
+        {
+            picBoxForca1.Visible = estado;
+            picBoxForca2.Visible = estado;
+            picBoxForca3.Visible = estado;
+            picBoxForca4.Visible = estado;
+            picBoxForca5.Visible = estado;
+            picBoxForca6.Visible = estado;
+            picBoxForca7.Visible = estado;
+            picBoxForca8.Visible = estado;
+            picBoxBonecoXX.Visible = estado;
+        }
+
+        public void BonecoEstaVivo(bool estado) // muda a visibilidade do vivo de acordo com a variável bool estado
+        {
+            picBoxBandeiraUm.Visible = estado;
+            picBoxBandeiraDois.Visible = estado;
+            picBoxBandeiraTres.Visible = estado;
+        }
+
+        public void ImagensGanhou() // combinação imagens de vitória
+        {
+            ComputarImagensDaForca(false);
+            ComputarImagensBonecoEnforcado(false);
+            BonecoEstaVivo(true);
+
+            picBoxEspiritoBoneco.Visible = false;
+        }
+
+        public void PerdeuOJogo() // combinação imagens de derrota
+        {
+            ComputarImagensBonecoEnforcado(true);
+
+            picBoxEspiritoBoneco.Visible = true;
+            tmrEspiritoBoneco.Enabled = true;
+        }
     }
 
 }

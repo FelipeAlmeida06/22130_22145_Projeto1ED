@@ -487,7 +487,7 @@ namespace apListaLigada
             }
             else
             {
-                grade.RowCount = 0; // Garante que não há linhas se o vetor estiver vazio
+                grade.RowCount = 1; // Garante que não há linhas se o vetor estiver vazio
             }
         }
         public void ExibirDados(TextBox lista)
