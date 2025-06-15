@@ -948,7 +948,7 @@ namespace apListaLigada
         int erros = 0;
 
         bool emJogo;
-        string inspiracao = "Inspirado em http://www.velhosamigos.com.br/jogos/forca.htm";
+        string inspiracao = "http://www.velhosamigos.com.br/jogos/forca.htm";
         string nome;
 
         private string palavraSecreta; // A palavra que o jogador deve adivinhar
@@ -1198,7 +1198,7 @@ namespace apListaLigada
             }
         }
 
-        // Funçãp para adicionar os botões do alfabeto à lista
+        // Função para adicionar os botões do alfabeto à lista
         private void AdicionarBotoesAlfabeto(params Button[] buttons)
         {
             botoesAlfabeto.AddRange(buttons);

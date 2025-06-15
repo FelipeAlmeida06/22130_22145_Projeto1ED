@@ -32,10 +32,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|apListaLigada||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2BFB39FF-63A8-4EBA-BED7-CA5A08AA9F55}|apListaLigada.csproj|c:\\users\\felipe almeida\\documents\\github\\22130_22145_projeto1ed\\listas duplamente ligadas\\apforca\\properties\\resources.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}",
-      "RelativeMoniker": "D:0:0:{2BFB39FF-63A8-4EBA-BED7-CA5A08AA9F55}|apListaLigada.csproj|solutionrelative:properties\\resources.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}"
     }
   ],
   "DocumentGroupContainers": [
@@ -128,8 +124,7 @@
               "ToolTip": "C:\\Users\\Felipe Almeida\\Documents\\GitHub\\22130_22145_Projeto1ED\\Listas Duplamente Ligadas\\apForca\\apListaLigada.csproj",
               "RelativeToolTip": "apListaLigada.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-06-14T18:28:21.742Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-14T18:28:21.742Z"
             },
             {
               "$type": "Document",
@@ -151,7 +146,7 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\Felipe Almeida\\Documents\\GitHub\\22130_22145_Projeto1ED\\Listas Duplamente Ligadas\\apForca\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAALUGAAAAAAAAAAAAANIGAAAFAAAA",
+              "ViewState": "AQIAAKsDAAAAAAAAAAAwwLAEAAA+AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-12T13:07:56.216Z",
               "EditorCaption": ""
@@ -166,8 +161,7 @@
               "RelativeToolTip": "VetorDicionario.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T23:07:00.361Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-13T23:07:00.361Z"
             },
             {
               "$type": "Document",
@@ -179,8 +173,7 @@
               "RelativeToolTip": "Dicionario.cs",
               "ViewState": "AQIAAC0AAAAAAAAAAAAowDQAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-13T23:06:44.267Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-06-13T23:06:44.267Z"
             },
             {
               "$type": "Document",
@@ -192,8 +185,7 @@
               "RelativeToolTip": "PalavraDica.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-26T19:43:39.491Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-26T19:43:39.491Z"
             },
             {
               "$type": "Document",
@@ -205,8 +197,7 @@
               "RelativeToolTip": "ListaDupla.cs",
               "ViewState": "AQIAAIIAAAAAAAAAAAAwwJcAAAA8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T13:07:56.46Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-12T13:07:56.46Z"
             },
             {
               "$type": "Document",
@@ -218,8 +209,7 @@
               "RelativeToolTip": "NoDuplo.cs",
               "ViewState": "AQIAAA0AAAAAAAAAAAAkwBwAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-12T13:07:56.444Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-12T13:07:56.444Z"
             }
           ]
         }
